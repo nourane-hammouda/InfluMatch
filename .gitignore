@@ -73,3 +73,9 @@ htmlcov/
 *.tmp
 .cache
 
+# Documentation (keep only README.md)
+ADMIN_GUIDE.md
+INTEGRATION_GUIDE.md
+LINKS.md
+PROJECT_STRUCTURE.md
+
