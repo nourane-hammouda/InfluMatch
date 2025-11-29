@@ -1,0 +1,1118 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+
+% Page setup
+\geometry{margin=2.5cm}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{InfluMatch - Rapport de Projet}
+\fancyhead[R]{\thepage}
+\fancyfoot[C]{}
+
+% Code listing style
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{green!60!black},
+    stringstyle=\color{red},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    stepnumber=1,
+    numbersep=5pt,
+    backgroundcolor=\color{gray!10},
+    frame=single,
+    breaklines=true,
+    breakatwhitespace=true,
+    tabsize=4,
+    showstringspaces=false
+}
+
+\lstdefinestyle{javascript}{
+    language=JavaScript,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{green!60!black},
+    stringstyle=\color{red},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    stepnumber=1,
+    numbersep=5pt,
+    backgroundcolor=\color{gray!10},
+    frame=single,
+    breaklines=true,
+    breakatwhitespace=true,
+    tabsize=2
+}
+
+% Title formatting
+\titleformat{\section}{\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\large\bfseries}{\thesubsection}{1em}{}
+
+\begin{document}
+
+% Title page
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    {\Huge\bfseries InfluMatch\par}
+    \vspace{1cm}
+    {\Large Plateforme de Mise en Relation\par}
+    {\Large entre Influenceurs et Entreprises\par}
+    \vspace{2cm}
+    {\large Rapport de Projet\par}
+    \vspace{1cm}
+    {\large Développement Web Full-Stack\par}
+    \vspace{3cm}
+    {\large \today\par}
+    \vfill
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+
+\subsection{Présentation du Projet}
+
+InfluMatch est une plateforme web complète permettant la mise en relation entre influenceurs et entreprises pour des collaborations publicitaires. Le projet a été développé en utilisant une architecture moderne full-stack avec Django REST Framework pour le backend et React avec TypeScript pour le frontend.
+
+\subsection{Objectifs}
+
+Les objectifs principaux du projet sont :
+\begin{itemize}
+    \item Permettre aux influenceurs de créer et gérer leur profil professionnel
+    \item Permettre aux entreprises de publier des campagnes publicitaires
+    \item Faciliter la mise en relation et les candidatures
+    \item Fournir un système d'authentification sécurisé avec JWT
+    \item Offrir un tableau de bord analytique pour les utilisateurs
+\end{itemize}
+
+\subsection{Technologies Utilisées}
+
+\begin{itemize}
+    \item \textbf{Backend} : Django 5.2, Django REST Framework, MySQL
+    \item \textbf{Frontend} : React 18, TypeScript, Vite, Bootstrap 5
+    \item \textbf{Authentification} : JWT (JSON Web Tokens) via Simple JWT
+    \item \textbf{Base de données} : MySQL avec schéma personnalisé
+    \item \textbf{Outils} : Git, npm, pip
+\end{itemize}
+
+\newpage
+
+\section{Architecture du Projet}
+
+\subsection{Architecture MVC}
+
+Le projet suit une architecture MVC (Model-View-Controller) :
+
+\begin{itemize}
+    \item \textbf{Model (Backend)} : Modèles Django dans \texttt{api/models/}
+    \item \textbf{View (Frontend)} : Pages React dans \texttt{frontend/src/pages/}
+    \item \textbf{Controller} : 
+    \begin{itemize}
+        \item Backend : Vues API dans \texttt{api/views/}
+        \item Frontend : Services dans \texttt{frontend/src/services/}
+    \end{itemize}
+\end{itemize}
+
+\subsection{Structure des Répertoires}
+
+\begin{lstlisting}[style=javascript, caption=Structure du projet]
+influmatch/
+├── backend/          # Configuration Django
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+├── api/              # Application principale
+│   ├── models/       # Modèles de données
+│   ├── views/        # Vues API
+│   ├── serializers/  # Sérialiseurs DRF
+│   └── urls.py       # Routes API
+└── frontend/         # Application React
+    └── src/
+        ├── pages/     # Pages principales
+        ├── components/ # Composants réutilisables
+        ├── services/  # Services API
+        └── contexts/  # Contextes React
+\end{lstlisting}
+
+\newpage
+
+\section{Modèles de Données}
+
+\subsection{Modèle User}
+
+Le modèle User est le modèle central du système, héritant de \texttt{AbstractBaseUser} pour personnaliser l'authentification.
+
+\begin{lstlisting}[caption=Modèle User - api/models/user.py]
+from django.contrib.auth.models import AbstractBaseUser, 
+    BaseUserManager, PermissionsMixin
+from django.db import models
+
+class UserManager(BaseUserManager):
+    def create_user(self, email, password=None, 
+                    type_utilisateur='influenceur', **extra_fields):
+        if not email:
+            raise ValueError('L\'email est requis')
+        email = self.normalize_email(email)
+        user = self.model(email=email, 
+                         type_utilisateur=type_utilisateur, 
+                         **extra_fields)
+        if password:
+            user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+class User(AbstractBaseUser, PermissionsMixin):
+    TYPE_CHOICES = [
+        ('influenceur', 'Influenceur'),
+        ('entreprise', 'Entreprise'),
+    ]
+    
+    email = models.EmailField('email', unique=True, 
+                             db_column='email')
+    type_utilisateur = models.CharField(max_length=20, 
+                                       choices=TYPE_CHOICES, 
+                                       db_column='type_utilisateur')
+    est_actif = models.BooleanField(default=True, 
+                                   db_column='est_actif')
+    est_verifie = models.BooleanField(default=False, 
+                                     db_column='est_verifie')
+    password = models.CharField(max_length=128, 
+                              db_column='mot_de_passe_hash')
+    
+    objects = UserManager()
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['type_utilisateur']
+    
+    class Meta:
+        db_table = 'utilisateurs'
+        indexes = [
+            models.Index(fields=['email'], name='idx_email'),
+            models.Index(fields=['type_utilisateur'], 
+                        name='idx_type_utilisateur'),
+        ]
+\end{lstlisting}
+
+\subsection{Modèle Influenceur}
+
+Le modèle Influenceur représente le profil d'un influenceur avec toutes ses informations.
+
+\begin{lstlisting}[caption=Modèle Influenceur - api/models/influencer.py]
+class Influenceur(models.Model):
+    utilisateur = models.OneToOneField(User, 
+                                      on_delete=models.CASCADE, 
+                                      related_name='influenceur')
+    pseudo = models.CharField(max_length=100)
+    photo_profil = models.CharField(max_length=500, 
+                                    null=True, blank=True)
+    biographie = models.TextField(max_length=500, 
+                                 null=True, blank=True)
+    localisation = models.CharField(max_length=255, 
+                                   null=True, blank=True)
+    pourcentage_completion_profil = models.IntegerField(default=0)
+    taux_acceptation = models.DecimalField(max_digits=5, 
+                                          decimal_places=2, 
+                                          default=0.00)
+    total_candidatures = models.IntegerField(default=0)
+    candidatures_acceptees = models.IntegerField(default=0)
+    
+    domaines = models.ManyToManyField(DomaineExpertise, 
+                                     through='InfluenceurExpertise', 
+                                     related_name='influenceurs')
+    
+    class Meta:
+        db_table = 'influenceurs'
+        indexes = [
+            models.Index(fields=['pourcentage_completion_profil']),
+            models.Index(fields=['localisation']),
+        ]
+\end{lstlisting}
+
+\subsection{Modèle Entreprise et Campagne}
+
+\begin{lstlisting}[caption=Modèles Entreprise et Campagne - api/models/company.py]
+class Entreprise(models.Model):
+    utilisateur = models.OneToOneField(User, 
+                                      on_delete=models.CASCADE, 
+                                      related_name='entreprise')
+    nom_entreprise = models.CharField(max_length=255)
+    description = models.TextField(null=True, blank=True)
+    secteur = models.CharField(max_length=100, 
+                              null=True, blank=True)
+    taille_entreprise = models.CharField(max_length=20, 
+                                        choices=TAILLE_CHOICES)
+
+class Campagne(models.Model):
+    STATUT_CHOICES = [
+        ('brouillon', 'Brouillon'),
+        ('active', 'Active'),
+        ('fermee', 'Fermée'),
+        ('annulee', 'Annulée'),
+    ]
+    
+    entreprise = models.ForeignKey(Entreprise, 
+                                  on_delete=models.CASCADE)
+    titre = models.CharField(max_length=255)
+    description = models.TextField()
+    budget_min = models.DecimalField(max_digits=10, 
+                                    decimal_places=2)
+    budget_max = models.DecimalField(max_digits=10, 
+                                    decimal_places=2)
+    date_limite_candidature = models.DateTimeField()
+    statut = models.CharField(max_length=20, 
+                             choices=STATUT_CHOICES, 
+                             default='brouillon')
+    total_candidatures = models.IntegerField(default=0)
+\end{lstlisting}
+
+\subsection{Modèle Candidature}
+
+\begin{lstlisting}[caption=Modèle Candidature - api/models/application.py]
+class Candidature(models.Model):
+    STATUT_CHOICES = [
+        ('en_attente', 'En attente'),
+        ('acceptee', 'Acceptée'),
+        ('refusee', 'Refusée'),
+        ('retiree', 'Retirée'),
+    ]
+    
+    campagne = models.ForeignKey(Campagne, 
+                                on_delete=models.CASCADE)
+    influenceur = models.ForeignKey(Influenceur, 
+                                   on_delete=models.CASCADE)
+    statut = models.CharField(max_length=20, 
+                             choices=STATUT_CHOICES, 
+                             default='en_attente')
+    message_motivation = models.TextField(max_length=500, 
+                                          null=True, blank=True)
+    prix_propose = models.DecimalField(max_digits=10, 
+                                      decimal_places=2, 
+                                      null=True, blank=True)
+    candidate_le = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        db_table = 'candidatures'
+        unique_together = ['campagne', 'influenceur']
+\end{lstlisting}
+
+\newpage
+
+\section{Système d'Authentification}
+
+\subsection{Inscription (Register)}
+
+La fonctionnalité d'inscription permet aux utilisateurs de créer un compte en tant qu'influenceur ou entreprise.
+
+\begin{lstlisting}[caption=Inscription - api/views/auth_views.py]
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def register(request):
+    """
+    Register a new user
+    """
+    email = request.data.get('email')
+    password = request.data.get('password')
+    type_utilisateur = request.data.get('type_utilisateur', 
+                                       'influenceur')
+    
+    if not email or not password:
+        return Response(
+            {'error': 'Email et mot de passe sont requis'},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+    
+    # Validate type
+    valid_types = ['influenceur', 'entreprise']
+    if type_utilisateur not in valid_types:
+        return Response(
+            {'error': f'type_utilisateur doit être l\'un de: 
+                      {", ".join(valid_types)}'},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+    
+    # Check if user already exists
+    if User.objects.filter(email=email).exists():
+        return Response(
+            {'error': 'Cet email est déjà utilisé'},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+    
+    # Create user
+    try:
+        username = email.split('@')[0]
+        user = User.objects.create_user(
+            username=username,
+            email=email,
+            password=password,
+            type_utilisateur=type_utilisateur
+        )
+        
+        # Generate tokens
+        refresh = RefreshToken.for_user(user)
+        
+        return Response({
+            'id': user.id,
+            'email': user.email,
+            'type_utilisateur': user.type_utilisateur,
+            'access': str(refresh.access_token),
+            'refresh': str(refresh),
+        }, status=status.HTTP_201_CREATED)
+    except Exception as e:
+        return Response(
+            {'error': str(e)},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+\end{lstlisting}
+
+\subsection{Connexion avec JWT}
+
+L'authentification utilise JWT (JSON Web Tokens) via Simple JWT. Les tokens sont générés lors de la connexion et rafraîchis automatiquement.
+
+\begin{lstlisting}[caption=Configuration JWT - backend/settings.py]
+from datetime import timedelta
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+}
+\end{lstlisting}
+
+\subsection{Service API Frontend pour l'Authentification}
+
+\begin{lstlisting}[style=javascript, caption=Service API - frontend/src/services/api.ts]
+export const authAPI = {
+  login: async (email: string, password: string) => {
+    const response = await fetch(`${API_BASE_URL}/auth/token/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json().catch(() => 
+        ({ detail: response.statusText }));
+      throw new Error(error.detail || error.message || 'Login failed');
+    }
+
+    const data = await response.json();
+    setTokens(data.access, data.refresh);
+    return data;
+  },
+
+  signup: async (email: string, password: string, 
+                 type: 'influencer' | 'company') => {
+    const djangoType = type === 'influencer' ? 
+                      'influenceur' : 'entreprise';
+    const response = await fetch(`${API_BASE_URL}/auth/register/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password, 
+                            type_utilisateur: djangoType }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json().catch(() => 
+        ({ detail: response.statusText }));
+      throw new Error(error.error || error.detail || 'Signup failed');
+    }
+
+    const data = await response.json();
+    if (data.access && data.refresh) {
+      setTokens(data.access, data.refresh);
+    }
+    return data;
+  },
+};
+\end{lstlisting}
+
+\newpage
+
+\section{Gestion des Profils}
+
+\subsection{Mise à Jour du Profil Influenceur}
+
+Cette fonctionnalité permet aux influenceurs de compléter et mettre à jour leur profil avec toutes leurs informations.
+
+\begin{lstlisting}[caption=Mise à jour profil - api/views/profile_views.py]
+@api_view(['POST', 'PUT'])
+@permission_classes([IsAuthenticated])
+def update_profile(request):
+    """
+    Update influencer profile with all information
+    """
+    user = request.user
+    
+    if user.type_utilisateur != 'influenceur':
+        return Response(
+            {'error': 'This endpoint is only for influencers'},
+            status=status.HTTP_403_FORBIDDEN
+        )
+    
+    try:
+        with transaction.atomic():
+            # Get or create influencer profile
+            influencer, created = Influenceur.objects.get_or_create(
+                utilisateur=user)
+            
+            data = request.data
+            
+            # Update basic profile info
+            if 'pseudo' in data:
+                influencer.pseudo = data['pseudo']
+            if 'bio' in data:
+                influencer.biographie = data['bio']
+            if 'location' in data:
+                influencer.localisation = data['location']
+            
+            # Update domains
+            if 'domains' in data:
+                domains = data['domains']
+                influencer.domaines.clear()
+                for domain_name in domains:
+                    if domain_name and domain_name.strip():
+                        domain, _ = DomaineExpertise.objects.get_or_create(
+                            nom=domain_name.strip(),
+                            defaults={'slug': domain_name.strip()
+                                     .lower().replace(' ', '-')}
+                        )
+                        influencer.domaines.add(domain)
+            
+            # Update platforms
+            if 'platforms' in data:
+                platforms_data = data['platforms']
+                InfluenceurPlateforme.objects.filter(
+                    influenceur=influencer).delete()
+                for platform_name, platform_info in platforms_data.items():
+                    if platform_info.get('active', False):
+                        followers = platform_info.get('followers', '0')
+                        followers_int = int(re.sub(r'\D', '', 
+                                                   str(followers)))
+                        
+                        platform, _ = PlateformeSociale.objects.get_or_create(
+                            nom=platform_name,
+                            defaults={'est_actif': True}
+                        )
+                        
+                        InfluenceurPlateforme.objects.create(
+                            influenceur=influencer,
+                            plateforme=platform,
+                            nombre_abonnes=followers_int
+                        )
+            
+            # Update rates
+            if 'rates' in data:
+                rates_data = data['rates']
+                tarifs, _ = InfluenceurTarif.objects.get_or_create(
+                    influenceur=influencer)
+                
+                if 'story' in rates_data and rates_data['story']:
+                    tarifs.prix_par_story = float(rates_data['story'])
+                if 'post' in rates_data and rates_data['post']:
+                    tarifs.prix_par_post = float(rates_data['post'])
+                if 'video' in rates_data and rates_data['video']:
+                    tarifs.prix_par_video = float(rates_data['video'])
+                
+                tarifs.save()
+            
+            # Calculate completion percentage
+            completion = 0
+            if influencer.pseudo: completion += 15
+            if influencer.biographie: completion += 10
+            if influencer.localisation: completion += 10
+            if influencer.domaines.exists(): completion += 20
+            if InfluenceurPlateforme.objects.filter(
+                influenceur=influencer).exists(): completion += 20
+            if hasattr(influencer, 'tarifs') and (
+                influencer.tarifs.prix_par_story or 
+                influencer.tarifs.prix_par_post or 
+                influencer.tarifs.prix_par_video
+            ): completion += 25
+            
+            influencer.pourcentage_completion_profil = completion
+            influencer.save()
+        
+        return Response({
+            'success': True,
+            'completion_percent': completion,
+            'message': 'Profil mis à jour avec succès'
+        }, status=status.HTTP_200_OK)
+        
+    except Exception as e:
+        return Response(
+            {'error': str(e)},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+\end{lstlisting}
+
+\subsection{Récupération des Informations Utilisateur}
+
+\begin{lstlisting}[caption=Informations utilisateur - api/views/user_views.py]
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def current_user(request):
+    """
+    Get current authenticated user information with full profile data
+    """
+    user = request.user
+    
+    profile_complete = False
+    completion_percent = 0
+    profile_data = {}
+    
+    if hasattr(user, 'influenceur'):
+        influencer = user.influenceur
+        profile_complete = (
+            influencer.pseudo and
+            influencer.biographie and
+            influencer.localisation and
+            influencer.domaines.exists() and
+            InfluenceurPlateforme.objects.filter(
+                influenceur=influencer).exists()
+        )
+        completion_percent = influencer.pourcentage_completion_profil
+        
+        domains = [d.nom for d in influencer.domaines.all()]
+        
+        platforms_data = {}
+        platforms = InfluenceurPlateforme.objects.filter(
+            influenceur=influencer).select_related('plateforme')
+        for platform_link in platforms:
+            platforms_data[platform_link.plateforme.nom] = {
+                'active': True,
+                'followers': str(platform_link.nombre_abonnes)
+            }
+        
+        profile_data = {
+            'name': influencer.pseudo or '',
+            'pseudo': influencer.pseudo or '',
+            'bio': influencer.biographie or '',
+            'location': influencer.localisation or '',
+            'domains': domains,
+            'platforms': platforms_data,
+        }
+    
+    return Response({
+        'id': user.id,
+        'email': user.email,
+        'username': user.username,
+        'type_utilisateur': user.type_utilisateur,
+        'profile_complete': profile_complete,
+        'completion_percent': completion_percent,
+        'profile': profile_data,
+    })
+\end{lstlisting}
+
+\newpage
+
+\section{Pages Frontend}
+
+\subsection{Routing et Navigation}
+
+Le système de routing gère l'authentification et la complétion du profil pour contrôler l'accès aux pages.
+
+\begin{lstlisting}[style=javascript, caption=App.tsx - Routing principal]
+export default function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [profileCompleted, setProfileCompleted] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const token = getToken();
+      if (token) {
+        try {
+          const userData = await authAPI.getCurrentUser();
+          setIsAuthenticated(true);
+          const isComplete = userData.completion_percent >= 100 || 
+                           userData.profile_complete || false;
+          setProfileCompleted(isComplete);
+        } catch (error) {
+          setIsAuthenticated(false);
+          setProfileCompleted(false);
+        }
+      }
+      setLoading(false);
+    };
+    checkAuth();
+  }, []);
+
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/inscription" 
+               element={<SignupPage onSignup={handleSignup} />} />
+        <Route path="/connexion" 
+               element={<LoginPage onLogin={handleLogin} />} />
+        
+        {isAuthenticated ? (
+          <>
+            <Route path="/profil/completion" 
+                   element={<ProfileCompletionPage 
+                            onComplete={handleProfileComplete} />} />
+            <Route path="/profil" 
+                   element={<ProfilePage onLogout={handleLogout} />} />
+            
+            {profileCompleted && (
+              <>
+                <Route path="/dashboard" 
+                       element={<DashboardPage onLogout={handleLogout} />} />
+                <Route path="/marketplace" 
+                       element={<MarketplacePage onLogout={handleLogout} />} />
+                <Route path="/offre/:id" 
+                       element={<OfferDetailPage onLogout={handleLogout} />} />
+                <Route path="/candidatures" 
+                       element={<ApplicationsPage onLogout={handleLogout} />} />
+                <Route path="/notifications" 
+                       element={<NotificationsPage onLogout={handleLogout} />} />
+              </>
+            )}
+          </>
+        ) : (
+          <Route path="*" element={<Navigate to="/" />} />
+        )}
+      </Routes>
+    </Router>
+  );
+}
+\end{lstlisting}
+
+\subsection{Contexte d'Authentification}
+
+Le contexte React gère l'état d'authentification global de l'application.
+
+\begin{lstlisting}[style=javascript, caption=AuthContext - frontend/src/contexts/AuthContext.tsx]
+export const AuthProvider: React.FC<{ children: ReactNode }> = 
+  ({ children }) => {
+  const [user, setUser] = useState<User | null>(null);
+  const [loginAttempts, setLoginAttempts] = useState(0);
+  const [isBlocked, setIsBlocked] = useState(false);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const token = getToken();
+      if (token) {
+        try {
+          const userData = await authAPI.getCurrentUser();
+          setUser({
+            id: userData.id.toString(),
+            email: userData.email,
+            type: userData.type_utilisateur === 'influenceur' ? 
+                  'influencer' : 'company',
+            profileComplete: userData.profile_complete || false,
+          });
+        } catch (error) {
+          authAPI.logout();
+        }
+      }
+    };
+    checkAuth();
+  }, []);
+
+  const login = async (email: string, password: string) => {
+    if (isBlocked) {
+      throw new Error('Compte bloqué temporairement. 
+                     Réessayez dans 15 minutes.');
+    }
+
+    try {
+      await authAPI.login(email, password);
+      const userData = await authAPI.getCurrentUser();
+      setUser({
+        id: userData.id.toString(),
+        email: userData.email,
+        type: userData.type_utilisateur === 'influenceur' ? 
+              'influencer' : 'company',
+        profileComplete: userData.profile_complete || false,
+      });
+      setLoginAttempts(0);
+    } catch (error: any) {
+      setLoginAttempts(prev => {
+        const newAttempts = prev + 1;
+        if (newAttempts >= 5) {
+          setIsBlocked(true);
+          setTimeout(() => {
+            setIsBlocked(false);
+            setLoginAttempts(0);
+          }, 15 * 60 * 1000);
+        }
+        return newAttempts;
+      });
+      throw error;
+    }
+  };
+
+  return (
+    <AuthContext.Provider value={{ user, login, signup, logout, 
+                                  updateProfile, loginAttempts, 
+                                  isBlocked, loading }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+\end{lstlisting}
+
+\newpage
+
+\section{Endpoints API}
+
+\subsection{Configuration des Routes}
+
+\begin{lstlisting}[caption=URLs API - api/urls.py]
+from django.urls import path, include
+from rest_framework_simplejwt.views import TokenObtainPairView, 
+                                          TokenRefreshView
+from .views.auth_views import register
+from .views.user_views import current_user
+from .views.profile_views import update_profile
+
+urlpatterns = [
+    path('auth/token/', 
+         TokenObtainPairView.as_view(
+             serializer_class=CustomTokenObtainPairSerializer), 
+         name='token_obtain'),
+    path('auth/token/refresh/', 
+         TokenRefreshView.as_view(), 
+         name='token_refresh'),
+    path('auth/register/', register, name='register'),
+    path('auth/user/', current_user, name='current_user'),
+    path('profile/update/', update_profile, name='update_profile'),
+]
+\end{lstlisting}
+
+\subsection{Liste des Endpoints}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|p{6cm}|}
+\hline
+\textbf{Méthode} & \textbf{Endpoint} & \textbf{Auth} & \textbf{Description} \\
+\hline
+POST & /api/auth/register/ & Non & Inscription d'un nouvel utilisateur \\
+POST & /api/auth/token/ & Non & Connexion et obtention des tokens JWT \\
+POST & /api/auth/token/refresh/ & Non & Rafraîchissement du token d'accès \\
+GET & /api/auth/user/ & Oui & Informations de l'utilisateur connecté \\
+POST/PUT & /api/profile/update/ & Oui & Mise à jour du profil influenceur \\
+\hline
+\end{tabular}
+\caption{Endpoints API principaux}
+\end{table}
+
+\newpage
+
+\section{Fonctionnalités Principales}
+
+\subsection{1. Authentification et Inscription}
+
+\textbf{Localisation} : \texttt{api/views/auth_views.py}, \texttt{frontend/src/pages/LoginPage.tsx}, \texttt{frontend/src/pages/SignupPage.tsx}
+
+\begin{itemize}
+    \item Inscription avec validation d'email unique
+    \item Connexion avec génération de tokens JWT
+    \item Rafraîchissement automatique des tokens
+    \item Protection contre les tentatives de connexion multiples
+    \item Gestion des erreurs et messages utilisateur
+\end{itemize}
+
+\subsection{2. Gestion de Profil Influenceur}
+
+\textbf{Localisation} : \texttt{api/views/profile_views.py}, \texttt{frontend/src/pages/ProfileCompletionPage.tsx}
+
+\begin{itemize}
+    \item Création et mise à jour du profil
+    \item Gestion des domaines d'expertise
+    \item Ajout de plateformes sociales avec nombre d'abonnés
+    \item Configuration des tarifs (post, story, vidéo)
+    \item Calcul automatique du pourcentage de complétion
+    \item Validation des données avant sauvegarde
+\end{itemize}
+
+\subsection{2.1 Code de Calcul de Complétion}
+
+\begin{lstlisting}[caption=Calcul du pourcentage de complétion]
+# Calculate completion percentage
+completion = 0
+if influencer.pseudo: completion += 15
+if influencer.biographie: completion += 10
+if influencer.localisation: completion += 10
+if influencer.domaines.exists(): completion += 20
+if InfluenceurPlateforme.objects.filter(
+    influenceur=influencer).exists(): completion += 20
+if hasattr(influencer, 'tarifs') and (
+    influencer.tarifs.prix_par_story or 
+    influencer.tarifs.prix_par_post or 
+    influencer.tarifs.prix_par_video
+): completion += 25
+
+influencer.pourcentage_completion_profil = completion
+\end{lstlisting}
+
+\subsection{3. Dashboard Utilisateur}
+
+\textbf{Localisation} : \texttt{frontend/src/pages/DashboardPage.tsx}
+
+\begin{itemize}
+    \item Affichage des statistiques personnelles
+    \item Vue d'ensemble des candidatures
+    \item Accès rapide aux fonctionnalités principales
+    \item Navigation vers les différentes sections
+\end{itemize}
+
+\subsection{4. Marketplace}
+
+\textbf{Localisation} : \texttt{frontend/src/pages/MarketplacePage.tsx}
+
+\begin{itemize}
+    \item Affichage des campagnes disponibles
+    \item Filtrage et recherche de campagnes
+    \item Détails des offres
+    \item Candidature aux campagnes
+\end{itemize}
+
+\subsection{5. Gestion des Candidatures}
+
+\textbf{Localisation} : \texttt{api/models/application.py}, \texttt{frontend/src/pages/ApplicationsPage.tsx}
+
+\begin{itemize}
+    \item Création de candidatures
+    \item Suivi du statut (en attente, acceptée, refusée)
+    \item Message de motivation
+    \item Proposition de prix
+\end{itemize}
+
+\subsection{6. Système de Notifications}
+
+\textbf{Localisation} : \texttt{api/models/application.py} (modèle Notification)
+
+\begin{itemize}
+    \item Notifications pour nouvelles campagnes
+    \item Notifications de réponse aux candidatures
+    \item Notifications système
+    \item Marquage des notifications comme lues
+\end{itemize}
+
+\subsection{7. Administration Django}
+
+\textbf{Localisation} : \texttt{api/admin.py}
+
+\begin{lstlisting}[caption=Configuration Admin - api/admin.py]
+@admin.register(User)
+class UserAdmin(admin.ModelAdmin):
+    list_display = ('email', 'type_utilisateur', 'est_actif', 
+                    'est_verifie', 'cree_le')
+    list_filter = ('type_utilisateur', 'est_actif', 'est_verifie')
+    search_fields = ('email', 'username')
+    readonly_fields = ('cree_le', 'modifie_le', 'derniere_connexion')
+
+@admin.register(Influenceur)
+class InfluenceurAdmin(admin.ModelAdmin):
+    list_display = ('pseudo', 'utilisateur', 'localisation', 
+                    'pourcentage_completion_profil', 
+                    'total_candidatures')
+    list_filter = ('pourcentage_completion_profil', 'localisation')
+    search_fields = ('pseudo', 'utilisateur__email', 'biographie')
+\end{lstlisting}
+
+\newpage
+
+\section{Sécurité}
+
+\subsection{Authentification JWT}
+
+\begin{itemize}
+    \item Tokens d'accès avec expiration (1 heure)
+    \item Tokens de rafraîchissement (7 jours)
+    \item Rotation automatique des tokens
+    \item Blacklist des tokens expirés
+\end{itemize}
+
+\subsection{Protection des Routes}
+
+\begin{lstlisting}[caption=Protection des vues API]
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def current_user(request):
+    """
+    Get current authenticated user information
+    Seuls les utilisateurs authentifiés peuvent accéder
+    """
+    user = request.user
+    # ...
+\end{lstlisting}
+
+\subsection{Validation des Données}
+
+\begin{itemize}
+    \item Validation des emails uniques
+    \item Validation des types d'utilisateurs
+    \item Validation des champs obligatoires
+    \item Gestion des erreurs avec messages appropriés
+\end{itemize}
+
+\newpage
+
+\section{Base de Données}
+
+\subsection{Schéma Principal}
+
+La base de données MySQL contient les tables suivantes :
+
+\begin{itemize}
+    \item \texttt{utilisateurs} : Utilisateurs du système
+    \item \texttt{influenceurs} : Profils des influenceurs
+    \item \texttt{entreprises} : Profils des entreprises
+    \item \texttt{campagnes} : Campagnes publicitaires
+    \item \texttt{candidatures} : Candidatures des influenceurs
+    \item \texttt{domaines\_expertise} : Domaines d'expertise
+    \item \texttt{plateformes\_sociales} : Plateformes sociales
+    \item \texttt{influenceur\_plateformes} : Lien influenceurs/plateformes
+    \item \texttt{influenceur\_tarifs} : Tarifs des influenceurs
+    \item \texttt{notifications} : Notifications utilisateurs
+\end{itemize}
+
+\subsection{Relations}
+
+\begin{itemize}
+    \item User $\leftrightarrow$ Influenceur (OneToOne)
+    \item User $\leftrightarrow$ Entreprise (OneToOne)
+    \item Entreprise $\rightarrow$ Campagne (OneToMany)
+    \item Influenceur $\leftrightarrow$ Candidature (OneToMany)
+    \item Campagne $\leftrightarrow$ Candidature (OneToMany)
+    \item Influenceur $\leftrightarrow$ DomaineExpertise (ManyToMany)
+\end{itemize}
+
+\newpage
+
+\section{Configuration et Déploiement}
+
+\subsection{Configuration Backend}
+
+\begin{lstlisting}[caption=Settings Django - backend/settings.py]
+DATABASES = {
+    'default': {
+        'ENGINE': 'mysql.connector.django',
+        'NAME': 'InfluMatch',
+        'USER': 'root',
+        'PASSWORD': 'CHiheb2004',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    }
+}
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
+CORS_ALLOW_CREDENTIALS = True
+\end{lstlisting}
+
+\subsection{Configuration Frontend}
+
+\begin{lstlisting}[style=javascript, caption=Vite Config - frontend/vite.config.ts]
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react-swc'
+
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    port: 5173,
+    proxy: {
+      '/api': {
+        target: 'http://127.0.0.1:8000',
+        changeOrigin: true,
+      },
+    },
+  },
+})
+\end{lstlisting}
+
+\subsection{Installation}
+
+\begin{lstlisting}[caption=Commandes d'installation]
+# Backend
+source venv/bin/activate
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py runserver
+
+# Frontend
+cd frontend
+npm install
+npm run dev
+\end{lstlisting}
+
+\newpage
+
+\section{Conclusion}
+
+\subsection{Résumé des Fonctionnalités}
+
+Le projet InfluMatch implémente avec succès une plateforme complète de mise en relation entre influenceurs et entreprises. Les fonctionnalités principales incluent :
+
+\begin{itemize}
+    \item Système d'authentification sécurisé avec JWT
+    \item Gestion complète des profils utilisateurs
+    \item Marketplace pour les campagnes publicitaires
+    \item Système de candidatures
+    \item Dashboard analytique
+    \item Interface d'administration Django
+    \item Notifications en temps réel
+\end{itemize}
+
+\subsection{Points Forts}
+
+\begin{itemize}
+    \item Architecture MVC bien structurée
+    \item Séparation claire entre backend et frontend
+    \item Authentification sécurisée avec JWT
+    \item Interface utilisateur moderne avec React et TypeScript
+    \item Base de données relationnelle bien conçue
+    \item Code modulaire et maintenable
+\end{itemize}
+
+\subsection{Améliorations Futures}
+
+\begin{itemize}
+    \item Ajout de fonctionnalités de messagerie
+    \item Système de paiement intégré
+    \item Analytics avancés pour les entreprises
+    \item Application mobile
+    \item Système de recommandations basé sur l'IA
+    \item Intégration avec les APIs des réseaux sociaux
+\end{itemize}
+
+\vspace{2cm}
+
+\begin{center}
+\textit{Fin du rapport}
+\end{center}
+
+\end{document}
+
