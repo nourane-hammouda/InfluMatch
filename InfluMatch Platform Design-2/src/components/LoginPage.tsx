@@ -1,4 +1,4 @@
-import React , { useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Target, AlertCircle } from 'lucide-react';
 
@@ -15,7 +15,7 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
   const [attempts, setAttempts] = useState(0);
   const [blocked, setBlocked] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
@@ -24,38 +24,30 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
       return;
     }
 
-    try {
-      const { authAPI } = await import('../services/api');
-      await authAPI.login(email, password);
+    if (email === 'demo@influmatch.com' && password === 'demo1234') {
       onLogin();
-      
-      // Rediriger vers le tableau de bord après connexion
       navigate('/dashboard');
-    } catch (error: any) {
+    } else {
       const newAttempts = attempts + 1;
       setAttempts(newAttempts);
       
       if (newAttempts >= 5) {
         setBlocked(true);
         setError('Trop de tentatives échouées. Compte bloqué pour 15 minutes.');
-        setTimeout(() => {
-          setBlocked(false);
-          setAttempts(0);
-        }, 15 * 60 * 1000);
       } else {
-        setError(error.message || 'Email ou mot de passe incorrect');
+        setError('Email ou mot de passe incorrect');
       }
     }
   };
 
   return (
-    <div className="min-vh-100 d-flex flex-column" style={{ background: 'linear-gradient(180deg, #f8f9ff 0%, #ffffff 100%)' }}>
+    <div className="min-vh-100 bg-light d-flex flex-column">
       {/* Header */}
       <nav className="navbar navbar-light bg-white border-bottom">
         <div className="container">
           <Link className="navbar-brand d-flex align-items-center" to="/">
-            <Target className="me-2" size={32} style={{ color: '#6366f1' }} />
-            <span className="fw-bold fs-4" style={{ color: '#6366f1' }}>InfluMatch</span>
+            <Target className="me-2" size={32} color="#0d6efd" />
+            <span className="fw-bold text-primary fs-4">InfluMatch</span>
           </Link>
         </div>
       </nav>
@@ -65,16 +57,17 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-md-6 col-lg-5">
-              <div className="card shadow-lg border-0">
+              <div className="card shadow-sm border-0">
                 <div className="card-body p-5">
-                  <div className="text-center mb-4">
-                    <div className="icon-container primary mx-auto mb-3" style={{ width: '64px', height: '64px' }}>
-                      <Target size={32} />
-                    </div>
-                    <h1 className="mb-2 fw-bold">Bon retour !</h1>
-                    <p className="text-muted mb-0">Connectez-vous à votre compte InfluMatch</p>
-                  </div>
+                  <h1 className="text-center mb-2">Connexion</h1>
+                  <p className="text-center text-muted mb-4">Accédez à votre compte InfluMatch</p>
 
+                  {/* Demo credentials hint */}
+                  <div className="alert alert-info mb-4">
+                    <small>
+                      <strong>Démo:</strong> demo@influmatch.com / demo1234
+                    </small>
+                  </div>
 
                   <form onSubmit={handleSubmit}>
                     {/* Email */}
@@ -134,18 +127,18 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
                       </label>
                     </div>
 
-                    <button type="submit" className="btn btn-gradient-primary w-100 py-3" disabled={blocked}>
+                    <button type="submit" className="btn btn-primary w-100 py-2" disabled={blocked}>
                       {blocked ? 'Compte bloqué' : 'Se connecter'}
                     </button>
                   </form>
 
                   <div className="text-center mt-4">
-                    <a href="#" className="d-block text-decoration-none small mb-2" style={{ color: '#6366f1' }}>
+                    <a href="#" className="d-block text-decoration-none small mb-2">
                       Mot de passe oublié ?
                     </a>
                     <p className="text-muted mb-0">
                       Pas encore de compte ?{' '}
-                      <Link to="/inscription" className="text-decoration-none fw-semibold" style={{ color: '#6366f1' }}>
+                      <Link to="/inscription" className="text-decoration-none">
                         S'inscrire
                       </Link>
                     </p>

@@ -56,7 +56,14 @@ export default function ProfileCompletionPage({ onComplete }: ProfileCompletionP
             setSelectedDomains(profile.domains);
           }
           if (profile.platforms) {
-            setPlatforms(profile.platforms);
+            // Merge avec les plateformes par défaut pour s'assurer que toutes les plateformes existent
+            const mergedPlatforms = { ...platforms };
+            Object.keys(profile.platforms).forEach(key => {
+              if (PLATFORMS.includes(key)) {
+                mergedPlatforms[key] = profile.platforms[key];
+              }
+            });
+            setPlatforms(mergedPlatforms);
           }
           if (profile.rates) {
             setRates({
@@ -100,10 +107,30 @@ export default function ProfileCompletionPage({ onComplete }: ProfileCompletionP
     }
 
     if (activeTab === 1) {
-      if (selectedDomains.length === 0) {
+      // Filter out custom domain if it's empty
+      const validDomains = selectedDomains.filter(d => {
+        // Keep predefined domains
+        if (DOMAINS.includes(d)) return true;
+        // Keep custom domain only if it's not empty
+        return d && d.trim() !== '';
+      });
+      
+      console.log('🔍 Validation domaines:');
+      console.log('  - selectedDomains:', selectedDomains);
+      console.log('  - validDomains:', validDomains);
+      console.log('  - showOtherDomain:', showOtherDomain);
+      console.log('  - customDomain:', customDomain);
+      console.log('  - validDomains.length:', validDomains.length);
+      
+      if (validDomains.length === 0) {
+        console.log('  ✗ Aucun domaine valide - Erreur ajoutée');
         newErrors.push('Sélectionnez au moins un domaine d\'expertise');
+      } else {
+        console.log('  ✓ Au moins un domaine valide sélectionné');
       }
-      if (showOtherDomain && !customDomain.trim()) {
+      // Only require custom domain if "Autre" is selected but no other domains are selected
+      if (showOtherDomain && !customDomain.trim() && validDomains.length === 0) {
+        console.log('  ✗ Domaine personnalisé requis mais vide - Erreur ajoutée');
         newErrors.push('Veuillez préciser votre domaine personnalisé');
       }
     }
@@ -115,15 +142,30 @@ export default function ProfileCompletionPage({ onComplete }: ProfileCompletionP
       }
     }
 
+    console.log('Validation - activeTab:', activeTab, 'errors:', newErrors);
+
     setErrors(newErrors);
 
     if (newErrors.length === 0) {
       if (activeTab < 3) {
-        setActiveTab(activeTab + 1);
+        // Clear errors before navigating
+        setErrors([]);
+        // Update completion before changing tab
+        const newCompletion = calculateCompletion();
+        setCompletion(newCompletion);
+        // Navigate to next tab
+        const nextTab = activeTab + 1;
+        console.log('✓ Validation réussie - Navigation de l\'onglet', activeTab, 'vers l\'onglet', nextTab);
+        console.log('Onglets: 0=Infos, 1=Domaines, 2=Plateformes, 3=Tarifs');
+        setActiveTab(nextTab);
+        console.log('activeTab mis à jour vers:', nextTab);
       } else {
+        console.log('Dernière étape - Appel de handleComplete()');
         handleComplete();
       }
-      setCompletion(calculateCompletion());
+    } else {
+      console.log('✗ Validation échouée - Erreurs:', newErrors);
+      console.log('État actuel - activeTab:', activeTab, 'selectedDomains:', selectedDomains);
     }
   };
 
@@ -195,7 +237,13 @@ export default function ProfileCompletionPage({ onComplete }: ProfileCompletionP
     }
     // Add new custom domain if not empty
     if (value.trim()) {
-      setSelectedDomains([...selectedDomains.filter(d => DOMAINS.includes(d)), value.trim()]);
+      const predefinedDomains = selectedDomains.filter(d => DOMAINS.includes(d));
+      if (!predefinedDomains.includes(value.trim())) {
+        setSelectedDomains([...predefinedDomains, value.trim()]);
+      }
+    } else {
+      // If empty, just keep predefined domains
+      setSelectedDomains(selectedDomains.filter(d => DOMAINS.includes(d)));
     }
   };
 
@@ -418,54 +466,57 @@ export default function ProfileCompletionPage({ onComplete }: ProfileCompletionP
                   <p className="text-muted mb-4">Ajoutez au moins une plateforme</p>
                   
                   <div className="row g-3">
-                    {PLATFORMS.map((platform) => (
-                      <div className="col-12" key={platform}>
-                        <div className={`p-3 border rounded ${
-                          platforms[platform].active ? 'border-primary border-2 bg-light' : ''
-                        }`}>
-                          <div className="form-check mb-3">
-                            <input
-                              className="form-check-input"
-                              type="checkbox"
-                              id={platform}
-                              checked={platforms[platform].active}
-                              onChange={() =>
-                                setPlatforms({
-                                  ...platforms,
-                                  [platform]: {
-                                    ...platforms[platform],
-                                    active: !platforms[platform].active
-                                  }
-                                })
-                              }
-                            />
-                            <label className="form-check-label fw-semibold" htmlFor={platform}>
-                              {platform}
-                            </label>
-                          </div>
-                          {platforms[platform].active && (
-                            <div className="ms-4">
-                              <label className="form-label small">Nombre d'abonnés</label>
+                    {PLATFORMS.map((platform) => {
+                      const platformData = platforms[platform] || { active: false, followers: '' };
+                      return (
+                        <div className="col-12" key={platform}>
+                          <div className={`p-3 border rounded ${
+                            platformData.active ? 'border-primary border-2 bg-light' : ''
+                          }`}>
+                            <div className="form-check mb-3">
                               <input
-                                type="number"
-                                className="form-control"
-                                value={platforms[platform].followers}
-                                onChange={(e) =>
+                                className="form-check-input"
+                                type="checkbox"
+                                id={platform}
+                                checked={platformData.active}
+                                onChange={() =>
                                   setPlatforms({
                                     ...platforms,
                                     [platform]: {
-                                      ...platforms[platform],
-                                      followers: e.target.value
+                                      ...platformData,
+                                      active: !platformData.active
                                     }
                                   })
                                 }
-                                placeholder="10000"
                               />
+                              <label className="form-check-label fw-semibold" htmlFor={platform}>
+                                {platform}
+                              </label>
                             </div>
-                          )}
+                            {platformData.active && (
+                              <div className="ms-4">
+                                <label className="form-label small">Nombre d'abonnés</label>
+                                <input
+                                  type="number"
+                                  className="form-control"
+                                  value={platformData.followers}
+                                  onChange={(e) =>
+                                    setPlatforms({
+                                      ...platforms,
+                                      [platform]: {
+                                        ...platformData,
+                                        followers: e.target.value
+                                      }
+                                    })
+                                  }
+                                  placeholder="10000"
+                                />
+                              </div>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
               )}
@@ -531,12 +582,22 @@ export default function ProfileCompletionPage({ onComplete }: ProfileCompletionP
               <div className="d-flex justify-content-between mt-5 pt-4 border-top">
                 <button
                   className="btn btn-outline-secondary"
-                  onClick={() => setActiveTab(Math.max(0, activeTab - 1))}
+                  onClick={() => {
+                    setActiveTab(Math.max(0, activeTab - 1));
+                    setErrors([]);
+                  }}
                   disabled={activeTab === 0}
                 >
                   Précédent
                 </button>
-                <button className="btn btn-primary" onClick={validateAndNext}>
+                <button 
+                  className="btn btn-primary" 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    console.log('Bouton Suivant cliqué, activeTab:', activeTab);
+                    validateAndNext();
+                  }}
+                >
                   {activeTab === 3 ? 'Terminer' : 'Suivant'}
                 </button>
               </div>

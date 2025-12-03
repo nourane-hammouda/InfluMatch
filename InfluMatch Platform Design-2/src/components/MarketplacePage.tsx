@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Sidebar from '../components/layout/Sidebar';
-import TopBar from '../components/layout/TopBar';
+import Sidebar from './Sidebar';
+import TopBar from './TopBar';
 import { Filter, Calendar, TrendingUp, Users } from 'lucide-react';
-import { mockOffers, mockApplications } from '../services/mockData';
+import { mockOffers, mockApplications } from '../lib/mockData';
 
 interface MarketplacePageProps {
   onLogout: () => void;
@@ -101,7 +101,7 @@ export default function MarketplacePage({ onLogout }: MarketplacePageProps) {
             <div className="row g-4">
               {/* Filters Sidebar */}
               <div className="col-lg-3">
-                <div className="card border-0 shadow-lg filter-sidebar">
+                <div className="card border-0 shadow-sm filter-sidebar">
                   <div className="card-body">
                     <div className="d-flex justify-content-between align-items-center mb-4">
                       <div className="d-flex align-items-center gap-2">
@@ -221,65 +221,45 @@ export default function MarketplacePage({ onLogout }: MarketplacePageProps) {
                         <div className="col-md-6" key={offer.id}>
                           <Link
                             to={`/offre/${offer.id}`}
-                            className={`card card-hover h-100 border-0 shadow-lg text-decoration-none ${
+                            className={`card card-hover h-100 border-0 shadow-sm text-decoration-none ${
                               isExpired ? 'opacity-50' : ''
                             }`}
                           >
                             <div className="card-body p-4">
                               <div className="d-flex gap-3 mb-3">
-                                <div 
-                                  style={{ 
-                                    fontSize: '3rem', 
-                                    width: '64px', 
-                                    height: '64px',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                                    borderRadius: '12px',
-                                    boxShadow: '0 4px 10px rgba(102, 126, 234, 0.3)'
-                                  }}
-                                >
-                                  {offer.logo}
-                                </div>
+                                <div style={{ fontSize: '2rem' }}>{offer.logo}</div>
                                 <div className="flex-grow-1">
-                                  <h5 className="mb-1 fw-bold">{offer.title}</h5>
-                                  <p className="small text-muted mb-0">{offer.company}</p>
+                                  <h5 className="mb-1">{offer.title}</h5>
+                                  <p className="small text-muted">{offer.company}</p>
                                 </div>
                                 {hasApplied && (
-                                  <span className="badge badge-accepted align-self-start">
-                                    ✓ Candidature envoyée
-                                  </span>
+                                  <span className="badge badge-pending align-self-start">Candidature envoyée</span>
                                 )}
                               </div>
 
-                              <p className="small text-muted mb-3 line-clamp-2" style={{ minHeight: '40px' }}>
-                                {offer.description || 'Description de l\'offre...'}
+                              <p className="small text-muted mb-3 line-clamp-2">
+                                {offer.description}
                               </p>
 
                               <div className="d-flex flex-wrap gap-2 mb-3">
-                                <span className="badge badge-purple">
-                                  {offer.domain}
-                                </span>
-                                {offer.platforms && offer.platforms.map(platform => (
-                                  <span key={platform} className="badge bg-light text-dark">
-                                    {platform}
-                                  </span>
+                                <span className="badge bg-light text-dark">{offer.domain}</span>
+                                {offer.platforms.map(platform => (
+                                  <span key={platform} className="badge bg-light text-dark">{platform}</span>
                                 ))}
                               </div>
 
-                              <div className="d-flex justify-content-between align-items-center pt-3 border-top">
+                              <div className="d-flex justify-content-between align-items-center text-muted small">
                                 <div className="d-flex gap-3">
-                                  <span className="d-flex align-items-center gap-1 text-primary fw-bold">
-                                    <TrendingUp size={16} />
+                                  <span className="d-flex align-items-center gap-1">
+                                    <TrendingUp size={14} />
                                     {offer.budget}€
                                   </span>
-                                  <span className="d-flex align-items-center gap-1 text-muted">
-                                    <Users size={16} />
-                                    {offer.applicationsCount || 0}
+                                  <span className="d-flex align-items-center gap-1">
+                                    <Users size={14} />
+                                    {offer.applicationsCount}
                                   </span>
-                                  <span className="d-flex align-items-center gap-1 text-muted">
-                                    <Calendar size={16} />
+                                  <span className="d-flex align-items-center gap-1">
+                                    <Calendar size={14} />
                                     {new Date(offer.deadline).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' })}
                                   </span>
                                 </div>

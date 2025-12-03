@@ -89,52 +89,60 @@ export default function DashboardPage({ onLogout }: DashboardPageProps) {
             {/* Stats Cards */}
             <div className="row g-4 mb-4">
               <div className="col-md-6 col-lg-3">
-                <div className="card stats-card primary h-100 border-0 shadow-sm">
+                <div className="card stats-card primary h-100 border-0 shadow-lg">
                   <div className="card-body">
                     <div className="d-flex justify-content-between align-items-center mb-2">
-                      <span className="text-muted">Candidatures</span>
-                      <FileText size={20} className="text-primary" />
+                      <span className="text-muted small fw-semibold">Candidatures</span>
+                      <div className="icon-container primary">
+                        <FileText size={20} />
+                      </div>
                     </div>
-                    <div className="display-6 mb-1">{mockStats.totalApplications}</div>
+                    <div className="display-5 mb-1 fw-bold text-primary">{mockStats.totalApplications}</div>
                     <small className="text-muted">{mockStats.pending} en attente</small>
                   </div>
                 </div>
               </div>
 
               <div className="col-md-6 col-lg-3">
-                <div className="card stats-card success h-100 border-0 shadow-sm">
+                <div className="card stats-card success h-100 border-0 shadow-lg">
                   <div className="card-body">
                     <div className="d-flex justify-content-between align-items-center mb-2">
-                      <span className="text-muted">Collaborations</span>
-                      <Briefcase size={20} className="text-success" />
+                      <span className="text-muted small fw-semibold">Collaborations</span>
+                      <div className="icon-container success">
+                        <Briefcase size={20} />
+                      </div>
                     </div>
-                    <div className="display-6 mb-1">{mockStats.activeCollaborations}</div>
+                    <div className="display-5 mb-1 fw-bold text-success">{mockStats.activeCollaborations}</div>
                     <small className="text-muted">En cours</small>
                   </div>
                 </div>
               </div>
 
               <div className="col-md-6 col-lg-3">
-                <div className="card stats-card warning h-100 border-0 shadow-sm">
+                <div className="card stats-card warning h-100 border-0 shadow-lg">
                   <div className="card-body">
                     <div className="d-flex justify-content-between align-items-center mb-2">
-                      <span className="text-muted">Vues du profil</span>
-                      <Eye size={20} className="text-warning" />
+                      <span className="text-muted small fw-semibold">Vues du profil</span>
+                      <div className="icon-container warning">
+                        <Eye size={20} />
+                      </div>
                     </div>
-                    <div className="display-6 mb-1">{mockStats.profileViews}</div>
+                    <div className="display-5 mb-1 fw-bold text-warning">{mockStats.profileViews}</div>
                     <small className="text-muted">Ce mois-ci</small>
                   </div>
                 </div>
               </div>
 
               <div className="col-md-6 col-lg-3">
-                <div className="card stats-card info h-100 border-0 shadow-sm">
+                <div className="card stats-card info h-100 border-0 shadow-lg">
                   <div className="card-body">
                     <div className="d-flex justify-content-between align-items-center mb-2">
-                      <span className="text-muted">Offres compatibles</span>
-                      <Star size={20} className="text-info" />
+                      <span className="text-muted small fw-semibold">Offres compatibles</span>
+                      <div className="icon-container info">
+                        <Star size={20} />
+                      </div>
                     </div>
-                    <div className="display-6 mb-1">{mockStats.matchingOffers}</div>
+                    <div className="display-5 mb-1 fw-bold text-info">{mockStats.matchingOffers}</div>
                     <small className="text-muted">Nouvelles</small>
                   </div>
                 </div>
@@ -235,12 +243,12 @@ export default function DashboardPage({ onLogout }: DashboardPageProps) {
             </div>
 
             {/* Quick Stats */}
-            <div className="card bg-primary text-white border-0 shadow-sm">
+            <div className="card border-0 shadow-lg text-white bg-gradient-purple">
               <div className="card-body p-4">
                 <div className="row g-4 text-center">
                   <div className="col-md-4">
-                    <div className="small opacity-75 mb-1">Taux d'engagement moyen</div>
-                    <div className="h2 mb-0">
+                    <div className="small opacity-90 mb-2 fw-semibold">Taux d'engagement moyen</div>
+                    <div className="h1 mb-0 fw-bold">
                       {mockUserProfile.platforms && mockUserProfile.platforms.length > 0
                         ? Math.round(
                             mockUserProfile.platforms.reduce((acc, p) => acc + (p.engagementRate || 0), 0) /
@@ -250,8 +258,8 @@ export default function DashboardPage({ onLogout }: DashboardPageProps) {
                     </div>
                   </div>
                   <div className="col-md-4">
-                    <div className="small opacity-75 mb-1">Audience totale</div>
-                    <div className="h2 mb-0">
+                    <div className="small opacity-90 mb-2 fw-semibold">Audience totale</div>
+                    <div className="h1 mb-0 fw-bold">
                       {mockUserProfile.platforms && mockUserProfile.platforms.length > 0
                         ? mockUserProfile.platforms
                             .reduce((acc, p) => acc + (p.followers || 0), 0)
@@ -260,8 +268,8 @@ export default function DashboardPage({ onLogout }: DashboardPageProps) {
                     </div>
                   </div>
                   <div className="col-md-4">
-                    <div className="small opacity-75 mb-1">Taux d'acceptation</div>
-                    <div className="h2 mb-0">
+                    <div className="small opacity-90 mb-2 fw-semibold">Taux d'acceptation</div>
+                    <div className="h1 mb-0 fw-bold">
                       {mockStats.totalApplications > 0 && mockStats.acceptedApplications !== undefined
                         ? Math.round((mockStats.acceptedApplications / mockStats.totalApplications) * 100)
                         : 0}%

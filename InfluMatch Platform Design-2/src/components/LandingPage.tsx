@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
-import React from 'react';
-import { Search, Target, Zap, TrendingUp, Shield, Clock, Sparkles, Award, Users, Heart, Star, Rocket, Globe, Gift, LogIn } from 'lucide-react';
+import { Search, Target, Zap, TrendingUp, Shield, Clock, Sparkles, Award, Users, Heart, Star, Rocket, Globe, Gift } from 'lucide-react';
 
 export default function LandingPage() {
   return (
@@ -60,11 +59,7 @@ export default function LandingPage() {
                   <Rocket size={20} className="me-2" />
                   Créer un compte gratuit
                 </Link>
-                <Link to="/connexion" className="btn btn-gradient-primary btn-lg px-4">
-                  <LogIn size={20} className="me-2" />
-                  Se connecter
-                </Link>
-                <a href="#fonctionnalites" className="btn btn-gradient-primary btn-lg px-4">
+                <a href="#fonctionnalites" className="btn btn-outline-primary btn-lg px-4">
                   <Globe size={20} className="me-2" />
                   Découvrir
                 </a>
@@ -277,16 +272,10 @@ export default function LandingPage() {
               <p className="lead text-muted mb-4">
                 Rejoignez InfluMatch et développez votre activité dès aujourd'hui
               </p>
-              <div className="d-flex gap-3 justify-content-center flex-wrap">
-                <Link to="/inscription" className="btn btn-gradient-pink btn-lg px-5 py-3">
-                  <Rocket size={24} className="me-2" />
-                  Créer un compte gratuit
-                </Link>
-                <Link to="/connexion" className="btn btn-gradient-pink btn-lg px-5 py-3">
-                  <LogIn size={24} className="me-2" />
-                  Se connecter
-                </Link>
-              </div>
+              <Link to="/inscription" className="btn btn-gradient-pink btn-lg px-5 py-3">
+                <Rocket size={24} className="me-2" />
+                Créer un compte gratuit
+              </Link>
             </div>
           </div>
         </div>

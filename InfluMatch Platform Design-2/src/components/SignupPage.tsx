@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Target, AlertCircle, Check } from 'lucide-react';
 
@@ -23,7 +23,7 @@ export default function SignupPage({ onSignup }: SignupPageProps) {
     return password.length >= 8;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const newErrors: Record<string, string> = {};
 
@@ -39,36 +39,27 @@ export default function SignupPage({ onSignup }: SignupPageProps) {
       newErrors.confirmPassword = 'Les mots de passe ne correspondent pas';
     }
 
+    if (email === 'test@example.com') {
+      newErrors.email = 'Email déjà utilisé';
+    }
+
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
 
-    try {
-      // Use API to signup and store token
-      const { authAPI } = await import('../services/api');
-      await authAPI.signup(email, password, accountType);
-      
-      // Call onSignup to update App state
-      onSignup();
-      navigate('/profil/completion');
-    } catch (error: any) {
-      if (error.message.includes('déjà utilisé') || error.message.includes('already exists')) {
-        setErrors({ email: 'Cet email est déjà utilisé' });
-      } else {
-        setErrors({ email: error.message || 'Erreur lors de l\'inscription' });
-      }
-    }
+    onSignup();
+    navigate('/profil/completion');
   };
 
   return (
-    <div className="min-vh-100 d-flex flex-column" style={{ background: 'linear-gradient(180deg, #f8f9ff 0%, #ffffff 100%)' }}>
+    <div className="min-vh-100 bg-light d-flex flex-column">
       {/* Header */}
       <nav className="navbar navbar-light bg-white border-bottom">
         <div className="container">
           <Link className="navbar-brand d-flex align-items-center" to="/">
-            <Target className="me-2" size={32} style={{ color: '#6366f1' }} />
-            <span className="fw-bold fs-4" style={{ color: '#6366f1' }}>InfluMatch</span>
+            <Target className="me-2" size={32} color="#0d6efd" />
+            <span className="fw-bold text-primary fs-4">InfluMatch</span>
           </Link>
         </div>
       </nav>
@@ -78,15 +69,10 @@ export default function SignupPage({ onSignup }: SignupPageProps) {
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-md-6 col-lg-5">
-              <div className="card shadow-lg border-0">
+              <div className="card shadow-sm border-0">
                 <div className="card-body p-5">
-                  <div className="text-center mb-4">
-                    <div className="icon-container primary mx-auto mb-3" style={{ width: '64px', height: '64px' }}>
-                      <Target size={32} />
-                    </div>
-                    <h1 className="mb-2 fw-bold">Créer un compte</h1>
-                    <p className="text-muted mb-0">Rejoignez InfluMatch en quelques secondes</p>
-                  </div>
+                  <h1 className="text-center mb-2">Créer un compte</h1>
+                  <p className="text-center text-muted mb-4">Rejoignez InfluMatch aujourd'hui</p>
 
                   {/* Account Type Selector */}
                   <div className="mb-4">
@@ -96,19 +82,15 @@ export default function SignupPage({ onSignup }: SignupPageProps) {
                         <button
                           type="button"
                           onClick={() => setAccountType('influencer')}
-                          className={`w-100 p-3 border rounded transition-all ${
+                          className={`w-100 p-3 border rounded ${
                             accountType === 'influencer'
-                              ? 'border-primary border-2' 
+                              ? 'border-primary border-2 bg-light'
                               : 'border-secondary'
                           }`}
-                          style={accountType === 'influencer' ? { 
-                            background: 'linear-gradient(135deg, #ddd6fe 0%, #e0e7ff 100%)',
-                            borderColor: '#6366f1'
-                          } : {}}
                         >
                           <div className="d-flex justify-content-between align-items-start mb-2">
-                            <span className="fw-semibold" style={{ color: accountType === 'influencer' ? '#6366f1' : '#6c757d' }}>Influenceur</span>
-                            {accountType === 'influencer' && <Check size={20} style={{ color: '#6366f1' }} />}
+                            <span className="fw-semibold">Influenceur</span>
+                            {accountType === 'influencer' && <Check size={20} className="text-primary" />}
                           </div>
                           <small className="text-muted">Trouvez des opportunités</small>
                         </button>
@@ -200,7 +182,7 @@ export default function SignupPage({ onSignup }: SignupPageProps) {
                       )}
                     </div>
 
-                    <button type="submit" className="btn btn-gradient-primary w-100 py-3">
+                    <button type="submit" className="btn btn-primary w-100 py-2">
                       Créer mon compte
                     </button>
                   </form>
@@ -208,7 +190,7 @@ export default function SignupPage({ onSignup }: SignupPageProps) {
                   <div className="text-center mt-4">
                     <p className="text-muted mb-0">
                       Vous avez déjà un compte ?{' '}
-                      <Link to="/connexion" className="text-decoration-none fw-semibold" style={{ color: '#6366f1' }}>
+                      <Link to="/connexion" className="text-decoration-none">
                         Se connecter
                       </Link>
                     </p>
