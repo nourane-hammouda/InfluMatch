@@ -4,6 +4,11 @@
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/api';
 
+// Debug: log API URL in development
+if (import.meta.env.DEV) {
+  console.log('API Base URL:', API_BASE_URL);
+}
+
 // Token storage
 const getToken = (): string | null => {
   return localStorage.getItem('access_token');
@@ -101,42 +106,58 @@ async function refreshAccessToken(): Promise<string | null> {
 // Auth API
 export const authAPI = {
   login: async (email: string, password: string) => {
-    const response = await fetch(`${API_BASE_URL}/auth/token/`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    });
+    try {
+      const response = await fetch(`${API_BASE_URL}/auth/token/`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
 
-    if (!response.ok) {
-      const error = await response.json().catch(() => ({ detail: response.statusText }));
-      throw new Error(error.detail || error.message || 'Login failed');
+      if (!response.ok) {
+        const error = await response.json().catch(() => ({ detail: response.statusText }));
+        const errorMessage = error.detail || error.message || error.non_field_errors?.[0] || 'Login failed';
+        throw new Error(errorMessage);
+      }
+
+      const data = await response.json();
+      setTokens(data.access, data.refresh);
+      return data;
+    } catch (error: any) {
+      if (error.message) {
+        throw error;
+      }
+      throw new Error('Erreur de connexion au serveur. Vérifiez que le backend est lancé.');
     }
-
-    const data = await response.json();
-    setTokens(data.access, data.refresh);
-    return data;
   },
 
   signup: async (email: string, password: string, type: 'influencer' | 'company') => {
-    // Map frontend type to Django type
-    const djangoType = type === 'influencer' ? 'influenceur' : 'entreprise';
-    const response = await fetch(`${API_BASE_URL}/auth/register/`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password, type_utilisateur: djangoType }),
-    });
+    try {
+      // Map frontend type to Django type
+      const djangoType = type === 'influencer' ? 'influenceur' : 'entreprise';
+      const response = await fetch(`${API_BASE_URL}/auth/register/`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password, type_utilisateur: djangoType }),
+      });
 
-    if (!response.ok) {
-      const error = await response.json().catch(() => ({ detail: response.statusText }));
-      throw new Error(error.error || error.detail || error.message || 'Signup failed');
-    }
+      if (!response.ok) {
+        const error = await response.json().catch(() => ({ detail: response.statusText }));
+        const errorMessage = error.error || error.detail || error.message || 'Signup failed';
+        throw new Error(errorMessage);
+      }
 
-    const data = await response.json();
-    // If registration returns tokens, store them
-    if (data.access && data.refresh) {
-      setTokens(data.access, data.refresh);
+      const data = await response.json();
+      // If registration returns tokens, store them
+      if (data.access && data.refresh) {
+        setTokens(data.access, data.refresh);
+      }
+      return data;
+    } catch (error: any) {
+      if (error.message) {
+        throw error;
+      }
+      throw new Error('Erreur de connexion au serveur. Vérifiez que le backend est lancé.');
     }
-    return data;
   },
 
   logout: () => {
