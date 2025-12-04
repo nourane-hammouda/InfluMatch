@@ -2,6 +2,119 @@
 
 Platforme de mise en relation entre influenceurs et entreprises.
 
+## 📁 Arborescence Complète du Projet
+
+```
+influmatch/
+├── 📄 manage.py                    # Script de gestion Django
+├── 📄 requirements.txt             # Dépendances Python
+├── 📄 .env                         # Variables d'environnement (à créer)
+├── 📄 .gitignore                   # Fichiers ignorés par Git
+│
+├── 📁 backend/                      # Configuration Django
+│   ├── __init__.py
+│   ├── settings.py                 # Configuration Django
+│   ├── urls.py                     # URLs principales
+│   ├── wsgi.py                     # WSGI config
+│   └── asgi.py                     # ASGI config
+│
+├── 📁 api/                         # Application Django principale
+│   ├── __init__.py
+│   ├── admin.py                    # Configuration admin Django
+│   ├── apps.py                     # Configuration de l'app
+│   ├── urls.py                     # Routes API
+│   ├── signals.py                  # Signaux Django
+│   ├── tests.py                    # Tests unitaires
+│   │
+│   ├── 📁 models/                  # Modèles de données (MVC: Model)
+│   │   ├── __init__.py
+│   │   ├── user.py                 # Modèle User
+│   │   ├── influencer.py           # Modèle Influenceur
+│   │   ├── company.py              # Modèle Company
+│   │   └── application.py          # Modèle Application
+│   │
+│   ├── 📁 views/                   # Vues API (MVC: Controller)
+│   │   ├── __init__.py
+│   │   ├── auth_views.py           # Authentification (login, signup)
+│   │   ├── user_views.py           # Vues utilisateur
+│   │   └── profile_views.py        # Vues profil
+│   │
+│   ├── 📁 serializers/             # Sérialiseurs DRF
+│   │   └── __init__.py             # CustomTokenObtainPairSerializer
+│   │
+│   ├── 📁 migrations/              # Migrations Django
+│   │   ├── __init__.py
+│   │   ├── 0001_initial.py
+│   │   └── 0002_alter_user_options_alter_user_managers_and_more.py
+│   │
+│   └── 📁 management/              # Commandes de gestion
+│       └── commands/
+│           ├── __init__.py
+│           └── load_initial_data.py
+│
+├── 📁 frontend/                     # Application React
+│   ├── 📄 package.json             # Dépendances Node.js
+│   ├── 📄 vite.config.ts           # Configuration Vite
+│   ├── 📄 index.html               # Point d'entrée HTML
+│   │
+│   └── 📁 src/                     # Code source React
+│       ├── 📄 main.tsx             # Point d'entrée React
+│       ├── 📄 App.tsx              # Composant principal + Routing
+│       ├── 📄 index.css            # Styles globaux
+│       │
+│       ├── 📁 pages/               # Pages/Vues (MVC: View)
+│       │   ├── LandingPage.tsx     # Page d'accueil
+│       │   ├── LoginPage.tsx       # Page de connexion
+│       │   ├── SignupPage.tsx      # Page d'inscription
+│       │   ├── DashboardPage.tsx   # Tableau de bord
+│       │   ├── ProfilePage.tsx     # Page de profil
+│       │   ├── ProfileCompletionPage.tsx  # Complétion de profil
+│       │   ├── MarketplacePage.tsx # Marketplace (offres fictives)
+│       │   ├── OfferDetailPage.tsx  # Détails d'une offre
+│       │   ├── ApplicationsPage.tsx # Page des candidatures
+│       │   └── NotificationsPage.tsx # Page des notifications
+│       │
+│       ├── 📁 components/          # Composants réutilisables
+│       │   ├── 📁 layout/         # Composants de layout
+│       │   │   ├── Sidebar.tsx     # Barre latérale
+│       │   │   └── TopBar.tsx      # Barre supérieure
+│       │   ├── OfferCard.tsx       # Carte d'offre
+│       │   └── 📁 ui/             # Composants UI (shadcn/ui)
+│       │       ├── accordion.tsx
+│       │       ├── alert.tsx
+│       │       ├── avatar.tsx
+│       │       ├── badge.tsx
+│       │       ├── button.tsx
+│       │       ├── card.tsx
+│       │       ├── dialog.tsx
+│       │       ├── form.tsx
+│       │       ├── input.tsx
+│       │       ├── select.tsx
+│       │       ├── table.tsx
+│       │       ├── tabs.tsx
+│       │       └── ... (48 composants UI au total)
+│       │
+│       ├── 📁 services/            # Services API (MVC: Controller)
+│       │   ├── api.ts              # Service API principal
+│       │   └── mockData.ts         # Données fictives (offres, etc.)
+│       │
+│       ├── 📁 contexts/            # Contextes React
+│       │   └── AuthContext.tsx     # Contexte d'authentification
+│       │
+│       └── 📁 styles/              # Styles CSS
+│           ├── bootstrap-custom.css # Styles Bootstrap personnalisés
+│           └── globals.css         # Styles globaux
+│
+├── 📁 venv/                        # Environnement virtuel Python (ignoré par Git)
+│
+├── 📄 InfluMatch.sql               # Schéma SQL de la base de données
+├── 📄 README.md                    # Documentation principale
+├── 📄 INSTALLATION.md              # Guide d'installation détaillé
+├── 📄 REPARTITION_TACHES.md        # Répartition des tâches (4 personnes)
+├── 📄 DESCRIPTION_FICHIERS.md       # Description des fichiers
+└── 📄 rapport.tex                  # Rapport LaTeX du projet
+```
+
 ## Structure du Projet
 
 ### Backend (Django REST Framework)
@@ -16,7 +129,8 @@ api/                  # Application principale
   │   └── application.py
   ├── views/          # Vues API (MVC: Controller)
   │   ├── auth_views.py
-  │   └── user_views.py
+  │   ├── user_views.py
+  │   └── profile_views.py
   ├── serializers/    # Sérialiseurs DRF
   ├── urls.py         # Routes API
   └── signals.py      # Signaux Django
@@ -40,7 +154,8 @@ frontend/
   │   │   ├── ui/             # Composants UI (shadcn/ui)
   │   │   └── OfferCard.tsx
   │   ├── services/           # Services API (MVC: Controller)
-  │   │   └── api.ts
+  │   │   ├── api.ts
+  │   │   └── mockData.ts
   │   ├── contexts/           # Contextes React
   │   │   └── AuthContext.tsx
   │   └── styles/             # Styles CSS
@@ -60,7 +175,7 @@ frontend/
 - **Backend**: Django Views (`api/views/`) - Gestion des requêtes API
 - **Frontend**: Services (`frontend/src/services/`) - Communication avec l'API
 
-## 🚀 Installation Rapide
+## Installation Rapide
 
 Pour une installation complète sur un nouvel ordinateur, consultez le guide détaillé : **[INSTALLATION.md](INSTALLATION.md)**
 

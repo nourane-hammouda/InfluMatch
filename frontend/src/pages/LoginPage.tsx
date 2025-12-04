@@ -30,7 +30,7 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
       onLogin();
       
       // Rediriger vers le tableau de bord après connexion
-      navigate('/dashboard');
+        navigate('/dashboard');
     } catch (error: any) {
       const newAttempts = attempts + 1;
       setAttempts(newAttempts);

@@ -86,19 +86,17 @@ export default function App() {
             {/* Page profil - toujours accessible */}
             <Route path="/profil" element={<ProfilePage onLogout={handleLogout} />} />
             
-            {/* Pages accessibles après completion du profil */}
-            {profileCompleted && (
-              <>
-                <Route path="/dashboard" element={<DashboardPage onLogout={handleLogout} />} />
-                <Route path="/marketplace" element={<MarketplacePage onLogout={handleLogout} />} />
-                <Route path="/offre/:id" element={<OfferDetailPage onLogout={handleLogout} />} />
-                <Route path="/candidatures" element={<ApplicationsPage onLogout={handleLogout} />} />
-                <Route path="/notifications" element={<NotificationsPage onLogout={handleLogout} />} />
-              </>
-            )}
+            {/* Dashboard - toujours accessible après connexion */}
+            <Route path="/dashboard" element={<DashboardPage onLogout={handleLogout} />} />
             
-            {/* Redirection par défaut - vers dashboard si profil complété, sinon vers completion */}
-            <Route path="*" element={<Navigate to={profileCompleted ? "/dashboard" : "/profil/completion"} />} />
+            {/* Autres pages - accessibles même si profil non complété */}
+            <Route path="/marketplace" element={<MarketplacePage onLogout={handleLogout} />} />
+            <Route path="/offre/:id" element={<OfferDetailPage onLogout={handleLogout} />} />
+            <Route path="/candidatures" element={<ApplicationsPage onLogout={handleLogout} />} />
+            <Route path="/notifications" element={<NotificationsPage onLogout={handleLogout} />} />
+            
+            {/* Redirection par défaut - toujours vers dashboard */}
+            <Route path="*" element={<Navigate to="/dashboard" />} />
           </>
         ) : (
           <Route path="*" element={<Navigate to="/" />} />

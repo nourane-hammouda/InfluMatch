@@ -10,6 +10,7 @@
 \usepackage{float}
 \usepackage{titlesec}
 \usepackage{fancyhdr}
+\usepackage{enumitem}
 
 % Page setup
 \geometry{margin=2.5cm}
@@ -18,42 +19,6 @@
 \fancyhead[L]{InfluMatch - Rapport de Projet}
 \fancyhead[R]{\thepage}
 \fancyfoot[C]{}
-
-% Code listing style
-\lstset{
-    language=Python,
-    basicstyle=\ttfamily\small,
-    keywordstyle=\color{blue}\bfseries,
-    commentstyle=\color{green!60!black},
-    stringstyle=\color{red},
-    numbers=left,
-    numberstyle=\tiny\color{gray},
-    stepnumber=1,
-    numbersep=5pt,
-    backgroundcolor=\color{gray!10},
-    frame=single,
-    breaklines=true,
-    breakatwhitespace=true,
-    tabsize=4,
-    showstringspaces=false
-}
-
-\lstdefinestyle{javascript}{
-    language=JavaScript,
-    basicstyle=\ttfamily\small,
-    keywordstyle=\color{blue}\bfseries,
-    commentstyle=\color{green!60!black},
-    stringstyle=\color{red},
-    numbers=left,
-    numberstyle=\tiny\color{gray},
-    stepnumber=1,
-    numbersep=5pt,
-    backgroundcolor=\color{gray!10},
-    frame=single,
-    breaklines=true,
-    breakatwhitespace=true,
-    tabsize=2
-}
 
 % Title formatting
 \titleformat{\section}{\Large\bfseries}{\thesection}{1em}{}
@@ -64,22 +29,31 @@
 % Title page
 \begin{titlepage}
     \centering
-    \vspace*{2cm}
+    
+    % Logo de l'université
+    % Note: Ajustez le chemin du logo si nécessaire
+    \vspace*{1cm}
+    \includegraphics[width=0.4\textwidth]{/Users/nouranehammouda/Desktop/Logo\ Universit\'e\ Paris-Nanterre.svg}
+    \vspace{1.5cm}
+    
     {\Huge\bfseries InfluMatch\par}
-    \vspace{1cm}
+    \vspace{0.5cm}
     {\Large Plateforme de Mise en Relation\par}
     {\Large entre Influenceurs et Entreprises\par}
     \vspace{2cm}
     {\large Rapport de Projet\par}
-    \vspace{1cm}
+    \vspace{0.5cm}
     {\large Développement Web Full-Stack\par}
-    \vspace{1cm}
-    {\large HAMMOUDA Nourane \\ 
+    \vspace{1.5cm}
+    {\large 
+    HAMMOUDA Nourane \\ 
     BENMAHMOUD Zaineb \\
     MABROUKI Chaïma\\
     MOTHU Ornela
     \par}
-    \vspace{3cm}
+    \vspace{2cm}
+    {\large Université Paris-Nanterre\par}
+    \vspace{1cm}
     {\large \today\par}
     \vfill
 \end{titlepage}
@@ -93,925 +67,927 @@
 
 InfluMatch est une plateforme web complète permettant la mise en relation entre influenceurs et entreprises pour des collaborations publicitaires. Le projet a été développé en utilisant une architecture moderne full-stack avec Django REST Framework pour le backend et React avec TypeScript pour le frontend.
 
-\subsection{Objectifs}
+La plateforme offre un écosystème complet où les influenceurs peuvent créer et gérer leur profil professionnel, consulter des offres de campagnes publicitaires, et postuler aux opportunités qui correspondent à leur domaine d'expertise. Pour les entreprises, la plateforme permet de publier des campagnes et de découvrir des influenceurs adaptés à leurs besoins marketing.
+
+\subsection{Objectifs du Projet}
 
 Les objectifs principaux du projet sont :
-\begin{itemize}
-    \item Permettre aux influenceurs de créer et gérer leur profil professionnel
-    \item Permettre aux entreprises de publier des campagnes publicitaires
-    \item Faciliter la mise en relation et les candidatures
-    \item Fournir un système d'authentification sécurisé avec JWT
-    \item Offrir un tableau de bord analytique pour les utilisateurs
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Authentification sécurisée} : Mettre en place un système d'authentification robuste avec JWT permettant la gestion des sessions utilisateurs de manière sécurisée
+    \item \textbf{Gestion de profils} : Permettre aux influenceurs de créer et compléter leur profil professionnel avec toutes les informations nécessaires (domaines d'expertise, plateformes sociales, tarifs)
+    \item \textbf{Marketplace} : Offrir une interface de découverte des campagnes publicitaires avec des fonctionnalités de recherche et de filtrage
+    \item \textbf{Gestion des candidatures} : Faciliter le processus de candidature des influenceurs aux campagnes et le suivi de leurs applications
+    \item \textbf{Dashboard analytique} : Fournir un tableau de bord personnalisé avec des statistiques et indicateurs de performance
+    \item \textbf{Expérience utilisateur moderne} : Développer une interface utilisateur intuitive et responsive avec React et TypeScript
 \end{itemize}
 
 \subsection{Technologies Utilisées}
 
-\begin{itemize}
-    \item \textbf{Backend} : Django 5.2, Django REST Framework, MySQL
-    \item \textbf{Frontend} : React 18, TypeScript, Vite, Bootstrap 5
-    \item \textbf{Authentification} : JWT (JSON Web Tokens) via Simple JWT
-    \item \textbf{Base de données} : MySQL avec schéma personnalisé
-    \item \textbf{Outils} : Git, npm, pip
+\subsubsection{Backend}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Django 5.2} : Framework web Python pour le développement backend, offrant une architecture MVC robuste et une administration intégrée
+    \item \textbf{Django REST Framework} : Extension de Django spécialisée dans la création d'APIs REST, facilitant la sérialisation, la validation et la documentation des endpoints
+    \item \textbf{MySQL} : Base de données relationnelle pour le stockage persistant des données avec un schéma optimisé et des relations bien définies
+    \item \textbf{Simple JWT} : Bibliothèque pour l'implémentation de l'authentification par tokens JWT (JSON Web Tokens) avec support des tokens d'accès et de rafraîchissement
+\end{itemize}
+
+\subsubsection{Frontend}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{React 18} : Bibliothèque JavaScript moderne pour la construction d'interfaces utilisateur réactives et modulaires
+    \item \textbf{TypeScript} : Superset typé de JavaScript offrant une meilleure maintenabilité du code et une détection précoce des erreurs
+    \item \textbf{Vite} : Outil de build moderne et rapide pour le développement frontend, offrant un rechargement à chaud optimisé
+    \item \textbf{Bootstrap 5} : Framework CSS pour la création d'interfaces responsive avec des composants pré-construits et un système de grille flexible
+    \item \textbf{React Router DOM} : Bibliothèque de routage pour la navigation entre les différentes pages de l'application React
+    \item \textbf{Lucide React} : Bibliothèque d'icônes moderne et légère pour améliorer l'expérience visuelle
+\end{itemize}
+
+\subsubsection{Outils et Infrastructure}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Git} : Système de contrôle de version pour la gestion collaborative du code
+    \item \textbf{npm} : Gestionnaire de paquets pour les dépendances JavaScript/TypeScript
+    \item \textbf{pip} : Gestionnaire de paquets Python pour les dépendances backend
+    \item \textbf{MySQL Connector} : Driver Python pour la connexion à la base de données MySQL
 \end{itemize}
 
 \newpage
 
 \section{Architecture du Projet}
 
-\subsection{Architecture MVC}
+\subsection{Architecture Générale}
 
-Le projet suit une architecture MVC (Model-View-Controller) :
+Le projet suit une architecture full-stack moderne avec une séparation claire entre le backend et le frontend, communiquant via une API REST. Cette architecture permet une meilleure maintenabilité, une évolutivité accrue et une indépendance des deux parties du système.
 
-\begin{itemize}
-    \item \textbf{Model (Backend)} : Modèles Django dans \texttt{api/models/}
-    \item \textbf{View (Frontend)} : Pages React dans \texttt{frontend/src/pages/}
+\subsubsection{Architecture MVC Adaptée}
+
+Le projet implémente une architecture MVC (Model-View-Controller) adaptée au contexte full-stack :
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Model (Backend)} : Les modèles Django dans \texttt{api/models/} représentent la structure des données et la logique métier associée. Ils définissent les entités du système (User, Influenceur, Campagne, Candidature, etc.) et leurs relations.
+    
+    \item \textbf{View (Frontend)} : Les pages React dans \texttt{frontend/src/pages/} constituent la couche de présentation. Elles gèrent l'affichage des données et l'interaction utilisateur, consommant les données fournies par l'API backend.
+    
     \item \textbf{Controller} : 
     \begin{itemize}
-        \item Backend : Vues API dans \texttt{api/views/}
-        \item Frontend : Services dans \texttt{frontend/src/services/}
+        \item \textbf{Backend} : Les vues API dans \texttt{api/views/} agissent comme contrôleurs, gérant les requêtes HTTP, la validation des données, et la logique métier avant de retourner les réponses appropriées.
+        \item \textbf{Frontend} : Les services dans \texttt{frontend/src/services/} gèrent la communication avec l'API, la transformation des données, et la gestion des états d'authentification.
     \end{itemize}
 \end{itemize}
 
 \subsection{Structure des Répertoires}
 
-\begin{lstlisting}[style=javascript, caption=Structure du projet]
-influmatch/
-├── backend/          # Configuration Django
-│   ├── settings.py
-│   ├── urls.py
-│   └── wsgi.py
-├── api/              # Application principale
-│   ├── models/       # Modèles de données
-│   ├── views/        # Vues API
-│   ├── serializers/  # Sérialiseurs DRF
-│   └── urls.py       # Routes API
-└── frontend/         # Application React
-    └── src/
-        ├── pages/     # Pages principales
-        ├── components/ # Composants réutilisables
-        ├── services/  # Services API
-        └── contexts/  # Contextes React
-\end{lstlisting}
+La structure du projet est organisée de manière modulaire pour faciliter la maintenance et la collaboration :
+
+\subsubsection{Backend (Django)}
+
+\begin{itemize}[leftmargin=*]
+    \item \texttt{backend/} : Configuration principale Django
+    \begin{itemize}
+        \item \texttt{settings.py} : Configuration de l'application (base de données, middleware, CORS, JWT, etc.)
+        \item \texttt{urls.py} : Routes principales pointant vers l'API et l'administration
+        \item \texttt{wsgi.py} : Configuration WSGI pour le déploiement en production
+    \end{itemize}
+    
+    \item \texttt{api/} : Application Django principale
+    \begin{itemize}
+        \item \texttt{models/} : Définition des modèles de données (User, Influenceur, Campagne, etc.)
+        \item \texttt{views/} : Vues API gérant les endpoints REST
+        \item \texttt{serializers/} : Sérialiseurs DRF pour la transformation des données
+        \item \texttt{urls.py} : Routes API spécifiques
+        \item \texttt{signals.py} : Signaux Django pour les actions automatiques (création de profils)
+        \item \texttt{admin.py} : Configuration de l'interface d'administration Django
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Frontend (React)}
+
+\begin{itemize}[leftmargin=*]
+    \item \texttt{frontend/src/} : Code source React
+    \begin{itemize}
+        \item \texttt{pages/} : Pages principales de l'application (Landing, Login, Dashboard, Marketplace, etc.)
+        \item \texttt{components/} : Composants réutilisables (Sidebar, TopBar, formulaires, etc.)
+        \item \texttt{services/} : Services API et gestion de l'authentification
+        \item \texttt{contexts/} : Contextes React pour la gestion d'état global (AuthContext)
+        \item \texttt{styles/} : Fichiers CSS et styles personnalisés
+    \end{itemize}
+\end{itemize}
+
+\subsection{Communication Backend-Frontend}
+
+La communication entre le backend et le frontend s'effectue via une API REST utilisant le protocole HTTP/HTTPS. Les principales caractéristiques de cette communication sont :
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Format JSON} : Toutes les données sont échangées au format JSON, facilitant la manipulation côté frontend
+    \item \textbf{Authentification JWT} : Les requêtes authentifiées incluent un token JWT dans l'en-tête Authorization
+    \item \textbf{CORS} : Configuration Cross-Origin Resource Sharing pour autoriser les requêtes depuis le frontend
+    \item \textbf{Gestion d'erreurs} : Système unifié de gestion des erreurs avec codes HTTP appropriés et messages descriptifs
+\end{itemize}
 
 \newpage
 
 \section{Modèles de Données}
 
+\subsection{Architecture de la Base de Données}
+
+La base de données MySQL est conçue pour supporter efficacement les fonctionnalités de la plateforme. Le schéma est optimisé avec des index appropriés et des contraintes d'intégrité référentielle pour garantir la cohérence des données.
+
 \subsection{Modèle User}
 
-Le modèle User est le modèle central du système, héritant de \texttt{AbstractBaseUser} pour personnaliser l'authentification.
+Le modèle \texttt{User} est le modèle central du système d'authentification. Il hérite de \texttt{AbstractBaseUser} de Django, permettant une personnalisation complète du système d'authentification.
 
-\begin{lstlisting}[caption=Modèle User - api/models/user.py]
-from django.contrib.auth.models import AbstractBaseUser, 
-    BaseUserManager, PermissionsMixin
-from django.db import models
+\subsubsection{Caractéristiques Principales}
 
-class UserManager(BaseUserManager):
-    def create_user(self, email, password=None, 
-                    type_utilisateur='influenceur', **extra_fields):
-        if not email:
-            raise ValueError('L\'email est requis')
-        email = self.normalize_email(email)
-        user = self.model(email=email, 
-                         type_utilisateur=type_utilisateur, 
-                         **extra_fields)
-        if password:
-            user.set_password(password)
-        user.save(using=self._db)
-        return user
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Email comme identifiant unique} : L'email est utilisé comme identifiant principal au lieu du username traditionnel, offrant une meilleure expérience utilisateur
+    \item \textbf{Type d'utilisateur} : Le champ \texttt{type\_utilisateur} permet de distinguer les influenceurs des entreprises, chaque type ayant des fonctionnalités spécifiques
+    \item \textbf{Statut de vérification} : Le champ \texttt{est\_verifie} permet de gérer la vérification des comptes utilisateurs
+    \item \textbf{Statut actif} : Le champ \texttt{est\_actif} permet de désactiver des comptes sans les supprimer
+    \item \textbf{Timestamps} : Champs automatiques pour suivre la création, modification et dernière connexion
+\end{itemize}
 
-class User(AbstractBaseUser, PermissionsMixin):
-    TYPE_CHOICES = [
-        ('influenceur', 'Influenceur'),
-        ('entreprise', 'Entreprise'),
-    ]
-    
-    email = models.EmailField('email', unique=True, 
-                             db_column='email')
-    type_utilisateur = models.CharField(max_length=20, 
-                                       choices=TYPE_CHOICES, 
-                                       db_column='type_utilisateur')
-    est_actif = models.BooleanField(default=True, 
-                                   db_column='est_actif')
-    est_verifie = models.BooleanField(default=False, 
-                                     db_column='est_verifie')
-    password = models.CharField(max_length=128, 
-                              db_column='mot_de_passe_hash')
-    
-    objects = UserManager()
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['type_utilisateur']
-    
-    class Meta:
-        db_table = 'utilisateurs'
-        indexes = [
-            models.Index(fields=['email'], name='idx_email'),
-            models.Index(fields=['type_utilisateur'], 
-                        name='idx_type_utilisateur'),
-        ]
-\end{lstlisting}
+\subsubsection{Relations}
+
+Le modèle User entretient des relations OneToOne avec les modèles \texttt{Influenceur} et \texttt{Entreprise}, permettant à chaque utilisateur d'avoir un profil spécifique selon son type.
 
 \subsection{Modèle Influenceur}
 
-Le modèle Influenceur représente le profil d'un influenceur avec toutes ses informations.
+Le modèle \texttt{Influenceur} représente le profil professionnel complet d'un influenceur sur la plateforme.
 
-\begin{lstlisting}[caption=Modèle Influenceur - api/models/influencer.py]
-class Influenceur(models.Model):
-    utilisateur = models.OneToOneField(User, 
-                                      on_delete=models.CASCADE, 
-                                      related_name='influenceur')
-    pseudo = models.CharField(max_length=100)
-    photo_profil = models.CharField(max_length=500, 
-                                    null=True, blank=True)
-    biographie = models.TextField(max_length=500, 
-                                 null=True, blank=True)
-    localisation = models.CharField(max_length=255, 
-                                   null=True, blank=True)
-    pourcentage_completion_profil = models.IntegerField(default=0)
-    taux_acceptation = models.DecimalField(max_digits=5, 
-                                          decimal_places=2, 
-                                          default=0.00)
-    total_candidatures = models.IntegerField(default=0)
-    candidatures_acceptees = models.IntegerField(default=0)
-    
-    domaines = models.ManyToManyField(DomaineExpertise, 
-                                     through='InfluenceurExpertise', 
-                                     related_name='influenceurs')
-    
-    class Meta:
-        db_table = 'influenceurs'
-        indexes = [
-            models.Index(fields=['pourcentage_completion_profil']),
-            models.Index(fields=['localisation']),
-        ]
-\end{lstlisting}
+\subsubsection{Informations de Base}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Pseudo} : Nom d'affichage public de l'influenceur
+    \item \textbf{Photo de profil} : URL de l'image de profil
+    \item \textbf{Biographie} : Description personnelle et professionnelle
+    \item \textbf{Localisation} : Localisation géographique de l'influenceur
+\end{itemize}
+
+\subsubsection{Métriques et Statistiques}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Pourcentage de complétion} : Calcul automatique basé sur les champs remplis (pseudo, bio, localisation, domaines, plateformes, tarifs)
+    \item \textbf{Taux d'acceptation} : Pourcentage de candidatures acceptées sur le total
+    \item \textbf{Total de candidatures} : Nombre total de candidatures soumises
+    \item \textbf{Candidatures acceptées} : Nombre de candidatures acceptées
+\end{itemize}
+
+\subsubsection{Relations Complexes}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Domaines d'expertise} : Relation ManyToMany avec \texttt{DomaineExpertise} via la table de liaison \texttt{InfluenceurExpertise}, permettant à un influenceur d'avoir plusieurs domaines (Mode, Tech, Sport, etc.)
+    \item \textbf{Plateformes sociales} : Relation ManyToMany avec \texttt{PlateformeSociale} via \texttt{InfluenceurPlateforme}, stockant le nombre d'abonnés pour chaque plateforme (Instagram, TikTok, YouTube, etc.)
+    \item \textbf{Tarifs} : Relation OneToOne avec \texttt{InfluenceurTarif}, stockant les prix pour différents types de contenus (post, story, vidéo)
+\end{itemize}
 
 \subsection{Modèle Entreprise et Campagne}
 
-\begin{lstlisting}[caption=Modèles Entreprise et Campagne - api/models/company.py]
-class Entreprise(models.Model):
-    utilisateur = models.OneToOneField(User, 
-                                      on_delete=models.CASCADE, 
-                                      related_name='entreprise')
-    nom_entreprise = models.CharField(max_length=255)
-    description = models.TextField(null=True, blank=True)
-    secteur = models.CharField(max_length=100, 
-                              null=True, blank=True)
-    taille_entreprise = models.CharField(max_length=20, 
-                                        choices=TAILLE_CHOICES)
+\subsubsection{Modèle Entreprise}
 
-class Campagne(models.Model):
-    STATUT_CHOICES = [
-        ('brouillon', 'Brouillon'),
-        ('active', 'Active'),
-        ('fermee', 'Fermée'),
-        ('annulee', 'Annulée'),
-    ]
-    
-    entreprise = models.ForeignKey(Entreprise, 
-                                  on_delete=models.CASCADE)
-    titre = models.CharField(max_length=255)
-    description = models.TextField()
-    budget_min = models.DecimalField(max_digits=10, 
-                                    decimal_places=2)
-    budget_max = models.DecimalField(max_digits=10, 
-                                    decimal_places=2)
-    date_limite_candidature = models.DateTimeField()
-    statut = models.CharField(max_length=20, 
-                             choices=STATUT_CHOICES, 
-                             default='brouillon')
-    total_candidatures = models.IntegerField(default=0)
-\end{lstlisting}
+Le modèle \texttt{Entreprise} représente les entreprises utilisant la plateforme pour publier des campagnes.
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Nom de l'entreprise} : Nom officiel de l'entreprise
+    \item \textbf{Description} : Présentation de l'entreprise et de ses activités
+    \item \textbf{Secteur} : Secteur d'activité de l'entreprise
+    \item \textbf{Taille} : Taille de l'entreprise (startup, PME, grande entreprise)
+\end{itemize}
+
+\subsubsection{Modèle Campagne}
+
+Le modèle \texttt{Campagne} représente les offres publicitaires publiées par les entreprises.
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Informations de base} : Titre, description détaillée de la campagne
+    \item \textbf{Budget} : Budget minimum et maximum alloué à la campagne
+    \item \textbf{Date limite} : Date limite pour les candidatures
+    \item \textbf{Statut} : État de la campagne (brouillon, active, fermée, annulée)
+    \item \textbf{Domaines ciblés} : Relation ManyToMany avec \texttt{DomaineExpertise} pour cibler des domaines spécifiques
+    \item \textbf{Plateformes ciblées} : Relation ManyToMany avec \texttt{PlateformeSociale} pour cibler des plateformes spécifiques
+    \item \textbf{Métriques} : Nombre total de candidatures reçues
+\end{itemize}
 
 \subsection{Modèle Candidature}
 
-\begin{lstlisting}[caption=Modèle Candidature - api/models/application.py]
-class Candidature(models.Model):
-    STATUT_CHOICES = [
-        ('en_attente', 'En attente'),
-        ('acceptee', 'Acceptée'),
-        ('refusee', 'Refusée'),
-        ('retiree', 'Retirée'),
-    ]
-    
-    campagne = models.ForeignKey(Campagne, 
-                                on_delete=models.CASCADE)
-    influenceur = models.ForeignKey(Influenceur, 
-                                   on_delete=models.CASCADE)
-    statut = models.CharField(max_length=20, 
-                             choices=STATUT_CHOICES, 
-                             default='en_attente')
-    message_motivation = models.TextField(max_length=500, 
-                                          null=True, blank=True)
-    prix_propose = models.DecimalField(max_digits=10, 
-                                      decimal_places=2, 
-                                      null=True, blank=True)
-    candidate_le = models.DateTimeField(auto_now_add=True)
-    
-    class Meta:
-        db_table = 'candidatures'
-        unique_together = ['campagne', 'influenceur']
-\end{lstlisting}
+Le modèle \texttt{Candidature} représente les candidatures des influenceurs aux campagnes.
+
+\subsubsection{Caractéristiques}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Statut} : État de la candidature (en attente, acceptée, refusée, retirée)
+    \item \textbf{Message de motivation} : Message personnalisé de l'influenceur expliquant son intérêt
+    \item \textbf{Prix proposé} : Tarif proposé par l'influenceur pour la collaboration
+    \item \textbf{Date de candidature} : Timestamp automatique de la soumission
+    \item \textbf{Contrainte d'unicité} : Un influenceur ne peut candidater qu'une seule fois par campagne
+\end{itemize}
+
+\subsubsection{Relations}
+
+\begin{itemize}[leftmargin=*]
+    \item Relation ForeignKey vers \texttt{Campagne} : Chaque candidature est liée à une campagne spécifique
+    \item Relation ForeignKey vers \texttt{Influenceur} : Chaque candidature est soumise par un influenceur
+\end{itemize}
+
+\subsection{Modèle Notification}
+
+Le modèle \texttt{Notification} permet de notifier les utilisateurs des événements importants (nouvelles campagnes, réponses aux candidatures, etc.).
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Type} : Type de notification (nouvelle campagne, réponse candidature, etc.)
+    \item \textbf{Message} : Contenu de la notification
+    \item \textbf{Statut de lecture} : Indicateur si la notification a été lue
+    \item \textbf{Timestamp} : Date de création de la notification
+\end{itemize}
 
 \newpage
 
 \section{Système d'Authentification}
 
-\subsection{Inscription (Register)}
+\subsection{Architecture JWT}
 
-La fonctionnalité d'inscription permet aux utilisateurs de créer un compte en tant qu'influenceur ou entreprise.
+Le système d'authentification utilise JSON Web Tokens (JWT) pour gérer les sessions utilisateurs de manière sécurisée et stateless. Cette approche présente plusieurs avantages :
 
-\begin{lstlisting}[caption=Inscription - api/views/auth_views.py]
-@api_view(['POST'])
-@permission_classes([AllowAny])
-def register(request):
-    """
-    Register a new user
-    """
-    email = request.data.get('email')
-    password = request.data.get('password')
-    type_utilisateur = request.data.get('type_utilisateur', 
-                                       'influenceur')
-    
-    if not email or not password:
-        return Response(
-            {'error': 'Email et mot de passe sont requis'},
-            status=status.HTTP_400_BAD_REQUEST
-        )
-    
-    # Validate type
-    valid_types = ['influenceur', 'entreprise']
-    if type_utilisateur not in valid_types:
-        return Response(
-            {'error': f'type_utilisateur doit être l\'un de: 
-                      {", ".join(valid_types)}'},
-            status=status.HTTP_400_BAD_REQUEST
-        )
-    
-    # Check if user already exists
-    if User.objects.filter(email=email).exists():
-        return Response(
-            {'error': 'Cet email est déjà utilisé'},
-            status=status.HTTP_400_BAD_REQUEST
-        )
-    
-    # Create user
-    try:
-        username = email.split('@')[0]
-        user = User.objects.create_user(
-            username=username,
-            email=email,
-            password=password,
-            type_utilisateur=type_utilisateur
-        )
-        
-        # Generate tokens
-        refresh = RefreshToken.for_user(user)
-        
-        return Response({
-            'id': user.id,
-            'email': user.email,
-            'type_utilisateur': user.type_utilisateur,
-            'access': str(refresh.access_token),
-            'refresh': str(refresh),
-        }, status=status.HTTP_201_CREATED)
-    except Exception as e:
-        return Response(
-            {'error': str(e)},
-            status=status.HTTP_400_BAD_REQUEST
-        )
-\end{lstlisting}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Stateless} : Pas besoin de stocker les sessions côté serveur, réduisant la charge serveur
+    \item \textbf{Scalabilité} : Facilite la mise à l'échelle horizontale du système
+    \item \textbf{Sécurité} : Tokens signés cryptographiquement, difficilement falsifiables
+    \item \textbf{Interopérabilité} : Standardisé et compatible avec différents clients (web, mobile)
+\end{itemize}
 
-\subsection{Connexion avec JWT}
+\subsection{Processus d'Inscription}
 
-L'authentification utilise JWT (JSON Web Tokens) via Simple JWT. Les tokens sont générés lors de la connexion et rafraîchis automatiquement.
+L'inscription permet aux utilisateurs de créer un compte en tant qu'influenceur ou entreprise.
 
-\begin{lstlisting}[caption=Configuration JWT - backend/settings.py]
-from datetime import timedelta
+\subsubsection{Étapes du Processus}
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-    ],
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-    ],
-}
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Validation des données} : Vérification que l'email et le mot de passe sont fournis et valides
+    \item \textbf{Vérification d'unicité} : Contrôle que l'email n'est pas déjà utilisé dans la base de données
+    \item \textbf{Validation du type} : Vérification que le type d'utilisateur (influenceur ou entreprise) est valide
+    \item \textbf{Création du compte} : Création de l'utilisateur avec hashage sécurisé du mot de passe
+    \item \textbf{Génération des tokens} : Génération automatique des tokens JWT (access et refresh)
+    \item \textbf{Création du profil} : Création automatique du profil associé (Influenceur ou Entreprise) via les signaux Django
+\end{enumerate}
 
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
-    'ROTATE_REFRESH_TOKENS': True,
-    'BLACKLIST_AFTER_ROTATION': True,
-    'AUTH_HEADER_TYPES': ('Bearer',),
-    'USER_ID_FIELD': 'id',
-    'USER_ID_CLAIM': 'user_id',
-}
-\end{lstlisting}
+\subsubsection{Sécurité}
 
-\subsection{Service API Frontend pour l'Authentification}
+\begin{itemize}[leftmargin=*]
+    \item Hashage du mot de passe avec l'algorithme PBKDF2 de Django
+    \item Validation stricte des types d'utilisateurs
+    \item Messages d'erreur génériques pour éviter l'énumération d'emails
+\end{itemize}
 
-\begin{lstlisting}[style=javascript, caption=Service API - frontend/src/services/api.ts]
-export const authAPI = {
-  login: async (email: string, password: string) => {
-    const response = await fetch(`${API_BASE_URL}/auth/token/`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    });
+\subsection{Processus de Connexion}
 
-    if (!response.ok) {
-      const error = await response.json().catch(() => 
-        ({ detail: response.statusText }));
-      throw new Error(error.detail || error.message || 'Login failed');
-    }
+La connexion authentifie l'utilisateur et génère les tokens JWT nécessaires pour les requêtes ultérieures.
 
-    const data = await response.json();
-    setTokens(data.access, data.refresh);
-    return data;
-  },
+\subsubsection{Étapes du Processus}
 
-  signup: async (email: string, password: string, 
-                 type: 'influencer' | 'company') => {
-    const djangoType = type === 'influencer' ? 
-                      'influenceur' : 'entreprise';
-    const response = await fetch(`${API_BASE_URL}/auth/register/`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password, 
-                            type_utilisateur: djangoType }),
-    });
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Vérification des credentials} : Validation de l'email et du mot de passe
+    \item \textbf{Génération des tokens} : Création d'un token d'accès (courte durée) et d'un token de rafraîchissement (longue durée)
+    \item \textbf{Retour des tokens} : Envoi des tokens au client pour stockage local
+    \item \textbf{Mise à jour de la dernière connexion} : Enregistrement du timestamp de connexion
+\end{enumerate}
 
-    if (!response.ok) {
-      const error = await response.json().catch(() => 
-        ({ detail: response.statusText }));
-      throw new Error(error.error || error.detail || 'Signup failed');
-    }
+\subsubsection{Personnalisation JWT}
 
-    const data = await response.json();
-    if (data.access && data.refresh) {
-      setTokens(data.access, data.refresh);
-    }
-    return data;
-  },
-};
-\end{lstlisting}
+Le système utilise un serializer personnalisé (\texttt{CustomTokenObtainPairSerializer}) qui permet d'utiliser l'email au lieu du username pour l'authentification, offrant une meilleure expérience utilisateur.
+
+\subsection{Gestion des Tokens}
+
+\subsubsection{Types de Tokens}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Access Token} : Token d'accès de courte durée (5 heures) utilisé pour authentifier les requêtes API
+    \item \textbf{Refresh Token} : Token de rafraîchissement de longue durée (1 jour) utilisé pour obtenir un nouveau token d'accès
+\end{itemize}
+
+\subsubsection{Caractéristiques de Sécurité}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Rotation des tokens} : Les refresh tokens sont automatiquement rotés à chaque utilisation
+    \item \textbf{Blacklist} : Les tokens expirés sont ajoutés à une blacklist pour empêcher leur réutilisation
+    \item \textbf{Expiration automatique} : Les tokens expirent automatiquement après leur durée de vie
+    \item \textbf{En-tête Bearer} : Les tokens sont transmis dans l'en-tête Authorization avec le préfixe "Bearer"
+\end{itemize}
+
+\subsection{Protection des Routes}
+
+\subsubsection{Backend}
+
+Les endpoints API sont protégés par des décorateurs de permissions Django REST Framework :
+
+\begin{itemize}[leftmargin=*]
+    \item \texttt{@permission\_classes([IsAuthenticated])} : Exige une authentification valide
+    \item \texttt{@permission\_classes([AllowAny])} : Permet l'accès public (pour l'inscription et la connexion)
+    \item Vérification automatique du token JWT dans l'en-tête Authorization
+\end{itemize}
+
+\subsubsection{Frontend}
+
+Le frontend implémente plusieurs mécanismes de protection :
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Stockage sécurisé} : Les tokens sont stockés dans le localStorage du navigateur
+    \item \textbf{Injection automatique} : Les tokens sont automatiquement injectés dans les en-têtes des requêtes API
+    \item \textbf{Rafraîchissement automatique} : Détection de l'expiration du token et rafraîchissement automatique
+    \item \textbf{Redirection} : Redirection vers la page de connexion si l'authentification échoue
+    \item \textbf{Protection contre les attaques} : Limitation du nombre de tentatives de connexion (5 tentatives maximum, blocage de 15 minutes)
+\end{itemize}
 
 \newpage
 
 \section{Gestion des Profils}
 
-\subsection{Mise à Jour du Profil Influenceur}
+\subsection{Architecture de Gestion des Profils}
 
-Cette fonctionnalité permet aux influenceurs de compléter et mettre à jour leur profil avec toutes leurs informations.
+Le système de gestion des profils permet aux influenceurs de créer et mettre à jour leur profil professionnel de manière complète et structurée. Le profil influenceur est composé de plusieurs sections interconnectées.
 
-\begin{lstlisting}[caption=Mise à jour profil - api/views/profile_views.py]
-@api_view(['POST', 'PUT'])
-@permission_classes([IsAuthenticated])
-def update_profile(request):
-    """
-    Update influencer profile with all information
-    """
-    user = request.user
-    
-    if user.type_utilisateur != 'influenceur':
-        return Response(
-            {'error': 'This endpoint is only for influencers'},
-            status=status.HTTP_403_FORBIDDEN
-        )
-    
-    try:
-        with transaction.atomic():
-            # Get or create influencer profile
-            influencer, created = Influenceur.objects.get_or_create(
-                utilisateur=user)
-            
-            data = request.data
-            
-            # Update basic profile info
-            if 'pseudo' in data:
-                influencer.pseudo = data['pseudo']
-            if 'bio' in data:
-                influencer.biographie = data['bio']
-            if 'location' in data:
-                influencer.localisation = data['location']
-            
-            # Update domains
-            if 'domains' in data:
-                domains = data['domains']
-                influencer.domaines.clear()
-                for domain_name in domains:
-                    if domain_name and domain_name.strip():
-                        domain, _ = DomaineExpertise.objects.get_or_create(
-                            nom=domain_name.strip(),
-                            defaults={'slug': domain_name.strip()
-                                     .lower().replace(' ', '-')}
-                        )
-                        influencer.domaines.add(domain)
-            
-            # Update platforms
-            if 'platforms' in data:
-                platforms_data = data['platforms']
-                InfluenceurPlateforme.objects.filter(
-                    influenceur=influencer).delete()
-                for platform_name, platform_info in platforms_data.items():
-                    if platform_info.get('active', False):
-                        followers = platform_info.get('followers', '0')
-                        followers_int = int(re.sub(r'\D', '', 
-                                                   str(followers)))
-                        
-                        platform, _ = PlateformeSociale.objects.get_or_create(
-                            nom=platform_name,
-                            defaults={'est_actif': True}
-                        )
-                        
-                        InfluenceurPlateforme.objects.create(
-                            influenceur=influencer,
-                            plateforme=platform,
-                            nombre_abonnes=followers_int
-                        )
-            
-            # Update rates
-            if 'rates' in data:
-                rates_data = data['rates']
-                tarifs, _ = InfluenceurTarif.objects.get_or_create(
-                    influenceur=influencer)
-                
-                if 'story' in rates_data and rates_data['story']:
-                    tarifs.prix_par_story = float(rates_data['story'])
-                if 'post' in rates_data and rates_data['post']:
-                    tarifs.prix_par_post = float(rates_data['post'])
-                if 'video' in rates_data and rates_data['video']:
-                    tarifs.prix_par_video = float(rates_data['video'])
-                
-                tarifs.save()
-            
-            # Calculate completion percentage
-            completion = 0
-            if influencer.pseudo: completion += 15
-            if influencer.biographie: completion += 10
-            if influencer.localisation: completion += 10
-            if influencer.domaines.exists(): completion += 20
-            if InfluenceurPlateforme.objects.filter(
-                influenceur=influencer).exists(): completion += 20
-            if hasattr(influencer, 'tarifs') and (
-                influencer.tarifs.prix_par_story or 
-                influencer.tarifs.prix_par_post or 
-                influencer.tarifs.prix_par_video
-            ): completion += 25
-            
-            influencer.pourcentage_completion_profil = completion
-            influencer.save()
-        
-        return Response({
-            'success': True,
-            'completion_percent': completion,
-            'message': 'Profil mis à jour avec succès'
-        }, status=status.HTTP_200_OK)
-        
-    except Exception as e:
-        return Response(
-            {'error': str(e)},
-            status=status.HTTP_400_BAD_REQUEST
-        )
-\end{lstlisting}
+\subsection{Complétion du Profil Influenceur}
+
+\subsubsection{Composants du Profil}
+
+Le profil influenceur comprend plusieurs éléments essentiels :
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Informations de base} : Pseudo, biographie, localisation, photo de profil
+    \item \textbf{Domaines d'expertise} : Sélection de un ou plusieurs domaines (Mode \& Beauté, Tech \& Gaming, Sport \& Fitness, etc.)
+    \item \textbf{Plateformes sociales} : Configuration des plateformes utilisées (Instagram, TikTok, YouTube, etc.) avec le nombre d'abonnés pour chaque plateforme
+    \item \textbf{Tarifs} : Définition des prix pour différents types de contenus (post, story, vidéo)
+\end{itemize}
+
+\subsubsection{Calcul du Pourcentage de Complétion}
+
+Le système calcule automatiquement le pourcentage de complétion du profil basé sur les champs remplis :
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Pseudo} : 15\% - Identité publique de l'influenceur
+    \item \textbf{Biographie} : 10\% - Description personnelle et professionnelle
+    \item \textbf{Localisation} : 10\% - Localisation géographique
+    \item \textbf{Domaines d'expertise} : 20\% - Au moins un domaine sélectionné
+    \item \textbf{Plateformes sociales} : 20\% - Au moins une plateforme configurée avec nombre d'abonnés
+    \item \textbf{Tarifs} : 25\% - Au moins un tarif défini (post, story ou vidéo)
+\end{itemize}
+
+Ce calcul permet d'encourager les utilisateurs à compléter leur profil et offre une indication visuelle du niveau de complétion.
+
+\subsection{Mise à Jour du Profil}
+
+\subsubsection{Processus de Mise à Jour}
+
+La mise à jour du profil s'effectue via un endpoint API unique qui gère toutes les sections du profil :
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Récupération du profil} : Récupération du profil existant ou création d'un nouveau profil
+    \item \textbf{Validation des données} : Vérification de la validité des données soumises
+    \item \textbf{Mise à jour atomique} : Utilisation de transactions pour garantir la cohérence des données
+    \item \textbf{Gestion des relations} : Mise à jour des relations ManyToMany (domaines, plateformes)
+    \item \textbf{Recalcul du pourcentage} : Calcul automatique du nouveau pourcentage de complétion
+    \item \textbf{Persistance} : Sauvegarde de toutes les modifications en base de données
+\end{enumerate}
+
+\subsubsection{Gestion des Domaines d'Expertise}
+
+Le système permet de gérer dynamiquement les domaines d'expertise :
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Création automatique} : Si un domaine n'existe pas, il est automatiquement créé
+    \item \textbf{Association multiple} : Un influenceur peut avoir plusieurs domaines d'expertise
+    \item \textbf{Nettoyage} : Les anciennes associations sont supprimées avant l'ajout des nouvelles
+\end{itemize}
+
+\subsubsection{Gestion des Plateformes Sociales}
+
+La gestion des plateformes sociales est plus complexe car elle inclut des métadonnées :
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Activation/Désactivation} : Chaque plateforme peut être activée ou désactivée
+    \item \textbf{Nombre d'abonnés} : Stockage du nombre d'abonnés pour chaque plateforme active
+    \item \textbf{Normalisation} : Conversion automatique des formats de nombres (suppression des espaces, virgules, etc.)
+    \item \textbf{Création automatique} : Les plateformes non existantes sont créées automatiquement
+\end{itemize}
+
+\subsubsection{Gestion des Tarifs}
+
+Les tarifs sont stockés dans une table séparée avec une relation OneToOne :
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Types de contenus} : Tarifs distincts pour les posts, stories et vidéos
+    \item \textbf{Flexibilité} : Possibilité de définir seulement certains types de tarifs
+    \item \textbf{Création automatique} : La table de tarifs est créée automatiquement si elle n'existe pas
+\end{itemize}
 
 \subsection{Récupération des Informations Utilisateur}
 
-\begin{lstlisting}[caption=Informations utilisateur - api/views/user_views.py]
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def current_user(request):
-    """
-    Get current authenticated user information with full profile data
-    """
-    user = request.user
-    
-    profile_complete = False
-    completion_percent = 0
-    profile_data = {}
-    
-    if hasattr(user, 'influenceur'):
-        influencer = user.influenceur
-        profile_complete = (
-            influencer.pseudo and
-            influencer.biographie and
-            influencer.localisation and
-            influencer.domaines.exists() and
-            InfluenceurPlateforme.objects.filter(
-                influenceur=influencer).exists()
-        )
-        completion_percent = influencer.pourcentage_completion_profil
-        
-        domains = [d.nom for d in influencer.domaines.all()]
-        
-        platforms_data = {}
-        platforms = InfluenceurPlateforme.objects.filter(
-            influenceur=influencer).select_related('plateforme')
-        for platform_link in platforms:
-            platforms_data[platform_link.plateforme.nom] = {
-                'active': True,
-                'followers': str(platform_link.nombre_abonnes)
-            }
-        
-        profile_data = {
-            'name': influencer.pseudo or '',
-            'pseudo': influencer.pseudo or '',
-            'bio': influencer.biographie or '',
-            'location': influencer.localisation or '',
-            'domains': domains,
-            'platforms': platforms_data,
-        }
-    
-    return Response({
-        'id': user.id,
-        'email': user.email,
-        'username': user.username,
-        'type_utilisateur': user.type_utilisateur,
-        'profile_complete': profile_complete,
-        'completion_percent': completion_percent,
-        'profile': profile_data,
-    })
-\end{lstlisting}
+\subsubsection{Endpoint Current User}
+
+L'endpoint \texttt{/api/auth/user/} permet de récupérer toutes les informations de l'utilisateur connecté, incluant :
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Informations de base} : ID, email, username, type d'utilisateur
+    \item \textbf{Statut du profil} : Indicateur de complétion et pourcentage de complétion
+    \item \textbf{Données du profil} : Toutes les informations du profil influenceur (pseudo, bio, localisation, domaines, plateformes)
+    \item \textbf{Format structuré} : Données formatées de manière à être directement utilisables par le frontend
+\end{itemize}
+
+\subsubsection{Optimisation des Requêtes}
+
+Le système utilise des optimisations de requêtes pour améliorer les performances :
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Select Related} : Utilisation de \texttt{select\_related} pour les relations ForeignKey
+    \item \textbf{Prefetch Related} : Utilisation de \texttt{prefetch\_related} pour les relations ManyToMany
+    \item \textbf{Agrégation} : Calcul des statistiques directement en base de données
+\end{itemize}
 
 \newpage
 
-\section{Pages Frontend}
+\section{Interface Utilisateur Frontend}
+
+\subsection{Architecture Frontend}
+
+L'interface utilisateur est construite avec React et TypeScript, offrant une expérience utilisateur moderne, réactive et type-safe. L'architecture frontend suit les meilleures pratiques de développement React.
+
+\subsection{Pages Principales}
+
+\subsubsection{Landing Page}
+
+La page d'accueil (\texttt{LandingPage.tsx}) est la première interface que voient les visiteurs. Elle comprend :
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Header avec navigation} : Barre de navigation sticky avec logo, liens de navigation et boutons d'action
+    \item \textbf{Hero Section} : Section d'accroche avec titre, description et call-to-action (boutons d'inscription, connexion, découverte)
+    \item \textbf{Section fonctionnalités} : Présentation des fonctionnalités principales de la plateforme avec icônes et descriptions
+    \item \textbf{Section témoignages} : Témoignages fictifs pour renforcer la crédibilité
+    \item \textbf{Section CTA finale} : Appel à l'action final pour encourager l'inscription
+    \item \textbf{Footer} : Informations de contact et liens utiles
+\end{itemize}
+
+\subsubsection{Pages d'Authentification}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Page d'inscription} (\texttt{SignupPage.tsx}) : Formulaire d'inscription avec validation en temps réel, sélection du type d'utilisateur, et gestion des erreurs
+    \item \textbf{Page de connexion} (\texttt{LoginPage.tsx}) : Formulaire de connexion avec protection contre les tentatives multiples, gestion des erreurs, et redirection automatique après connexion
+\end{itemize}
+
+\subsubsection{Dashboard}
+
+La page dashboard (\texttt{DashboardPage.tsx}) est le centre de contrôle pour les utilisateurs authentifiés :
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Indicateur de complétion} : Barre de progression montrant le pourcentage de complétion du profil
+    \item \textbf{Statistiques} : Métriques clés (candidatures, offres vues, taux d'acceptation)
+    \item \textbf{Offres récentes} : Liste des dernières offres consultées
+    \item \textbf{Candidatures récentes} : Liste des dernières candidatures soumises
+    \item \textbf{Actions rapides} : Liens vers les fonctionnalités principales (marketplace, profil, candidatures)
+\end{itemize}
+
+\subsubsection{Marketplace}
+
+La page marketplace (\texttt{MarketplacePage.tsx}) permet de découvrir et rechercher des offres :
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Liste des offres} : Affichage en grille des offres disponibles avec informations clés (titre, budget, domaine, plateformes)
+    \item \textbf{Système de filtrage} : Filtres par domaine, budget, plateformes, et dates
+    \item \textbf{Recherche} : Barre de recherche pour trouver des offres spécifiques
+    \item \textbf{Pagination} : Navigation entre les pages d'offres pour gérer de grandes quantités de données
+    \item \textbf{Lien vers détails} : Accès rapide aux détails complets de chaque offre
+\end{itemize}
+
+\subsubsection{Page de Détails d'Offre}
+
+La page de détails (\texttt{OfferDetailPage.tsx}) affiche toutes les informations d'une offre :
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Informations complètes} : Titre, description détaillée, budget, dates, domaines et plateformes ciblées
+    \item \textbf{Statistiques} : Nombre de candidatures, budget moyen, etc.
+    \item \textbf{Bouton de candidature} : Action pour postuler à l'offre (actuellement non fonctionnel, données fictives)
+\end{itemize}
+
+\subsubsection{Gestion des Candidatures}
+
+La page candidatures (\texttt{ApplicationsPage.tsx}) permet de suivre toutes les candidatures :
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Liste des candidatures} : Affichage de toutes les candidatures avec leur statut
+    \item \textbf{Filtrage par statut} : Filtres pour voir les candidatures en attente, acceptées, refusées
+    \item \textbf{Informations détaillées} : Pour chaque candidature, affichage de l'offre associée, message de motivation, prix proposé, date
+    \item \textbf{Lien vers l'offre} : Accès rapide aux détails de l'offre pour laquelle la candidature a été soumise
+\end{itemize}
+
+\subsubsection{Page de Profil}
+
+La page profil (\texttt{ProfilePage.tsx}) permet de consulter et modifier le profil :
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Affichage du profil} : Visualisation de toutes les informations du profil
+    \item \textbf{Édition} : Possibilité de modifier les différentes sections du profil
+    \item \textbf{Statistiques personnelles} : Métriques individuelles (taux d'acceptation, nombre de candidatures)
+\end{itemize}
+
+\subsubsection{Complétion de Profil}
+
+La page de complétion (\texttt{ProfileCompletionPage.tsx}) guide l'utilisateur dans la complétion de son profil :
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Formulaire multi-étapes} : Formulaire structuré en sections logiques
+    \item \textbf{Validation en temps réel} : Vérification des champs au fur et à mesure de la saisie
+    \item \textbf{Indicateur de progression} : Barre de progression montrant l'avancement
+    \item \textbf{Sauvegarde progressive} : Possibilité de sauvegarder et continuer plus tard
+\end{itemize}
+
+\subsection{Composants Réutilisables}
+
+\subsubsection{Layout Components}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Sidebar} : Barre latérale de navigation avec menu principal et bouton de déconnexion
+    \item \textbf{TopBar} : Barre supérieure avec informations utilisateur et notifications
+\end{itemize}
+
+\subsubsection{Form Components}
+
+Composants de formulaires réutilisables pour assurer la cohérence de l'interface.
+
+\subsection{Gestion d'État}
+
+\subsubsection{Context API}
+
+Le système utilise React Context API pour la gestion de l'état global d'authentification :
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{AuthContext} : Contexte global gérant l'état d'authentification, les informations utilisateur, et les fonctions de login/logout
+    \item \textbf{Persistance} : Synchronisation automatique avec le localStorage pour maintenir la session entre les rechargements
+    \item \textbf{Hooks personnalisés} : Hook \texttt{useAuth()} pour accéder facilement au contexte d'authentification
+\end{itemize}
+
+\subsubsection{État Local}
+
+Chaque composant gère son propre état local pour les données spécifiques à la page (filtres, formulaires, etc.).
 
 \subsection{Routing et Navigation}
 
-Le système de routing gère l'authentification et la complétion du profil pour contrôler l'accès aux pages.
+\subsubsection{React Router}
 
-\begin{lstlisting}[style=javascript, caption=App.tsx - Routing principal]
-export default function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [profileCompleted, setProfileCompleted] = useState(false);
-  const [loading, setLoading] = useState(true);
+Le système de routing utilise React Router DOM pour gérer la navigation :
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      const token = getToken();
-      if (token) {
-        try {
-          const userData = await authAPI.getCurrentUser();
-          setIsAuthenticated(true);
-          const isComplete = userData.completion_percent >= 100 || 
-                           userData.profile_complete || false;
-          setProfileCompleted(isComplete);
-        } catch (error) {
-          setIsAuthenticated(false);
-          setProfileCompleted(false);
-        }
-      }
-      setLoading(false);
-    };
-    checkAuth();
-  }, []);
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Routes publiques} : Landing page, inscription, connexion
+    \item \textbf{Routes protégées} : Toutes les autres pages nécessitent une authentification
+    \item \textbf{Redirection automatique} : Redirection vers la page de connexion si non authentifié, vers le dashboard après connexion
+    \item \textbf{Routes dynamiques} : Routes avec paramètres (ex: \texttt{/offre/:id})
+\end{itemize}
 
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/inscription" 
-               element={<SignupPage onSignup={handleSignup} />} />
-        <Route path="/connexion" 
-               element={<LoginPage onLogin={handleLogin} />} />
-        
-        {isAuthenticated ? (
-          <>
-            <Route path="/profil/completion" 
-                   element={<ProfileCompletionPage 
-                            onComplete={handleProfileComplete} />} />
-            <Route path="/profil" 
-                   element={<ProfilePage onLogout={handleLogout} />} />
-            
-            {profileCompleted && (
-              <>
-                <Route path="/dashboard" 
-                       element={<DashboardPage onLogout={handleLogout} />} />
-                <Route path="/marketplace" 
-                       element={<MarketplacePage onLogout={handleLogout} />} />
-                <Route path="/offre/:id" 
-                       element={<OfferDetailPage onLogout={handleLogout} />} />
-                <Route path="/candidatures" 
-                       element={<ApplicationsPage onLogout={handleLogout} />} />
-                <Route path="/notifications" 
-                       element={<NotificationsPage onLogout={handleLogout} />} />
-              </>
-            )}
-          </>
-        ) : (
-          <Route path="*" element={<Navigate to="/" />} />
-        )}
-      </Routes>
-    </Router>
-  );
-}
-\end{lstlisting}
+\subsubsection{Protection des Routes}
 
-\subsection{Contexte d'Authentification}
+Les routes protégées vérifient automatiquement l'authentification avant de rendre le composant, redirigeant vers la page de connexion si nécessaire.
 
-Le contexte React gère l'état d'authentification global de l'application.
+\subsection{Service API}
 
-\begin{lstlisting}[style=javascript, caption=AuthContext - frontend/src/contexts/AuthContext.tsx]
-export const AuthProvider: React.FC<{ children: ReactNode }> = 
-  ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [loginAttempts, setLoginAttempts] = useState(0);
-  const [isBlocked, setIsBlocked] = useState(false);
+\subsubsection{Architecture du Service}
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      const token = getToken();
-      if (token) {
-        try {
-          const userData = await authAPI.getCurrentUser();
-          setUser({
-            id: userData.id.toString(),
-            email: userData.email,
-            type: userData.type_utilisateur === 'influenceur' ? 
-                  'influencer' : 'company',
-            profileComplete: userData.profile_complete || false,
-          });
-        } catch (error) {
-          authAPI.logout();
-        }
-      }
-    };
-    checkAuth();
-  }, []);
+Le service API (\texttt{services/api.ts}) centralise toute la communication avec le backend :
 
-  const login = async (email: string, password: string) => {
-    if (isBlocked) {
-      throw new Error('Compte bloqué temporairement. 
-                     Réessayez dans 15 minutes.');
-    }
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Configuration centralisée} : URL de base de l'API configurée via variable d'environnement
+    \item \textbf{Gestion des tokens} : Fonctions pour stocker, récupérer et supprimer les tokens JWT
+    \item \textbf{Requêtes HTTP} : Fonctions génériques pour effectuer des requêtes avec injection automatique des tokens
+    \item \textbf{Gestion d'erreurs} : Traitement centralisé des erreurs avec messages utilisateur appropriés
+\end{itemize}
 
-    try {
-      await authAPI.login(email, password);
-      const userData = await authAPI.getCurrentUser();
-      setUser({
-        id: userData.id.toString(),
-        email: userData.email,
-        type: userData.type_utilisateur === 'influenceur' ? 
-              'influencer' : 'company',
-        profileComplete: userData.profile_complete || false,
-      });
-      setLoginAttempts(0);
-    } catch (error: any) {
-      setLoginAttempts(prev => {
-        const newAttempts = prev + 1;
-        if (newAttempts >= 5) {
-          setIsBlocked(true);
-          setTimeout(() => {
-            setIsBlocked(false);
-            setLoginAttempts(0);
-          }, 15 * 60 * 1000);
-        }
-        return newAttempts;
-      });
-      throw error;
-    }
-  };
+\subsubsection{Endpoints API}
 
-  return (
-    <AuthContext.Provider value={{ user, login, signup, logout, 
-                                  updateProfile, loginAttempts, 
-                                  isBlocked, loading }}>
-      {children}
-    </AuthContext.Provider>
-  );
-};
-\end{lstlisting}
+Le service expose des fonctions pour chaque endpoint :
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{authAPI.login} : Connexion et récupération des tokens
+    \item \textbf{authAPI.signup} : Inscription et génération automatique des tokens
+    \item \textbf{authAPI.getCurrentUser} : Récupération des informations utilisateur
+    \item \textbf{authAPI.logout} : Déconnexion et nettoyage des tokens
+    \item \textbf{profileAPI.updateProfile} : Mise à jour du profil influenceur
+\end{itemize}
 
 \newpage
 
 \section{Endpoints API}
 
-\subsection{Configuration des Routes}
+\subsection{Architecture REST}
 
-\begin{lstlisting}[caption=URLs API - api/urls.py]
-from django.urls import path, include
-from rest_framework_simplejwt.views import TokenObtainPairView, 
-                                          TokenRefreshView
-from .views.auth_views import register
-from .views.user_views import current_user
-from .views.profile_views import update_profile
+L'API suit les principes REST (Representational State Transfer) pour offrir une interface claire et standardisée :
 
-urlpatterns = [
-    path('auth/token/', 
-         TokenObtainPairView.as_view(
-             serializer_class=CustomTokenObtainPairSerializer), 
-         name='token_obtain'),
-    path('auth/token/refresh/', 
-         TokenRefreshView.as_view(), 
-         name='token_refresh'),
-    path('auth/register/', register, name='register'),
-    path('auth/user/', current_user, name='current_user'),
-    path('profile/update/', update_profile, name='update_profile'),
-]
-\end{lstlisting}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{URLs sémantiques} : Les URLs reflètent la structure des ressources
+    \item \textbf{Méthodes HTTP} : Utilisation appropriée des méthodes HTTP (GET, POST, PUT, DELETE)
+    \item \textbf{Codes de statut} : Retour de codes HTTP appropriés (200, 201, 400, 401, 403, 404, 500)
+    \item \textbf{Format JSON} : Toutes les réponses sont au format JSON
+\end{itemize}
 
-\subsection{Liste des Endpoints}
+\subsection{Endpoints d'Authentification}
 
-\begin{table}[H]
-\centering
-\begin{tabular}{|l|l|l|p{6cm}|}
-\hline
-\textbf{Méthode} & \textbf{Endpoint} & \textbf{Auth} & \textbf{Description} \\
-\hline
-POST & /api/auth/register/ & Non & Inscription d'un nouvel utilisateur \\
-POST & /api/auth/token/ & Non & Connexion et obtention des tokens JWT \\
-POST & /api/auth/token/refresh/ & Non & Rafraîchissement du token d'accès \\
-GET & /api/auth/user/ & Oui & Informations de l'utilisateur connecté \\
-POST/PUT & /api/profile/update/ & Oui & Mise à jour du profil influenceur \\
-\hline
-\end{tabular}
-\caption{Endpoints API principaux}
-\end{table}
+\subsubsection{POST /api/auth/register/}
+
+Endpoint pour l'inscription d'un nouvel utilisateur.
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Authentification requise} : Non
+    \item \textbf{Paramètres} : email, password, type\_utilisateur (influenceur ou entreprise)
+    \item \textbf{Réponse succès} : Tokens JWT (access et refresh), informations utilisateur de base
+    \item \textbf{Réponse erreur} : Message d'erreur descriptif (email déjà utilisé, données invalides, etc.)
+\end{itemize}
+
+\subsubsection{POST /api/auth/token/}
+
+Endpoint pour la connexion et l'obtention des tokens JWT.
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Authentification requise} : Non
+    \item \textbf{Paramètres} : email, password
+    \item \textbf{Réponse succès} : Tokens JWT (access et refresh)
+    \item \textbf{Réponse erreur} : Message d'erreur si les credentials sont invalides
+\end{itemize}
+
+\subsubsection{POST /api/auth/token/refresh/}
+
+Endpoint pour rafraîchir le token d'accès.
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Authentification requise} : Non (mais token refresh requis)
+    \item \textbf{Paramètres} : refresh (token de rafraîchissement)
+    \item \textbf{Réponse succès} : Nouveau token d'accès
+    \item \textbf{Réponse erreur} : Message d'erreur si le token est invalide ou expiré
+\end{itemize}
+
+\subsubsection{GET /api/auth/user/}
+
+Endpoint pour récupérer les informations de l'utilisateur connecté.
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Authentification requise} : Oui
+    \item \textbf{Paramètres} : Aucun (utilisateur identifié via le token JWT)
+    \item \textbf{Réponse succès} : Informations complètes de l'utilisateur incluant le profil (influenceur ou entreprise)
+    \item \textbf{Réponse erreur} : 401 si non authentifié, 404 si utilisateur non trouvé
+\end{itemize}
+
+\subsection{Endpoints de Profil}
+
+\subsubsection{POST/PUT /api/profile/update/}
+
+Endpoint pour mettre à jour le profil influenceur.
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Authentification requise} : Oui
+    \item \textbf{Type d'utilisateur} : Influenceur uniquement
+    \item \textbf{Paramètres} : Toutes les données du profil (pseudo, bio, localisation, domaines, plateformes, tarifs)
+    \item \textbf{Réponse succès} : Confirmation de mise à jour, nouveau pourcentage de complétion
+    \item \textbf{Réponse erreur} : 403 si type utilisateur incorrect, 400 si données invalides
+\end{itemize}
+
+\subsection{Gestion des Erreurs}
+
+\subsubsection{Codes de Statut HTTP}
+
+L'API utilise les codes de statut HTTP standardisés :
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{200 OK} : Requête réussie
+    \item \textbf{201 Created} : Ressource créée avec succès
+    \item \textbf{400 Bad Request} : Données invalides ou manquantes
+    \item \textbf{401 Unauthorized} : Authentification requise ou token invalide
+    \item \textbf{403 Forbidden} : Accès refusé (permissions insuffisantes)
+    \item \textbf{404 Not Found} : Ressource non trouvée
+    \item \textbf{500 Internal Server Error} : Erreur serveur interne
+\end{itemize}
+
+\subsubsection{Format des Erreurs}
+
+Toutes les erreurs sont retournées dans un format JSON standardisé :
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Champ "error"} : Message d'erreur descriptif pour l'utilisateur
+    \item \textbf{Champ "detail"} : Détails techniques de l'erreur (pour les erreurs DRF)
+    \item \textbf{Messages clairs} : Messages d'erreur compréhensibles pour faciliter le débogage côté frontend
+\end{itemize}
 
 \newpage
 
-\section{Fonctionnalités Principales}
+\section{Fonctionnalités Techniques}
 
-\subsection{1. Authentification et Inscription}
+\subsection{Système de Signaux Django}
 
-\textbf{Localisation} : \texttt{api/views/auth_views.py}, \texttt{frontend/src/pages/LoginPage.tsx}, \texttt{frontend/src/pages/SignupPage.tsx}
+Django Signals est utilisé pour automatiser certaines actions lors d'événements spécifiques :
 
-\begin{itemize}
-    \item Inscription avec validation d'email unique
-    \item Connexion avec génération de tokens JWT
-    \item Rafraîchissement automatique des tokens
-    \item Protection contre les tentatives de connexion multiples
-    \item Gestion des erreurs et messages utilisateur
+\subsubsection{Création Automatique de Profils}
+
+Lors de la création d'un utilisateur, un signal Django déclenche automatiquement la création du profil associé :
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Signal post\_save} : Déclenché après la sauvegarde d'un utilisateur
+    \item \textbf{Création conditionnelle} : Si l'utilisateur est de type "influenceur", création d'un profil Influenceur
+    \item \textbf{Création conditionnelle} : Si l'utilisateur est de type "entreprise", création d'un profil Entreprise
+    \item \textbf{Éviter les doublons} : Vérification que le profil n'existe pas déjà avant création
 \end{itemize}
 
-\subsection{2. Gestion de Profil Influenceur}
+Cette automatisation garantit que chaque utilisateur a toujours un profil associé, évitant les erreurs de données manquantes.
 
-\textbf{Localisation} : \texttt{api/views/profile_views.py}, \texttt{frontend/src/pages/ProfileCompletionPage.tsx}
+\subsection{Interface d'Administration Django}
 
-\begin{itemize}
-    \item Création et mise à jour du profil
-    \item Gestion des domaines d'expertise
-    \item Ajout de plateformes sociales avec nombre d'abonnés
-    \item Configuration des tarifs (post, story, vidéo)
-    \item Calcul automatique du pourcentage de complétion
-    \item Validation des données avant sauvegarde
+L'interface d'administration Django offre une gestion complète des données pour les administrateurs :
+
+\subsubsection{Modèles Enregistrés}
+
+Tous les modèles principaux sont enregistrés dans l'admin avec des configurations personnalisées :
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{User} : Gestion des utilisateurs avec filtres par type, statut actif, vérification
+    \item \textbf{Influenceur} : Gestion des profils influenceurs avec recherche par pseudo, email, localisation
+    \item \textbf{Entreprise} : Gestion des entreprises
+    \item \textbf{Campagne} : Gestion des campagnes publicitaires
+    \item \textbf{Candidature} : Gestion des candidatures avec filtres par statut
+    \item \textbf{Notifications} : Gestion des notifications utilisateurs
 \end{itemize}
 
-\subsection{2.1 Code de Calcul de Complétion}
+\subsubsection{Fonctionnalités Admin}
 
-\begin{lstlisting}[caption=Calcul du pourcentage de complétion]
-# Calculate completion percentage
-completion = 0
-if influencer.pseudo: completion += 15
-if influencer.biographie: completion += 10
-if influencer.localisation: completion += 10
-if influencer.domaines.exists(): completion += 20
-if InfluenceurPlateforme.objects.filter(
-    influenceur=influencer).exists(): completion += 20
-if hasattr(influencer, 'tarifs') and (
-    influencer.tarifs.prix_par_story or 
-    influencer.tarifs.prix_par_post or 
-    influencer.tarifs.prix_par_video
-): completion += 25
-
-influencer.pourcentage_completion_profil = completion
-\end{lstlisting}
-
-\subsection{3. Dashboard Utilisateur}
-
-\textbf{Localisation} : \texttt{frontend/src/pages/DashboardPage.tsx}
-
-\begin{itemize}
-    \item Affichage des statistiques personnelles
-    \item Vue d'ensemble des candidatures
-    \item Accès rapide aux fonctionnalités principales
-    \item Navigation vers les différentes sections
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Liste personnalisée} : Affichage des champs les plus importants dans les listes
+    \item \textbf{Filtres} : Filtres par différents critères pour faciliter la recherche
+    \item \textbf{Recherche} : Recherche textuelle dans les champs pertinents
+    \item \textbf{Champs en lecture seule} : Protection des champs automatiques (timestamps)
+    \item \textbf{Actions groupées} : Possibilité d'effectuer des actions sur plusieurs objets à la fois
 \end{itemize}
 
-\subsection{4. Marketplace}
+\subsection{Configuration CORS}
 
-\textbf{Localisation} : \texttt{frontend/src/pages/MarketplacePage.tsx}
+Cross-Origin Resource Sharing (CORS) est configuré pour permettre les requêtes depuis le frontend :
 
-\begin{itemize}
-    \item Affichage des campagnes disponibles
-    \item Filtrage et recherche de campagnes
-    \item Détails des offres
-    \item Candidature aux campagnes
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Origines autorisées} : Configuration des origines autorisées (localhost:5173 pour le développement)
+    \item \textbf{Credentials} : Autorisation de l'envoi de cookies et credentials
+    \item \textbf{Méthodes autorisées} : GET, POST, PUT, DELETE, OPTIONS
+    \item \textbf{En-têtes autorisés} : Content-Type, Authorization, etc.
 \end{itemize}
 
-\subsection{5. Gestion des Candidatures}
+\subsection{Configuration de la Base de Données}
 
-\textbf{Localisation} : \texttt{api/models/application.py}, \texttt{frontend/src/pages/ApplicationsPage.tsx}
+\subsubsection{MySQL Connector}
 
-\begin{itemize}
-    \item Création de candidatures
-    \item Suivi du statut (en attente, acceptée, refusée)
-    \item Message de motivation
-    \item Proposition de prix
+Le projet utilise MySQL Connector pour Django, offrant une intégration native avec MySQL :
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Configuration} : Connexion via variables d'environnement pour la sécurité
+    \item \textbf{Pool de connexions} : Gestion automatique du pool de connexions
+    \item \textbf{Transactions} : Support des transactions pour garantir l'intégrité des données
 \end{itemize}
 
-\subsection{6. Système de Notifications}
+\subsubsection{Migrations Django}
 
-\textbf{Localisation} : \texttt{api/models/application.py} (modèle Notification)
+Le système de migrations Django gère l'évolution du schéma de base de données :
 
-\begin{itemize}
-    \item Notifications pour nouvelles campagnes
-    \item Notifications de réponse aux candidatures
-    \item Notifications système
-    \item Marquage des notifications comme lues
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Migrations automatiques} : Génération automatique des migrations lors des modifications de modèles
+    \item \textbf{Versioning} : Chaque migration est versionnée et peut être appliquée ou annulée
+    \item \textbf{Historique} : Suivi complet de l'historique des modifications du schéma
 \end{itemize}
 
-\subsection{7. Administration Django}
+\subsection{Sécurité}
 
-\textbf{Localisation} : \texttt{api/admin.py}
+\subsubsection{Protection CSRF}
 
-\begin{lstlisting}[caption=Configuration Admin - api/admin.py]
-@admin.register(User)
-class UserAdmin(admin.ModelAdmin):
-    list_display = ('email', 'type_utilisateur', 'est_actif', 
-                    'est_verifie', 'cree_le')
-    list_filter = ('type_utilisateur', 'est_actif', 'est_verifie')
-    search_fields = ('email', 'username')
-    readonly_fields = ('cree_le', 'modifie_le', 'derniere_connexion')
+Django inclut une protection CSRF (Cross-Site Request Forgery) intégrée pour les requêtes POST/PUT/DELETE.
 
-@admin.register(Influenceur)
-class InfluenceurAdmin(admin.ModelAdmin):
-    list_display = ('pseudo', 'utilisateur', 'localisation', 
-                    'pourcentage_completion_profil', 
-                    'total_candidatures')
-    list_filter = ('pourcentage_completion_profil', 'localisation')
-    search_fields = ('pseudo', 'utilisateur__email', 'biographie')
-\end{lstlisting}
+\subsubsection{Validation des Données}
 
-\newpage
-
-\section{Sécurité}
-
-\subsection{Authentification JWT}
-
-\begin{itemize}
-    \item Tokens d'accès avec expiration (1 heure)
-    \item Tokens de rafraîchissement (7 jours)
-    \item Rotation automatique des tokens
-    \item Blacklist des tokens expirés
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Validation côté serveur} : Toutes les données sont validées côté backend avant traitement
+    \item \textbf{Validation côté client} : Validation supplémentaire côté frontend pour améliorer l'expérience utilisateur
+    \item \textbf{Messages d'erreur} : Messages d'erreur clairs et descriptifs pour guider l'utilisateur
 \end{itemize}
 
-\subsection{Protection des Routes}
+\subsubsection{Hashage des Mots de Passe}
 
-\begin{lstlisting}[caption=Protection des vues API]
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def current_user(request):
-    """
-    Get current authenticated user information
-    Seuls les utilisateurs authentifiés peuvent accéder
-    """
-    user = request.user
-    # ...
-\end{lstlisting}
-
-\subsection{Validation des Données}
-
-\begin{itemize}
-    \item Validation des emails uniques
-    \item Validation des types d'utilisateurs
-    \item Validation des champs obligatoires
-    \item Gestion des erreurs avec messages appropriés
-\end{itemize}
+Django utilise PBKDF2 avec SHA256 pour le hashage des mots de passe, offrant une sécurité robuste contre les attaques par force brute.
 
 \newpage
 
 \section{Base de Données}
 
-\subsection{Schéma Principal}
+\subsection{Schéma Relationnel}
 
-La base de données MySQL contient les tables suivantes :
+La base de données MySQL est structurée avec un schéma relationnel optimisé pour les performances et l'intégrité des données.
 
-\begin{itemize}
-    \item \texttt{utilisateurs} : Utilisateurs du système
-    \item \texttt{influenceurs} : Profils des influenceurs
-    \item \texttt{entreprises} : Profils des entreprises
-    \item \texttt{campagnes} : Campagnes publicitaires
-    \item \texttt{candidatures} : Candidatures des influenceurs
-    \item \texttt{domaines\_expertise} : Domaines d'expertise
-    \item \texttt{plateformes\_sociales} : Plateformes sociales
-    \item \texttt{influenceur\_plateformes} : Lien influenceurs/plateformes
-    \item \texttt{influenceur\_tarifs} : Tarifs des influenceurs
-    \item \texttt{notifications} : Notifications utilisateurs
+\subsection{Tables Principales}
+
+\subsubsection{Table utilisateurs}
+
+Table centrale stockant tous les utilisateurs du système (influenceurs et entreprises).
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Clé primaire} : ID auto-incrémenté
+    \item \textbf{Index} : Index sur email (unique) et type\_utilisateur pour optimiser les recherches
+    \item \textbf{Contraintes} : Email unique, validation du type d'utilisateur
 \end{itemize}
 
-\subsection{Relations}
+\subsubsection{Table influenceurs}
 
-\begin{itemize}
-    \item User $\leftrightarrow$ Influenceur (OneToOne)
-    \item User $\leftrightarrow$ Entreprise (OneToOne)
-    \item Entreprise $\rightarrow$ Campagne (OneToMany)
-    \item Influenceur $\leftrightarrow$ Candidature (OneToMany)
-    \item Campagne $\leftrightarrow$ Candidature (OneToMany)
-    \item Influenceur $\leftrightarrow$ DomaineExpertise (ManyToMany)
+Table stockant les profils des influenceurs.
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Clé étrangère} : Relation OneToOne avec utilisateurs
+    \item \textbf{Index} : Index sur pourcentage\_completion\_profil et localisation
+    \item \textbf{Métriques} : Champs calculés pour les statistiques (taux d'acceptation, total candidatures)
+\end{itemize}
+
+\subsubsection{Table entreprises}
+
+Table stockant les profils des entreprises.
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Clé étrangère} : Relation OneToOne avec utilisateurs
+    \item \textbf{Informations} : Nom, description, secteur, taille
+\end{itemize}
+
+\subsubsection{Table campagnes}
+
+Table stockant les campagnes publicitaires.
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Clé étrangère} : Relation ForeignKey vers entreprises
+    \item \textbf{Statut} : Gestion des différents statuts (brouillon, active, fermée, annulée)
+    \item \textbf{Budget} : Budget minimum et maximum
+    \item \textbf{Dates} : Date limite de candidature
+\end{itemize}
+
+\subsubsection{Table candidatures}
+
+Table stockant les candidatures des influenceurs.
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Clés étrangères} : Relations ForeignKey vers campagnes et influenceurs
+    \item \textbf{Contrainte d'unicité} : Un influenceur ne peut candidater qu'une fois par campagne
+    \item \textbf{Statut} : Gestion du statut de la candidature
+    \item \textbf{Timestamp} : Date automatique de candidature
+\end{itemize}
+
+\subsection{Tables de Liaison}
+
+\subsubsection{Domaines d'Expertise}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Table domaines\_expertise} : Liste des domaines disponibles
+    \item \textbf{Table influenceur\_expertise} : Table de liaison ManyToMany entre influenceurs et domaines
+    \item \textbf{Table campagne\_domaine} : Table de liaison ManyToMany entre campagnes et domaines
+\end{itemize}
+
+\subsubsection{Plateformes Sociales}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Table plateformes\_sociales} : Liste des plateformes disponibles
+    \item \textbf{Table influenceur\_plateformes} : Table de liaison avec métadonnées (nombre d'abonnés)
+    \item \textbf{Table campagne\_plateforme} : Table de liaison ManyToMany entre campagnes et plateformes
+\end{itemize}
+
+\subsection{Relations et Intégrité}
+
+\subsubsection{Types de Relations}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{OneToOne} : User ↔ Influenceur, User ↔ Entreprise, Influenceur ↔ InfluenceurTarif
+    \item \textbf{OneToMany} : Entreprise → Campagne, Influenceur → Candidature, Campagne → Candidature
+    \item \textbf{ManyToMany} : Influenceur ↔ DomaineExpertise, Campagne ↔ DomaineExpertise, Influenceur ↔ PlateformeSociale, Campagne ↔ PlateformeSociale
+\end{itemize}
+
+\subsubsection{Contraintes d'Intégrité}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{CASCADE} : Suppression en cascade pour maintenir l'intégrité (ex: suppression d'un utilisateur supprime son profil)
+    \item \textbf{UNIQUE} : Contraintes d'unicité pour éviter les doublons (email, candidature unique par campagne/influenceur)
+    \item \textbf{NOT NULL} : Champs obligatoires pour garantir la complétude des données
+\end{itemize}
+
+\subsection{Optimisations}
+
+\subsubsection{Index}
+
+Des index sont créés sur les champs fréquemment utilisés dans les requêtes :
+
+\begin{itemize}[leftmargin=*]
+    \item Index sur email (recherche d'utilisateurs)
+    \item Index sur type\_utilisateur (filtrage par type)
+    \item Index sur pourcentage\_completion\_profil (tri et filtrage)
+    \item Index sur localisation (recherche géographique)
+\end{itemize}
+
+\subsubsection{Requêtes Optimisées}
+
+Le système utilise des techniques d'optimisation de requêtes :
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Select Related} : Évite les requêtes N+1 pour les relations ForeignKey
+    \item \textbf{Prefetch Related} : Charge en une seule requête les relations ManyToMany
+    \item \textbf{Agrégation} : Calcul des statistiques directement en base de données
 \end{itemize}
 
 \newpage
@@ -1020,59 +996,95 @@ La base de données MySQL contient les tables suivantes :
 
 \subsection{Configuration Backend}
 
-\begin{lstlisting}[caption=Settings Django - backend/settings.py]
-DATABASES = {
-    'default': {
-        'ENGINE': 'mysql.connector.django',
-        'NAME': 'InfluMatch',
-        'USER': 'root',
-        'PASSWORD': 'CHiheb2004',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
-}
+\subsubsection{Variables d'Environnement}
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-]
-CORS_ALLOW_CREDENTIALS = True
-\end{lstlisting}
+Le projet utilise des variables d'environnement pour la configuration sensible :
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{SECRET\_KEY} : Clé secrète Django pour le cryptage (ne jamais commiter)
+    \item \textbf{DATABASE\_NAME} : Nom de la base de données MySQL
+    \item \textbf{DATABASE\_USER} : Utilisateur MySQL
+    \item \textbf{DATABASE\_PASSWORD} : Mot de passe MySQL
+    \item \textbf{DATABASE\_HOST} : Hôte de la base de données (localhost en développement)
+    \item \textbf{DATABASE\_PORT} : Port MySQL (3306 par défaut)
+\end{itemize}
+
+\subsubsection{Configuration Django}
+
+Le fichier \texttt{settings.py} contient toute la configuration de l'application :
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Applications installées} : Liste des applications Django utilisées
+    \item \textbf{Middleware} : Configuration des middlewares (sécurité, CORS, etc.)
+    \item \textbf{Base de données} : Configuration de la connexion MySQL
+    \item \textbf{REST Framework} : Configuration de DRF (authentification, permissions, pagination)
+    \item \textbf{JWT} : Configuration des tokens JWT (durée de vie, rotation, etc.)
+    \item \textbf{CORS} : Configuration des origines autorisées
+\end{itemize}
 
 \subsection{Configuration Frontend}
 
-\begin{lstlisting}[style=javascript, caption=Vite Config - frontend/vite.config.ts]
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
+\subsubsection{Variables d'Environnement}
 
-export default defineConfig({
-  plugins: [react()],
-  server: {
-    port: 5173,
-    proxy: {
-      '/api': {
-        target: 'http://127.0.0.1:8000',
-        changeOrigin: true,
-      },
-    },
-  },
-})
-\end{lstlisting}
+Le frontend utilise également des variables d'environnement :
 
-\subsection{Installation}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{VITE\_API\_URL} : URL de base de l'API backend (http://localhost:8000/api en développement)
+    \item Configuration via fichier \texttt{.env} pour le développement
+    \item Variables accessibles via \texttt{import.meta.env} dans le code
+\end{itemize}
 
-\begin{lstlisting}[caption=Commandes d'installation]
-# Backend
-source venv/bin/activate
-pip install -r requirements.txt
-python manage.py migrate
-python manage.py runserver
+\subsubsection{Configuration Vite}
 
-# Frontend
-cd frontend
-npm install
-npm run dev
-\end{lstlisting}
+Le fichier \texttt{vite.config.ts} configure le serveur de développement :
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Port} : Port du serveur de développement (5173 par défaut)
+    \item \textbf{Proxy} : Configuration du proxy pour rediriger les requêtes \texttt{/api} vers le backend
+    \item \textbf{Plugins} : Configuration des plugins (React, SWC pour la compilation rapide)
+\end{itemize}
+
+\subsection{Installation et Lancement}
+
+\subsubsection{Prérequis}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Python} : Version 3.8 ou supérieure
+    \item \textbf{Node.js} : Version 18 ou supérieure
+    \item \textbf{MySQL} : Serveur MySQL installé et configuré
+    \item \textbf{Git} : Pour cloner le dépôt
+\end{itemize}
+
+\subsubsection{Installation Backend}
+
+\begin{enumerate}[leftmargin=*]
+    \item Création d'un environnement virtuel Python
+    \item Installation des dépendances via \texttt{pip install -r requirements.txt}
+    \item Configuration des variables d'environnement dans \texttt{.env}
+    \item Création de la base de données MySQL
+    \item Application des migrations : \texttt{python manage.py migrate}
+    \item Création d'un superutilisateur : \texttt{python manage.py createsuperuser}
+    \item Lancement du serveur : \texttt{python manage.py runserver}
+\end{enumerate}
+
+\subsubsection{Installation Frontend}
+
+\begin{enumerate}[leftmargin=*]
+    \item Navigation vers le dossier \texttt{frontend}
+    \item Installation des dépendances : \texttt{npm install}
+    \item Configuration des variables d'environnement dans \texttt{.env}
+    \item Lancement du serveur de développement : \texttt{npm run dev}
+\end{enumerate}
+
+\subsection{Accès aux Interfaces}
+
+\subsubsection{Application Web}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Frontend} : http://localhost:5173
+    \item \textbf{Backend API} : http://localhost:8000/api
+    \item \textbf{Admin Django} : http://localhost:8000/admin
+\end{itemize}
 
 \newpage
 
@@ -1082,36 +1094,67 @@ npm run dev
 
 Le projet InfluMatch implémente avec succès une plateforme complète de mise en relation entre influenceurs et entreprises. Les fonctionnalités principales incluent :
 
-\begin{itemize}
-    \item Système d'authentification sécurisé avec JWT
-    \item Gestion complète des profils utilisateurs
-    \item Marketplace pour les campagnes publicitaires
-    \item Système de candidatures
-    \item Dashboard analytique
-    \item Interface d'administration Django
-    \item Notifications en temps réel
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Système d'authentification sécurisé} : Authentification JWT avec gestion des tokens d'accès et de rafraîchissement, protection contre les attaques par force brute
+    \item \textbf{Gestion complète des profils} : Création et mise à jour de profils influenceurs avec calcul automatique du pourcentage de complétion
+    \item \textbf{Marketplace} : Interface de découverte d'offres avec fonctionnalités de recherche et de filtrage
+    \item \textbf{Gestion des candidatures} : Système de suivi des candidatures avec différents statuts
+    \item \textbf{Dashboard analytique} : Tableau de bord personnalisé avec statistiques et indicateurs de performance
+    \item \textbf{Interface d'administration} : Interface Django Admin complète pour la gestion des données
+    \item \textbf{Expérience utilisateur moderne} : Interface React responsive et intuitive avec TypeScript pour la sécurité de types
 \end{itemize}
 
-\subsection{Points Forts}
+\subsection{Points Forts Techniques}
 
-\begin{itemize}
-    \item Architecture MVC bien structurée
-    \item Séparation claire entre backend et frontend
-    \item Authentification sécurisée avec JWT
-    \item Interface utilisateur moderne avec React et TypeScript
-    \item Base de données relationnelle bien conçue
-    \item Code modulaire et maintenable
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Architecture MVC bien structurée} : Séparation claire des responsabilités entre backend et frontend
+    \item \textbf{API REST standardisée} : Endpoints bien définis suivant les conventions REST
+    \item \textbf{Sécurité robuste} : Authentification JWT, validation des données, protection CSRF, hashage sécurisé des mots de passe
+    \item \textbf{Base de données optimisée} : Schéma relationnel bien conçu avec index appropriés et contraintes d'intégrité
+    \item \textbf{Code modulaire et maintenable} : Structure de projet claire, composants réutilisables, services centralisés
+    \item \textbf{TypeScript} : Typage statique pour réduire les erreurs et améliorer la maintenabilité
+    \item \textbf{Automatisation} : Signaux Django pour la création automatique de profils, migrations automatiques
+\end{itemize}
+
+\subsection{Choix Techniques Justifiés}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Django REST Framework} : Framework mature et bien documenté pour la création d'APIs REST, avec support intégré de l'authentification et de la sérialisation
+    \item \textbf{React avec TypeScript} : Bibliothèque moderne pour les interfaces utilisateur avec typage statique pour la sécurité et la maintenabilité
+    \item \textbf{JWT} : Solution d'authentification stateless adaptée aux applications web modernes, facilitant la scalabilité
+    \item \textbf{MySQL} : Base de données relationnelle robuste et performante, adaptée aux données structurées du projet
+    \item \textbf{Bootstrap 5} : Framework CSS permettant un développement rapide d'interfaces responsive
 \end{itemize}
 
 \subsection{Améliorations Futures}
 
-\begin{itemize}
-    \item Ajout de fonctionnalités de messagerie
-    \item Système de paiement intégré
-    \item Analytics avancés pour les entreprises
-    \item Application mobile
-    \item Système de recommandations basé sur l'IA
-    \item Intégration avec les APIs des réseaux sociaux
+Plusieurs améliorations pourraient être apportées au projet :
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Fonctionnalités de messagerie} : Système de messagerie en temps réel entre influenceurs et entreprises
+    \item \textbf{Système de paiement} : Intégration d'un système de paiement pour faciliter les transactions
+    \item \textbf{Analytics avancés} : Tableaux de bord analytiques plus détaillés pour les entreprises avec métriques de performance des campagnes
+    \item \textbf{Application mobile} : Développement d'une application mobile native ou Progressive Web App
+    \item \textbf{Système de recommandations} : Algorithme de recommandation basé sur l'IA pour suggérer des influenceurs adaptés aux campagnes
+    \item \textbf{Intégration APIs sociales} : Connexion avec les APIs des réseaux sociaux pour récupérer automatiquement les statistiques des influenceurs
+    \item \textbf{Système de notation} : Système de notation et d'avis pour évaluer les collaborations
+    \item \textbf{Recherche avancée} : Fonctionnalités de recherche plus sophistiquées avec filtres multiples et recherche sémantique
+    \item \textbf{Notifications en temps réel} : Système de notifications push en temps réel via WebSockets
+    \item \textbf{Multilingue} : Support de plusieurs langues pour l'internationalisation
+\end{itemize}
+
+\subsection{Apprentissages et Défis}
+
+Le développement de ce projet a permis de mettre en pratique de nombreux concepts :
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Architecture full-stack} : Compréhension approfondie de l'architecture full-stack et de la communication entre backend et frontend
+    \item \textbf{Authentification moderne} : Implémentation d'un système d'authentification JWT sécurisé
+    \item \textbf{Gestion d'état} : Utilisation de React Context API pour la gestion d'état global
+    \item \textbf{API REST} : Conception et implémentation d'une API REST complète et documentée
+    \item \textbf{Base de données relationnelle} : Modélisation et optimisation d'un schéma de base de données complexe
+    \item \textbf{TypeScript} : Utilisation de TypeScript pour améliorer la qualité et la maintenabilité du code
+    \item \textbf{Collaboration} : Travail en équipe avec gestion de version Git et répartition des tâches
 \end{itemize}
 
 \vspace{2cm}
@@ -1121,4 +1164,3 @@ Le projet InfluMatch implémente avec succès une plateforme complète de mise e
 \end{center}
 
 \end{document}
-

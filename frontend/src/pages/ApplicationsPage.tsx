@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Sidebar from '../components/layout/Sidebar';
@@ -165,7 +166,7 @@ export default function ApplicationsPage({ onLogout }: ApplicationsPageProps) {
                                 <div className="d-flex gap-2">
                                   <span className="badge bg-light text-dark">{offer.domain}</span>
                                   <span className="badge bg-light text-dark">{offer.budget}€</span>
-                                  {offer.platforms.map(platform => (
+                                  {(offer.platforms || []).map(platform => (
                                     <span key={platform} className="badge bg-light text-dark">{platform}</span>
                                   ))}
                                 </div>
