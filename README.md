@@ -106,8 +106,6 @@ influmatch/
 │           └── globals.css         # Styles globaux
 │
 ├── 📁 venv/                        # Environnement virtuel Python (ignoré par Git)
-│
-├── 📄 InfluMatch.sql               # Schéma SQL de la base de données
 ├── 📄 README.md                    # Documentation principale
 ├── 📄 INSTALLATION.md              # Guide d'installation détaillé
 ├── 📄 REPARTITION_TACHES.md        # Répartition des tâches (4 personnes)
@@ -175,9 +173,6 @@ frontend/
 - **Backend**: Django Views (`api/views/`) - Gestion des requêtes API
 - **Frontend**: Services (`frontend/src/services/`) - Communication avec l'API
 
-## Installation Rapide
-
-Pour une installation complète sur un nouvel ordinateur, consultez le guide détaillé : **[INSTALLATION.md](INSTALLATION.md)**
 
 ### Installation Rapide (Résumé)
 
