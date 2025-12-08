@@ -78,21 +78,7 @@ influmatch/
 │       │   ├── 📁 layout/         # Composants de layout
 │       │   │   ├── Sidebar.tsx     # Barre latérale
 │       │   │   └── TopBar.tsx      # Barre supérieure
-│       │   ├── OfferCard.tsx       # Carte d'offre
-│       │   └── 📁 ui/             # Composants UI (shadcn/ui)
-│       │       ├── accordion.tsx
-│       │       ├── alert.tsx
-│       │       ├── avatar.tsx
-│       │       ├── badge.tsx
-│       │       ├── button.tsx
-│       │       ├── card.tsx
-│       │       ├── dialog.tsx
-│       │       ├── form.tsx
-│       │       ├── input.tsx
-│       │       ├── select.tsx
-│       │       ├── table.tsx
-│       │       ├── tabs.tsx
-│       │       └── ... (48 composants UI au total)
+│       │   └── OfferCard.tsx       # Carte d'offre
 │       │
 │       ├── 📁 services/            # Services API (MVC: Controller)
 │       │   ├── api.ts              # Service API principal
@@ -102,14 +88,11 @@ influmatch/
 │       │   └── AuthContext.tsx     # Contexte d'authentification
 │       │
 │       └── 📁 styles/              # Styles CSS
-│           ├── bootstrap-custom.css # Styles Bootstrap personnalisés
-│           └── globals.css         # Styles globaux
+│           └── bootstrap-custom.css # Styles Bootstrap personnalisés (optionnel)
 │
 ├── 📁 venv/                        # Environnement virtuel Python (ignoré par Git)
 ├── 📄 README.md                    # Documentation principale
-├── 📄 INSTALLATION.md              # Guide d'installation détaillé
 ├── 📄 REPARTITION_TACHES.md        # Répartition des tâches (4 personnes)
-├── 📄 DESCRIPTION_FICHIERS.md       # Description des fichiers
 └── 📄 rapport.tex                  # Rapport LaTeX du projet
 ```
 
@@ -134,7 +117,7 @@ api/                  # Application principale
   └── signals.py      # Signaux Django
 ```
 
-### Frontend (React + TypeScript + Vite)
+### Frontend (React + TypeScript + Vite + Bootstrap)
 
 ```
 frontend/
@@ -149,14 +132,13 @@ frontend/
   │   │   ├── layout/         # Composants de layout
   │   │   │   ├── Sidebar.tsx
   │   │   │   └── TopBar.tsx
-  │   │   ├── ui/             # Composants UI (shadcn/ui)
   │   │   └── OfferCard.tsx
   │   ├── services/           # Services API (MVC: Controller)
   │   │   ├── api.ts
   │   │   └── mockData.ts
   │   ├── contexts/           # Contextes React
   │   │   └── AuthContext.tsx
-  │   └── styles/             # Styles CSS
+  │   └── index.css           # Styles globaux (Bootstrap + custom)
 ```
 
 ## Architecture MVC
@@ -168,6 +150,8 @@ frontend/
 ### View (Frontend)
 - **React Pages** (`frontend/src/pages/`): Pages principales de l'application
 - **React Components** (`frontend/src/components/`): Composants réutilisables
+- **Bootstrap 5**: Framework CSS utilisé exclusivement pour le styling
+- **React Bootstrap**: Composants React basés sur Bootstrap
 
 ### Controller
 - **Backend**: Django Views (`api/views/`) - Gestion des requêtes API
@@ -340,7 +324,21 @@ Voir `InfluMatch.sql` pour le schéma complet.
 
 ## Technologies
 
-- **Backend**: Django 5.2, Django REST Framework, MySQL
-- **Frontend**: React 18, TypeScript, Vite, Bootstrap 5
+### Backend
+- **Framework**: Django 5.2
+- **API**: Django REST Framework
+- **Database**: MySQL 8.0+
 - **Authentication**: JWT (Simple JWT)
+
+### Frontend
+- **Framework**: React 18.3.1 avec TypeScript
+- **Build Tool**: Vite 6.3.5
+- **UI Framework**: Bootstrap 5.3.3 (exclusivement)
+- **React Components**: React Bootstrap 2.10.2
+- **Routing**: React Router DOM 7.9.6
+- **Icons**: Lucide React
+- **Charts**: Recharts
+- **Forms**: React Hook Form
+
+
 
