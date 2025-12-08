@@ -3,7 +3,7 @@
 \usepackage[french]{babel}
 \usepackage{geometry}
 \usepackage{graphicx}
-\usepackage{hyperref}
+\usepackage[hidelinks]{hyperref}
 \usepackage{listings}
 \usepackage{xcolor}
 \usepackage{amsmath}
@@ -33,8 +33,9 @@
     % Logo de l'université
     % Note: Ajustez le chemin du logo si nécessaire
     \vspace*{1cm}
-    \includegraphics[width=0.4\textwidth]{/Users/nouranehammouda/Desktop/Logo\ Universit\'e\ Paris-Nanterre.svg}
+    \includegraphics[width=0.4\textwidth]{UPN.svg}
     \vspace{1.5cm}
+    
     
     {\Huge\bfseries InfluMatch\par}
     \vspace{0.5cm}
@@ -55,6 +56,10 @@
     {\large Université Paris-Nanterre\par}
     \vspace{1cm}
     {\large \today\par}
+    \vspace{1.5cm}
+    {\large 
+    \href{https://github.com/nourane-hammouda/InfluMatch}{https://github.com/nourane-hammouda/InfluMatch}
+    \par}
     \vfill
 \end{titlepage}
 
@@ -66,6 +71,8 @@
 \subsection{Présentation du Projet}
 
 InfluMatch est une plateforme web complète permettant la mise en relation entre influenceurs et entreprises pour des collaborations publicitaires. Le projet a été développé en utilisant une architecture moderne full-stack avec Django REST Framework pour le backend et React avec TypeScript pour le frontend.
+
+Le code source du projet est disponible sur GitHub : \href{https://github.com/nourane-hammouda/InfluMatch}{https://github.com/nourane-hammouda/InfluMatch}
 
 La plateforme offre un écosystème complet où les influenceurs peuvent créer et gérer leur profil professionnel, consulter des offres de campagnes publicitaires, et postuler aux opportunités qui correspondent à leur domaine d'expertise. Pour les entreprises, la plateforme permet de publier des campagnes et de découvrir des influenceurs adaptés à leurs besoins marketing.
 
@@ -96,12 +103,15 @@ Les objectifs principaux du projet sont :
 \subsubsection{Frontend}
 
 \begin{itemize}[leftmargin=*]
-    \item \textbf{React 18} : Bibliothèque JavaScript moderne pour la construction d'interfaces utilisateur réactives et modulaires
+    \item \textbf{React 18.3.1} : Bibliothèque JavaScript moderne pour la construction d'interfaces utilisateur réactives et modulaires
     \item \textbf{TypeScript} : Superset typé de JavaScript offrant une meilleure maintenabilité du code et une détection précoce des erreurs
-    \item \textbf{Vite} : Outil de build moderne et rapide pour le développement frontend, offrant un rechargement à chaud optimisé
-    \item \textbf{Bootstrap 5} : Framework CSS pour la création d'interfaces responsive avec des composants pré-construits et un système de grille flexible
-    \item \textbf{React Router DOM} : Bibliothèque de routage pour la navigation entre les différentes pages de l'application React
+    \item \textbf{Vite 6.3.5} : Outil de build moderne et rapide pour le développement frontend, offrant un rechargement à chaud optimisé
+    \item \textbf{Bootstrap 5.3.3} : Framework CSS utilisé exclusivement pour la création d'interfaces responsive avec des composants pré-construits et un système de grille flexible
+    \item \textbf{React Bootstrap 2.10.2} : Composants React basés sur Bootstrap pour faciliter l'intégration de Bootstrap dans React
+    \item \textbf{React Router DOM 7.9.6} : Bibliothèque de routage pour la navigation entre les différentes pages de l'application React
     \item \textbf{Lucide React} : Bibliothèque d'icônes moderne et légère pour améliorer l'expérience visuelle
+    \item \textbf{Recharts} : Bibliothèque de graphiques pour React permettant la visualisation de données
+    \item \textbf{React Hook Form} : Bibliothèque pour la gestion efficace des formulaires avec validation
 \end{itemize}
 
 \subsubsection{Outils et Infrastructure}
@@ -171,7 +181,8 @@ La structure du projet est organisée de manière modulaire pour faciliter la ma
         \item \texttt{components/} : Composants réutilisables (Sidebar, TopBar, formulaires, etc.)
         \item \texttt{services/} : Services API et gestion de l'authentification
         \item \texttt{contexts/} : Contextes React pour la gestion d'état global (AuthContext)
-        \item \texttt{styles/} : Fichiers CSS et styles personnalisés
+        \item \texttt{index.css} : Fichier CSS principal importe Bootstrap et styles personnalisés
+        \item \texttt{styles/} : Fichiers CSS additionnels (styles Bootstrap personnalisés optionnels)
     \end{itemize}
 \end{itemize}
 
@@ -1123,7 +1134,7 @@ Le projet InfluMatch implémente avec succès une plateforme complète de mise e
     \item \textbf{React avec TypeScript} : Bibliothèque moderne pour les interfaces utilisateur avec typage statique pour la sécurité et la maintenabilité
     \item \textbf{JWT} : Solution d'authentification stateless adaptée aux applications web modernes, facilitant la scalabilité
     \item \textbf{MySQL} : Base de données relationnelle robuste et performante, adaptée aux données structurées du projet
-    \item \textbf{Bootstrap 5} : Framework CSS permettant un développement rapide d'interfaces responsive
+    \item \textbf{Bootstrap 5 avec React Bootstrap} : Framework CSS utilisé exclusivement pour le styling, permettant un développement rapide d'interfaces responsive avec des composants React pré-construits
 \end{itemize}
 
 \subsection{Améliorations Futures}
