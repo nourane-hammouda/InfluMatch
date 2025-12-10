@@ -2,7 +2,8 @@
  * API service for communicating with Django backend
  */
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/api';
+// Utiliser le proxy Vite en développement, ou l'URL directe en production
+const API_BASE_URL = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? '/api' : 'http://127.0.0.1:8000/api');
 
 // Debug: log API URL in development
 if (import.meta.env.DEV) {
@@ -34,9 +35,9 @@ async function apiRequest<T>(
   options: RequestInit = {}
 ): Promise<T> {
   const token = getToken();
-  const headers: HeadersInit = {
+  const headers: Record<string, string> = {
     'Content-Type': 'application/json',
-    ...options.headers,
+    ...(options.headers as Record<string, string> || {}),
   };
 
   if (token) {
@@ -53,10 +54,13 @@ async function apiRequest<T>(
     try {
       const newToken = await refreshAccessToken();
       if (newToken) {
-        headers['Authorization'] = `Bearer ${newToken}`;
+        const retryHeaders: Record<string, string> = {
+          ...headers,
+          'Authorization': `Bearer ${newToken}`,
+        };
         const retryResponse = await fetch(`${API_BASE_URL}${endpoint}`, {
           ...options,
-          headers,
+          headers: retryHeaders,
         });
         if (!retryResponse.ok) {
           throw new Error(`API error: ${retryResponse.statusText}`);
