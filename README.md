@@ -8,6 +8,7 @@ Platforme de mise en relation entre influenceurs et entreprises.
 influmatch/
 ├── 📄 manage.py                    # Script de gestion Django
 ├── 📄 requirements.txt             # Dépendances Python
+├── 📄 .env.example                 # Exemple de variables d'environnement
 ├── 📄 .env                         # Variables d'environnement (à créer)
 ├── 📄 .gitignore                   # Fichiers ignorés par Git
 │
@@ -45,7 +46,8 @@ influmatch/
 │   ├── 📁 migrations/              # Migrations Django
 │   │   ├── __init__.py
 │   │   ├── 0001_initial.py
-│   │   └── 0002_alter_user_options_alter_user_managers_and_more.py
+│   │   ├── 0002_alter_user_options_alter_user_managers_and_more.py
+│   │   └── 0003_rename_utilisateur_email_1cb90f_idx_idx_email_and_more.py
 │   │
 │   └── 📁 management/              # Commandes de gestion
 │       └── commands/
@@ -54,13 +56,17 @@ influmatch/
 │
 ├── 📁 frontend/                     # Application React
 │   ├── 📄 package.json             # Dépendances Node.js
+│   ├── 📄 package-lock.json        # Lock file npm
 │   ├── 📄 vite.config.ts           # Configuration Vite
+│   ├── 📄 tsconfig.json            # Configuration TypeScript
+│   ├── 📄 tsconfig.node.json       # Configuration TypeScript pour Node
 │   ├── 📄 index.html               # Point d'entrée HTML
 │   │
 │   └── 📁 src/                     # Code source React
 │       ├── 📄 main.tsx             # Point d'entrée React
 │       ├── 📄 App.tsx              # Composant principal + Routing
 │       ├── 📄 index.css            # Styles globaux
+│       ├── 📄 vite-env.d.ts        # Types TypeScript pour Vite
 │       │
 │       ├── 📁 pages/               # Pages/Vues (MVC: View)
 │       │   ├── LandingPage.tsx     # Page d'accueil
@@ -88,12 +94,13 @@ influmatch/
 │       │   └── AuthContext.tsx     # Contexte d'authentification
 │       │
 │       └── 📁 styles/              # Styles CSS
-│           └── bootstrap-custom.css # Styles Bootstrap personnalisés (optionnel)
+│           ├── bootstrap-custom.css # Styles Bootstrap personnalisés
+│           └── globals.css         # Styles globaux personnalisés
 │
 ├── 📁 venv/                        # Environnement virtuel Python (ignoré par Git)
 ├── 📄 README.md                    # Documentation principale
-├── 📄 REPARTITION_TACHES.md        # Répartition des tâches (4 personnes)
-└── 📄 rapport.tex                  # Rapport LaTeX du projet
+├── 📄 rapport.tex                  # Rapport LaTeX du projet
+└── 📄 Logo_Université_Paris-Nanterre.svg  # Logo de l'université
 ```
 
 ## Structure du Projet
@@ -145,7 +152,7 @@ frontend/
 
 ### Model (Backend)
 - **Django Models** (`api/models/`): Définition des entités de données
-- **Database**: MySQL avec schéma personnalisé
+- **Database**: MySQL 8.0+ (SQLite optionnel via variable d'environnement)
 
 ### View (Frontend)
 - **React Pages** (`frontend/src/pages/`): Pages principales de l'application
@@ -164,7 +171,7 @@ frontend/
 
 - **Python** 3.8+ (recommandé: Python 3.11+)
 - **Node.js** 18+ et npm
-- **MySQL** 8.0+
+- **MySQL** 8.0+ (requis par défaut)
 - **Git**
 
 ### Étape 1 : Cloner le projet
@@ -185,6 +192,8 @@ CREATE DATABASE InfluMatch CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```bash
 mysql -u root -p InfluMatch < InfluMatch.sql
 ```
+
+**Note :** Le projet utilise MySQL par défaut. Pour utiliser SQLite à la place, ajouter `USE_SQLITE=true` dans le fichier `.env`.
 
 ### Étape 3 : Configuration du Backend (Django)
 
@@ -222,6 +231,11 @@ DB_USER=root
 DB_PASSWORD=votre_mot_de_passe_mysql
 DB_HOST=localhost
 DB_PORT=3306
+```
+
+**Si vous préférez utiliser SQLite** (optionnel), ajouter :
+```env
+USE_SQLITE=true
 ```
 
    **Générer une SECRET_KEY** :
@@ -320,19 +334,20 @@ npm run build
 
 ## Structure de la Base de Données
 
-Voir `InfluMatch.sql` pour le schéma complet.
+La base de données utilise MySQL 8.0+ par défaut. Les migrations Django définissent le schéma complet. Pour utiliser SQLite à la place, ajouter `USE_SQLITE=true` dans le fichier `.env`.
 
 ## Technologies
 
 ### Backend
 - **Framework**: Django 5.2
 - **API**: Django REST Framework
-- **Database**: MySQL 8.0+
+- **Database**: MySQL 8.0+ (par défaut) ou SQLite (optionnel)
 - **Authentication**: JWT (Simple JWT)
 
 ### Frontend
 - **Framework**: React 18.3.1 avec TypeScript
 - **Build Tool**: Vite 6.3.5
+- **TypeScript**: Configuration complète avec types Vite
 - **UI Framework**: Bootstrap 5.3.3 (exclusivement)
 - **React Components**: React Bootstrap 2.10.2
 - **Routing**: React Router DOM 7.9.6
