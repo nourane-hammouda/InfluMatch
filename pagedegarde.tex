@@ -1,0 +1,87 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Page de garde (InfluMatch)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\makeatletter
+
+% --- Commandes pour les membres
+\def\@membrea{}
+\newcommand{\membrea}[1]{\def\@membrea{#1\\}}
+\def\@membreb{}
+\newcommand{\membreb}[1]{\def\@membreb{#1\\}}
+\def\@membrec{}
+\newcommand{\membrec}[1]{\def\@membrec{#1\\}}
+\def\@membred{}
+\newcommand{\membred}[1]{\def\@membred{#1\\}}
+
+\makeatother
+
+% --- Bordure
+%\newcommand\BackgroundPic{%
+%	\put(0,0){%
+%		\parbox[b][\paperheight]{\paperwidth}{%
+%			\includegraphics[height=0.45\paperheight]{bordure.png}%
+%			\vfill
+%		}
+%	}
+%}
+
+% --- Commande principale
+\makeatletter
+\newcommand{\pagedegarde}{
+\newgeometry{top=2.5cm, bottom=1cm, left=2cm, right=1cm}
+\AddToShipoutPicture*{\BackgroundPic}
+
+\begin{titlepage}
+\centering
+
+% --- Logo
+\includegraphics[width=0.55\textwidth]{logo_Paris_Nanterre_couleur_RVB.png}
+
+\vspace{1cm}
+
+% --- Ligne Licence
+{\Large Licence MIAGE — Troisième année}\\[0.8cm]
+
+% --- Titre
+{\huge\color{rosepale}\bfseries \@title}\\[0.4cm]
+
+% --- Sous-titre
+{\large Plateforme de mise en relation entre influenceurs et entreprises}\\[0.4cm]
+
+% --- Développement Web
+{\Large\bfseries Développement Web}\\[1.2cm]
+
+\vfill
+
+% --- Membres du groupe
+{\large\bfseries Membres du groupe}\\[0.2cm]
+{\large
+\@membrea
+\@membreb
+\@membrec
+\@membred
+}
+
+\vfill
+
+% --- Date centrée
+{\Large 18 décembre 2025}\\[0.8cm]
+
+% --- GitHub centré et encadré
+\begin{center}
+\fcolorbox{rosepale}{white}{
+    \begin{minipage}{0.65\linewidth}
+    \centering
+    {\bfseries Dépôt GitHub : }\\[0.15cm]
+    \href{https://github.com/nourane-hammouda/InfluMatch}
+         {github.com/nourane-hammouda/InfluMatch}
+    \end{minipage}
+}
+\end{center}
+
+\end{titlepage}
+
+\restoregeometry
+}
+\makeatother
