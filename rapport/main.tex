@@ -1,0 +1,709 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage[hidelinks]{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{titlesec}
+\usepackage{newunicodechar}
+\newunicodechar{ }{\,}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{eso-pic}
+
+% Couleur rose pâle
+%\definecolor{rosepale}{RGB}{255,150,200}
+
+% Page de garde
+\input{pagedegarde}
+
+% --- Infos du projet
+\title{InfluMatch}
+
+\membrea{HAMMOUDA Nourane}
+\membreb{BENMAHMOUD Zaineb}
+\membrec{MABROUKI Chaïma}
+\membred{MOTHU Ornela}
+
+\begin{document}
+
+\pagedegarde
+
+\newpage
+\tableofcontents
+\newpage
+
+\section{Introduction}
+
+\subsection{Présentation du Projet}
+
+InfluMatch est une plateforme web complète permettant la mise en relation entre influenceurs et entreprises pour des collaborations publicitaires. Le projet a été développé avec une architecture full-stack moderne, combinant Django REST Framework pour le backend et React avec TypeScript pour le frontend.
+
+Le code source du projet est disponible sur GitHub : \href{https://github.com/nourane-hammouda/InfluMatch}{https://github.com/nourane-hammouda/InfluMatch}
+
+La plateforme offre un écosystème complet où les influenceurs peuvent créer et gérer leur profil professionnel, consulter des offres de campagnes publicitaires, et postuler aux opportunités qui correspondent à leur domaine d'expertise. Pour les entreprises, la plateforme permet de publier des campagnes et de découvrir des influenceurs adaptés à leurs besoins marketing.
+
+\subsection{Objectifs du Projet}
+
+Les objectifs principaux du projet sont :
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Authentification sécurisée} : Mettre en place un système d'authentification robuste avec JWT (JSON Web Tokens) permettant la gestion des sessions utilisateurs de manière sécurisée
+    \item \textbf{Gestion de profils} : Permettre aux influenceurs de créer et compléter leur profil professionnel avec toutes les informations nécessaires (domaines d'expertise, plateformes sociales, tarifs)
+    \item \textbf{Marketplace} : Offrir une interface de découverte des campagnes publicitaires avec des fonctionnalités de recherche et de filtrage
+    \item \textbf{Gestion des candidatures} : Faciliter la candidature des influenceurs et le suivi des applications
+    \item \textbf{Dashboard analytique} : Fournir un tableau de bord avec statistiques et indicateurs
+    \item \textbf{Expérience utilisateur moderne} : Développer une interface utilisateur intuitive et responsive avec React et TypeScript
+\end{itemize}
+
+\subsection{Technologies Utilisées}
+
+\subsubsection{Backend}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Django 5.2} : Framework web Python pour le développement backend, offrant une architecture MVC robuste et une administration intégrée
+    \item \textbf{Django REST Framework} : Extension de Django spécialisée dans la création d'APIs REST, facilitant la sérialisation, la validation et la documentation des endpoints
+    \item \textbf{MySQL} : Base de données relationnelle pour le stockage persistant des données avec un schéma optimisé et des relations bien définies
+    \item \textbf{Simple JWT} : Bibliothèque pour l'implémentation de l'authentification par tokens JWT (JSON Web Tokens) avec support des tokens d'accès et de rafraîchissement
+\end{itemize}
+
+\subsubsection{Frontend}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{React 18.3.1} : Bibliothèque JavaScript moderne pour la construction d'interfaces utilisateur réactives et modulaires
+    \item \textbf{TypeScript} : Superset typé de JavaScript offrant une meilleure maintenabilité du code et une détection précoce des erreurs
+    \item \textbf{Vite 6.3.5} : Outil de build moderne et rapide pour le développement frontend, offrant un rechargement à chaud optimisé
+    \item \textbf{Bootstrap 5.3.3} : Framework CSS utilisé exclusivement pour la création d'interfaces responsive avec des composants pré-construits et un système de grille flexible
+    \item \textbf{React Bootstrap 2.10.2} : Composants React basés sur Bootstrap pour faciliter l'intégration de Bootstrap dans React
+    \item \textbf{React Router DOM 7.9.6} : Bibliothèque de routage pour la navigation entre les différentes pages de l'application React
+    \item \textbf{Lucide React} : Bibliothèque d'icônes moderne et légère pour améliorer l'expérience visuelle
+    \item \textbf{Recharts} : Bibliothèque de graphiques pour React permettant la visualisation de données
+    \item \textbf{React Hook Form} : Bibliothèque pour la gestion efficace des formulaires avec validation
+\end{itemize}
+
+\subsubsection{Outils et Infrastructure}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Git} : Système de contrôle de version pour la gestion collaborative du code
+    \item \textbf{npm} : Gestionnaire de paquets pour les dépendances JavaScript/TypeScript
+    \item \textbf{pip} : Gestionnaire de paquets Python pour les dépendances backend
+    \item \textbf{MySQL Connector} : Driver Python pour la connexion à la base de données MySQL
+\end{itemize}
+
+\section{Architecture du Projet}
+
+\subsection{Architecture Générale}
+
+Le projet suit une architecture full-stack moderne avec une séparation claire entre le backend et le frontend, communiquant via une API REST. Cette architecture assure maintenabilité, évolutivité et indépendance entre backend et frontend.
+
+\subsubsection{Architecture MVC Adaptée}
+
+Le projet implémente une architecture MVC (Model-View-Controller) adaptée au contexte full-stack :
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Model (Backend)} : Les modèles Django dans \texttt{api/models/} représentent la structure des données et la logique métier associée. Ils définissent les entités du système (User, Influenceur, Campagne, Candidature, etc.) et leurs relations.
+    
+    \item \textbf{View (Frontend)} : Les pages React dans \texttt{frontend/src/pages/} constituent la couche de présentation. Elles affichent les données et gèrent l’interaction utilisateur via l’API backend.
+    
+    \item \textbf{Controller} : 
+    \begin{itemize}
+        \item \textbf{Backend} : Les vues API dans \texttt{api/views/} agissent comme contrôleurs, gérant les requêtes HTTP, la validation des données, et la logique métier avant de retourner les réponses appropriées.
+        \item \textbf{Frontend} : Les services dans \texttt{frontend/src/services/} gèrent la communication avec l'API, la transformation des données, et la gestion des états d'authentification.
+    \end{itemize}
+\end{itemize}
+
+\subsection{Structure des Répertoires}
+
+La structure du projet est organisée de manière modulaire pour faciliter la maintenance et la collaboration :
+
+\subsubsection{Backend (Django)}
+
+\begin{itemize}[leftmargin=*]
+    \item \texttt{backend/} : Configuration principale Django
+    \begin{itemize}
+        \item \texttt{settings.py} : Configuration de l'application (base de données, middleware, CORS, JWT, etc.)
+        \item \texttt{urls.py} : Routes principales pointant vers l'API et l'administration
+        \item \texttt{wsgi.py} : Configuration WSGI pour le déploiement en production
+    \end{itemize}
+    
+    \item \texttt{api/} : Application Django principale
+    \begin{itemize}
+        \item \texttt{models/} : Définition des modèles de données (User, Influenceur, Campagne, etc.)
+        \item \texttt{views/} : Vues API gérant les endpoints REST
+        \item \texttt{serializers/} : Sérialiseurs DRF pour la transformation des données
+        \item \texttt{urls.py} : Routes API spécifiques
+        \item \texttt{signals.py} : Signaux Django pour automatiser certaines actions, comme la création de profils
+        \item \texttt{admin.py} : Configuration de l'interface d'administration Django
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Frontend (React)}
+
+\begin{itemize}[leftmargin=*]
+    \item \texttt{frontend/src/} : Code source React
+    \begin{itemize}
+        \item \texttt{pages/} : Pages principales de l'application (Landing, Login, Dashboard, Marketplace, etc.)
+        \item \texttt{components/} : Composants réutilisables (Sidebar, TopBar, formulaires, etc.)
+        \item \texttt{services/} : Services API et gestion de l'authentification
+        \item \texttt{contexts/} : Contextes React pour la gestion d'état global (AuthContext)
+        \item \texttt{index.css} : Fichier CSS principal, incluant Bootstrap et styles personnalisés
+        \item \texttt{styles/} : Fichiers CSS additionnels (styles Bootstrap personnalisés optionnels)
+    \end{itemize}
+\end{itemize}
+
+\subsection{Communication Backend-Frontend}
+
+La communication entre le backend et le frontend s'effectue via une API REST utilisant le protocole HTTP/HTTPS. Les principales caractéristiques de cette communication sont :
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Format JSON} : Toutes les données sont échangées au format JSON, facilitant la manipulation côté frontend
+    \item \textbf{Authentification JWT} : Les requêtes authentifiées incluent un token JWT dans l'en-tête Authorization
+    \item \textbf{CORS} : Configuration Cross-Origin Resource Sharing pour autoriser les requêtes depuis le frontend
+    \item \textbf{Gestion d'erreurs} : Système unifié de gestion des erreurs avec codes HTTP appropriés et messages descriptifs
+\end{itemize}
+\section{Modèles de Données}
+
+\subsection{Architecture de la Base de Données}
+
+La base de données MySQL assure la cohérence et la fiabilité des données de la plateforme, permettant de gérer efficacement les utilisateurs, campagnes et candidatures.
+
+\subsection{Modèle User}
+
+Le modèle \texttt{User} est le modèle central du système d'authentification. Il hérite de \texttt{AbstractBaseUser} de Django, permettant une personnalisation complète du système d'authentification.
+
+
+\subsubsection{Relations}
+
+Le modèle User entretient des relations OneToOne avec les modèles \texttt{Influenceur} et \texttt{Entreprise}, permettant à chaque utilisateur d'avoir un profil spécifique selon son type.
+
+\subsection{Modèle Influenceur}
+
+Le modèle \texttt{Influenceur} représente le profil professionnel complet d'un influenceur sur la plateforme.
+
+\subsubsection{Informations de Base}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Pseudo} : Nom d'affichage public de l'influenceur
+    \item \textbf{Photo de profil} : URL de l'image de profil
+    \item \textbf{Biographie} : Description personnelle et professionnelle
+    \item \textbf{Localisation} : Localisation géographique de l'influenceur
+\end{itemize}
+
+\subsubsection{Métriques et Statistiques}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Pourcentage de complétion} : Calcul automatique basé sur les champs remplis (pseudo, bio, localisation, domaines, plateformes, tarifs)
+    \item \textbf{Taux d'acceptation} : Pourcentage de candidatures acceptées sur le total
+    \item \textbf{Total de candidatures} : Nombre total de candidatures soumises
+    \item \textbf{Candidatures acceptées} : Nombre de candidatures acceptées
+\end{itemize}
+
+\subsection{Modèle Entreprise et Campagne}
+
+\subsubsection{Modèle Entreprise}
+
+Le modèle \texttt{Entreprise} représente les entreprises utilisant la plateforme pour publier des campagnes.
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Nom de l'entreprise} : Nom officiel de l'entreprise
+    \item \textbf{Description} : Présentation de l'entreprise et de ses activités
+    \item \textbf{Secteur} : Secteur d'activité de l'entreprise
+    \item \textbf{Taille} : Taille de l'entreprise (startup, PME, grande entreprise)
+\end{itemize}
+
+\subsubsection{Modèle Campagne}
+
+Le modèle \texttt{Campagne} représente les offres publicitaires publiées par les entreprises.
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Informations de base} : Titre, description détaillée de la campagne
+    \item \textbf{Budget} : Budget minimum et maximum alloué à la campagne
+    \item \textbf{Date limite} : Date limite pour les candidatures
+    \item \textbf{Statut} : État de la campagne (brouillon, active, fermée, annulée)
+    \item \textbf{Domaines ciblés} : Relation ManyToMany avec \texttt{DomaineExpertise} pour cibler des domaines spécifiques
+    \item \textbf{Plateformes ciblées} : Relation ManyToMany avec \texttt{PlateformeSociale} pour cibler des plateformes spécifiques
+    \item \textbf{Métriques} : Nombre total de candidatures reçues
+\end{itemize}
+
+\subsection{Modèle Candidature}
+
+Le modèle \texttt{Candidature} représente les candidatures des influenceurs aux campagnes.
+
+\subsubsection{Caractéristiques}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Statut} : État de la candidature (en attente, acceptée, refusée, retirée)
+    \item \textbf{Message de motivation} : Message personnalisé de l'influenceur expliquant son intérêt
+    \item \textbf{Prix proposé} : Tarif proposé par l'influenceur pour la collaboration
+    \item \textbf{Date de candidature} : Timestamp automatique de la soumission
+    \item \textbf{Contrainte d'unicité} : Un influenceur ne peut candidater qu'une seule fois par campagne
+\end{itemize}
+
+\subsection{Modèle Notification}
+
+Le modèle \texttt{Notification} permet de notifier les utilisateurs des événements importants (nouvelles campagnes, réponses aux candidatures, etc.).
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Type} : Type de notification (nouvelle campagne, réponse candidature, etc.)
+    \item \textbf{Message} : Contenu de la notification
+    \item \textbf{Statut de lecture} : Indicateur si la notification a été lue
+    \item \textbf{Timestamp} : Date de création de la notification
+\end{itemize}
+
+\section{Système d'Authentification}
+
+\subsection{Architecture JWT}
+
+Le projet utilise JSON Web Tokens (JWT) pour gérer les sessions utilisateurs de manière sécurisée et stateless. Cette approche permet d'authentifier les requêtes sans stocker de session côté serveur, tout en garantissant la sécurité des échanges et la compatibilité avec différents clients (web, mobile).
+
+\subsection{Processus d'Inscription et de Connexion}
+
+\textbf{Inscription :} L'utilisateur fournit un email, un mot de passe et son type (influenceur ou entreprise). Le système vérifie les données, crée le compte avec un mot de passe hashé, génère les tokens JWT (access et refresh) et crée automatiquement le profil associé.
+
+\textbf{Connexion :} L'utilisateur saisit son email et son mot de passe. Après validation, les tokens JWT sont générés et renvoyés au client pour authentifier les futures requêtes. La dernière connexion est également enregistrée. Le système utilise l'email comme identifiant grâce à un serializer personnalisé.
+
+\subsection{Gestion et Sécurité des Tokens}
+
+Deux types de tokens sont utilisés : 
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Access Token} : court terme, pour authentifier les requêtes API
+    \item \textbf{Refresh Token} : long terme, pour obtenir de nouveaux tokens d'accès
+\end{itemize}
+
+Les tokens sont sécurisés grâce à leur expiration automatique et à la rotation des refresh tokens. Les tokens expirés sont invalidés pour empêcher toute réutilisation abusive.
+
+\subsection{Protection des Routes}
+
+Les endpoints backend sont protégés par des permissions Django REST Framework, garantissant que seules les requêtes authentifiées accèdent aux ressources sensibles.  
+Côté frontend, les tokens sont stockés et injectés automatiquement dans les requêtes API, avec redirection vers la page de connexion si l'utilisateur n'est pas authentifié ou si le token a expiré.
+
+
+\section{Gestion des Profils}
+
+\subsection{Architecture de Gestion des Profils}
+
+Le système de gestion des profils permet aux influenceurs de créer, consulter et mettre à jour leur profil professionnel. Ce profil centralise l’ensemble des informations nécessaires pour participer aux campagnes proposées sur la plateforme.
+
+\subsection{Profil Influenceur}
+
+Le profil influenceur est structuré autour de plusieurs éléments essentiels permettant de présenter clairement l’utilisateur aux entreprises.
+
+\subsubsection{Composants du Profil}
+
+Le profil influenceur comprend :
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Informations de base} : pseudo, biographie, localisation et photo de profil
+    \item \textbf{Domaines d'expertise} : sélection d’un ou plusieurs domaines d’activité
+    \item \textbf{Plateformes sociales} : plateformes utilisées avec indication du nombre d’abonnés
+    \item \textbf{Tarifs} : prix proposés selon le type de contenu (post, story, vidéo)
+\end{itemize}
+
+\subsubsection{Complétion du Profil}
+
+Un pourcentage de complétion du profil est calculé automatiquement en fonction des informations renseignées par l’influenceur. Cet indicateur permet d’encourager les utilisateurs à compléter leur profil afin d’optimiser leur visibilité auprès des entreprises.
+
+\subsection{Mise à Jour du Profil}
+
+Les influenceurs peuvent modifier à tout moment les informations de leur profil via l’interface de la plateforme. Les modifications prennent en compte l’ensemble des sections du profil (informations personnelles, domaines, plateformes et tarifs) et sont enregistrées de manière cohérente.
+
+\subsection{Récupération des Informations Utilisateur}
+
+La plateforme permet de récupérer les informations de l’utilisateur connecté afin d’afficher dynamiquement son profil et son niveau de complétion. Ces données sont structurées de manière à être directement exploitables par le frontend pour l’affichage des profils et des tableaux de bord.
+
+\section{Interface Utilisateur Frontend}
+
+\subsection{Architecture Frontend}
+
+L’interface utilisateur de la plateforme InfluMatch est développée avec React et TypeScript. Ce choix technologique permet de proposer une application moderne, dynamique et offrant une bonne expérience utilisateur.
+
+\subsection{Pages Principales}
+
+\subsubsection{Page d’Accueil}
+
+La page d’accueil (\texttt{LandingPage.tsx}) constitue le point d’entrée principal de la plateforme. Elle présente le concept du service, les fonctionnalités principales ainsi que des appels à l’action invitant les visiteurs à s’inscrire ou à se connecter.
+
+La \fbox{\hyperref[fig:1]{figure suivante}} illustre la page d’accueil de la plateforme InfluMatch.
+
+
+\subsubsection{Pages d’Authentification}
+
+Les pages d’inscription (\texttt{SignupPage.tsx}) et de connexion (\texttt{LoginPage.tsx}) permettent aux utilisateurs de créer un compte ou d’accéder à leur espace personnel. Elles intègrent des formulaires avec validation des données et gestion des erreurs afin de guider l’utilisateur tout au long du processus.
+
+ La \fbox{\hyperref[fig:2]{figure suivante}} illustre la page d’inscription et \fbox{\hyperref[fig:3]{celle-ci}} illustre la page de connexion de la plateforme InfluMatch.
+
+
+\subsubsection{Dashboard}
+
+Le dashboard (\texttt{DashboardPage.tsx}) représente l’espace principal des utilisateurs authentifiés. Il offre une vue d’ensemble des informations importantes, telles que le niveau de complétion du profil, les statistiques personnelles et un accès rapide aux fonctionnalités clés de la plateforme.
+
+La \fbox{\hyperref[fig:4]{figure suivante}} présente le tableau de bord utilisateur après authentification.
+
+
+\subsubsection{Marketplace}
+
+La marketplace (\texttt{MarketplacePage.tsx}) permet aux influenceurs de découvrir les campagnes publiées par les entreprises. Les utilisateurs peuvent consulter les offres disponibles, effectuer des recherches et appliquer différents filtres afin de trouver des campagnes correspondant à leurs critères.
+
+La \fbox{\hyperref[fig:5]{figure suivante}} illustre la marketplace permettant la recherche et la consultation des campagnes.
+
+\subsubsection{Page de Détails d’Offre}
+
+La page de détails d’une offre (\texttt{OfferDetailPage.tsx}) affiche l’ensemble des informations liées à une campagne, incluant sa description, son budget et les critères recherchés. Elle permet également à l’influenceur de postuler directement à la campagne (actuellement non fonctionnel, données fictives).
+
+La page de détails d’une offre de campagne se trouve sur la \fbox{\hyperref[fig:5]{même figure}} que la marketplace.
+
+
+\subsubsection{Gestion des Candidatures}
+
+La page de gestion des candidatures (\texttt{ApplicationsPage.tsx}) permet aux influenceurs de suivre l’ensemble de leurs candidatures et d’en consulter le statut. Cette interface facilite le suivi des réponses des entreprises.
+
+La \fbox{\hyperref[fig:6]{figure suivante}} illustre les différentes candidatures que les influenceurs ont pu envoyer.
+
+
+\subsubsection{Profil Utilisateur}
+
+La page profil (\texttt{ProfilePage.tsx}) permet aux utilisateurs de consulter et de modifier leurs informations personnelles et professionnelles. Elle constitue un élément central de la plateforme, notamment pour les influenceurs souhaitant valoriser leur profil auprès des entreprises.
+
+La \fbox{\hyperref[fig:7]{figure suivante}} présente l’interface de gestion du profil de l'influenceur.
+
+\subsubsection{Complétion du Profil}
+
+Une interface dédiée (\texttt{ProfileCompletionPage.tsx}) guide les influenceurs dans la complétion progressive de leur profil. Un indicateur de progression permet de visualiser le niveau de complétion et d’encourager l’utilisateur à renseigner l’ensemble des informations requises.
+
+La page de complétion du profil se trouve sur la \fbox{\hyperref[fig:7]{même figure}} que la page du profil.
+
+\subsection{Composants Réutilisables}
+
+La plateforme utilise des composants réutilisables pour le layout et les formulaires, assurant la cohérence et l’ergonomie de l’interface.
+
+\subsection{Gestion d'État}
+
+La gestion de l’état global est assurée via React Context API, tandis que chaque composant conserve son état local pour les données spécifiques à la page.
+
+\subsection{Routing et Navigation}
+
+Le routing est géré avec React Router DOM, permettant de définir des routes publiques et protégées ainsi que des redirections automatiques selon l’état d’authentification.
+
+
+\subsection{Service API}
+
+\subsubsection{Architecture du Service}
+
+Le service API (\texttt{services/api.ts}) centralise toute la communication avec le backend :
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Configuration centralisée} : URL de base de l'API configurée via variable d'environnement
+    \item \textbf{Gestion des tokens} : Fonctions pour stocker, récupérer et supprimer les tokens JWT
+    \item \textbf{Requêtes HTTP} : Fonctions génériques pour effectuer des requêtes avec injection automatique des tokens
+    \item \textbf{Gestion d'erreurs} : Traitement centralisé des erreurs avec messages utilisateur appropriés
+\end{itemize}
+
+\subsubsection{Endpoints API}
+
+Le service expose des fonctions pour chaque endpoint :
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{authAPI.login} : Connexion et récupération des tokens
+    \item \textbf{authAPI.signup} : Inscription et génération automatique des tokens
+    \item \textbf{authAPI.getCurrentUser} : Récupération des informations utilisateur
+    \item \textbf{authAPI.logout} : Déconnexion et nettoyage des tokens
+    \item \textbf{profileAPI.updateProfile} : Mise à jour du profil influenceur
+\end{itemize}
+
+\section{Endpoints API}
+
+\subsection{Architecture REST}
+
+L'API suit les principes REST (Representational State Transfer) avec des URLs sémantiques, des méthodes HTTP adaptées, des codes de statut standard et un format JSON pour toutes les réponses.
+
+
+\subsection{Endpoints d'Authentification}
+
+Les principaux endpoints d'authentification incluent : 
+\begin{itemize}[leftmargin=*]
+    \item \texttt{POST /api/auth/register/} : Inscription d’un nouvel utilisateur
+    \item \texttt{POST /api/auth/token/} : Connexion et obtention des tokens JWT
+    \item \texttt{POST /api/auth/token/refresh/} : Rafraîchissement du token d’accès
+    \item \texttt{GET /api/auth/user/} : Récupération des informations de l’utilisateur connecté
+\end{itemize}
+
+
+\subsection{Endpoints de Profil}
+
+\begin{itemize}[leftmargin=*]
+    \item \texttt{POST/PUT /api/profile/update/} : Mise à jour du profil influenceur, incluant informations personnelles, domaines, plateformes et tarifs
+\end{itemize}
+
+
+\subsection{Gestion des Erreurs}
+
+L’API s’appuie sur les codes HTTP standard (200, 201, 400, 401, 403, 404, 500) pour indiquer le résultat des requêtes.  
+Toutes les erreurs sont renvoyées dans un format JSON unifié contenant un message clair destiné au frontend, avec des détails techniques fournis par Django REST Framework lorsque nécessaire.
+
+\section{Fonctionnalités Techniques}
+
+\subsection{Système de Signaux Django}
+
+Django Signals est utilisé pour automatiser certaines actions lors d'événements spécifiques.  
+Par exemple, lors de la création d'un utilisateur, un signal déclenche automatiquement la création du profil associé (influenceur ou entreprise), en vérifiant que le profil n'existe pas déjà. Cette automatisation garantit l'intégrité des données et évite les profils manquants.
+
+\subsection{Interface d'Administration Django}
+
+L'interface d'administration offre une gestion complète des données pour les administrateurs.  
+Les modèles principaux (User, Influenceur, Entreprise, Campagne, Candidature, Notifications) sont enregistrés avec des configurations personnalisées permettant :
+
+\begin{itemize}[leftmargin=*]
+    \item Affichage des champs clés dans les listes
+    \item Filtres et recherche textuelle pour faciliter la navigation
+    \item Protection des champs automatiques en lecture seule
+    \item Actions groupées sur plusieurs objets
+\end{itemize}
+
+\subsection{Configuration CORS}
+
+Le module \texttt{django-cors-headers} est utilisé pour autoriser les requêtes provenant du frontend React. Seuls les domaines approuvés peuvent communiquer avec l'API, sécurisant ainsi les échanges entre frontend et backend.
+
+\subsection{Configuration de la Base de Données}
+
+\subsubsection{MySQL Connector}
+
+La connexion à MySQL utilise MySQL Connector pour Django, offrant :
+
+\begin{itemize}[leftmargin=*]
+    \item Configuration via variables d'environnement pour plus de sécurité
+    \item Gestion automatique du pool de connexions
+    \item Support des transactions pour garantir l'intégrité des données
+\end{itemize}
+
+\subsubsection{Migrations Django}
+
+Le système de migrations gère l'évolution du schéma de base de données :
+
+\begin{itemize}[leftmargin=*]
+    \item Génération automatique des migrations lors de modifications de modèles
+    \item Versioning des migrations avec possibilité d'application ou d'annulation
+    \item Historique complet des modifications du schéma
+\end{itemize}
+
+\subsection{Sécurité}
+
+\subsubsection{Protection CSRF}
+
+Django fournit une protection CSRF intégrée pour toutes les requêtes modifiant des données (POST, PUT, DELETE).
+
+\subsubsection{Validation des Données}
+
+Toutes les données sont validées côté serveur, avec une validation supplémentaire côté frontend pour améliorer l’expérience utilisateur. Les messages d’erreur sont clairs et descriptifs.
+
+\subsubsection{Hashage des Mots de Passe}
+
+Les mots de passe sont sécurisés via PBKDF2 avec SHA256, offrant une protection robuste contre les attaques par force brute.
+
+
+\section{Base de Données}
+
+\subsection{Schéma Relationnel}
+
+La base de données MySQL est organisée selon un schéma relationnel optimisé pour la performance et l'intégrité des données.  
+
+\subsection{Tables Principales}
+
+\subsubsection{Utilisateurs}
+
+Table centrale stockant tous les utilisateurs (influenceurs et entreprises) :
+
+\begin{itemize}[leftmargin=*]
+    \item Clé primaire : ID auto-incrémenté
+    \item Index : email (unique) et type\_utilisateur
+    \item Contraintes : email unique et type d'utilisateur valide
+\end{itemize}
+
+\subsubsection{Influenceurs}
+
+\begin{itemize}[leftmargin=*]
+    \item Clé étrangère : OneToOne vers utilisateurs
+    \item Index : pourcentage\_completion\_profil, localisation
+    \item Métriques : statistiques comme taux d'acceptation et total candidatures
+\end{itemize}
+
+\subsubsection{Entreprises}
+
+\begin{itemize}[leftmargin=*]
+    \item Clé étrangère : OneToOne vers utilisateurs
+    \item Informations : nom, description, secteur, taille
+\end{itemize}
+
+\subsubsection{Campagnes}
+
+\begin{itemize}[leftmargin=*]
+    \item Clé étrangère : ForeignKey vers entreprises
+    \item Statut : brouillon, active, fermée, annulée
+    \item Budget : minimum et maximum
+    \item Dates : date limite de candidature
+\end{itemize}
+
+\subsubsection{Candidatures}
+
+\begin{itemize}[leftmargin=*]
+    \item Clés étrangères : ForeignKey vers campagnes et influenceurs
+    \item Contrainte : un influenceur ne peut candidater qu'une fois par campagne
+    \item Statut et timestamp : suivi du statut et date de candidature
+\end{itemize}
+
+\subsection{Tables de Liaison}
+
+\subsubsection{Domaines d'Expertise}
+
+\begin{itemize}[leftmargin=*]
+    \item \texttt{domaines\_expertise} : liste des domaines
+    \item \texttt{influenceur\_expertise} : liaison ManyToMany influenceurs ↔ domaines
+    \item \texttt{campagne\_domaine} : liaison ManyToMany campagnes ↔ domaines
+\end{itemize}
+
+\subsubsection{Plateformes Sociales}
+
+\begin{itemize}[leftmargin=*]
+    \item \texttt{plateformes\_sociales} : liste des plateformes
+    \item \texttt{influenceur\_plateformes} : liaison avec métadonnées (nombre d'abonnés)
+    \item \texttt{campagne\_plateforme} : liaison ManyToMany campagnes ↔ plateformes
+\end{itemize}
+
+\subsection{Relations et Intégrité}
+
+\subsubsection{Types de Relations}
+
+\begin{itemize}[leftmargin=*]
+    \item OneToOne : User ↔ Influenceur, User ↔ Entreprise
+    \item OneToMany : Entreprise → Campagne, Influenceur → Candidature, Campagne → Candidature
+    \item ManyToMany : Influenceur ↔ DomaineExpertise, Campagne ↔ DomaineExpertise, Influenceur ↔ PlateformeSociale, Campagne ↔ PlateformeSociale
+\end{itemize}
+
+\subsubsection{Contraintes d'Intégrité}
+
+\begin{itemize}[leftmargin=*]
+    \item CASCADE : suppression en cascade pour maintenir l'intégrité
+    \item UNIQUE : éviter les doublons (email, candidature unique par campagne)
+    \item NOT NULL : champs obligatoires pour garantir la complétude
+\end{itemize}
+
+\subsection{Optimisations}
+
+\subsubsection{Index}
+
+\begin{itemize}[leftmargin=*]
+    \item email, type\_utilisateur, pourcentage\_completion\_profil, localisation
+\end{itemize}
+
+\subsubsection{Requêtes Optimisées}
+
+\begin{itemize}[leftmargin=*]
+    \item Select Related : éviter les requêtes N+1 pour ForeignKey
+    \item Prefetch Related : optimiser les relations ManyToMany
+    \item Agrégation : calcul des statistiques directement en base
+\end{itemize}
+
+\section{Configuration et Déploiement}
+
+Le projet utilise Django pour le backend et React/Vite pour le frontend.  
+Toutes les informations de configuration (variables d'environnement, installation, lancement) sont documentées dans le fichier README du projet.  
+
+\section{Conclusion}
+
+Le projet \textbf{InfluMatch} a permis de développer une plateforme complète de mise en relation entre influenceurs et entreprises. Les principales fonctionnalités implémentées comprennent un système d'authentification sécurisé avec JWT, la gestion complète des profils influenceurs et entreprises, un espace marketplace pour découvrir les offres, un suivi des candidatures avec différents statuts, ainsi qu'un tableau de bord analytique personnalisé. L'expérience utilisateur est moderne et réactive grâce à l'utilisation de React avec TypeScript, garantissant une interface intuitive et sécurisée.
+
+\subsection{Améliorations Futures}
+
+Plusieurs axes d'amélioration pourraient enrichir la plateforme et offrir davantage de fonctionnalités aux utilisateurs :
+
+\begin{itemize}[leftmargin=*]
+    \item Système de messagerie en temps réel entre influenceurs et entreprises
+    \item Intégration d'un système de paiement pour faciliter les transactions
+    \item Tableaux de bord analytiques avancés pour suivre la performance des campagnes
+    \item Développement d'une application mobile ou Progressive Web App
+    \item Recommandations d'influenceurs via un algorithme intelligent et intégration avec les APIs sociales
+    \item Notifications en temps réel et support multilingue
+\end{itemize}
+
+\subsection{Apprentissages et Défis}
+
+Le développement de ce projet a été une expérience riche en apprentissages. Nous avons renforcé notre compréhension de l'architecture full-stack, de la communication entre frontend et backend, de la modélisation de bases de données relationnelles et de la conception d'API REST sécurisées. L'utilisation de TypeScript et de React pour le frontend nous a permis d'améliorer la maintenabilité et la robustesse du code. Nous aurions aimé pouvoir finaliser complètement le projet, afin de démontrer pleinement l’étendue de ce que nous sommes capables de réaliser. Même si nous avons eu recours à l’assistance d’outils d’intelligence artificielle, chaque ligne de code a été comprise, adaptée et intégrée avec discernement. Cela a renforcé notre compréhension du développement web, et rendu l’apprentissage d’autant plus motivant et concret. 
+
+En somme, InfluMatch constitue un projet ambitieux qui nous a permis de mettre en pratique nos compétences techniques tout en préparant le terrain pour de futures améliorations et fonctionnalités avancées.
+
+\newpage
+\section{Webographie}
+\begin{thebibliography}{2}
+   \bibitem[ChatGPT]{ChatGPT} \url{https://chatgpt.com/?oai-dm=1}
+   \bibitem[Claude.ai]{Claude.ai} \url{https://claude.ai}
+\end{thebibliography}
+
+\vspace{2cm}
+
+\section{Annexes}
+\appendix
+
+
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\textwidth]{PageAccueil.png}
+  \caption{Page d'accueil.}
+  \label{fig:1}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\textwidth]{PageInscription.png}
+  \caption{Page d'inscription.}
+  \label{fig:2}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\textwidth]{PageConnexion.png}
+  \caption{Page de connexion.}
+  \label{fig:3}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\textwidth]{Dashboard.png}
+  \caption{Dashboard.}
+  \label{fig:4}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\textwidth]{Marketplace.png}
+  \caption{Marketplace et page de détails d'une offre de campagne.}
+  \label{fig:5}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\textwidth]{Candidature.png}
+  \caption{Candidatures.}
+  \label{fig:6}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\textwidth]{Profil.png}
+  \caption{Profil utilisateur.}
+  \label{fig:7}
+\end{figure}
+
+
+\vspace{2cm}
+
+\begin{center}
+\textit{Fin du rapport}
+\end{center}
+
+
+
+\end{document}
