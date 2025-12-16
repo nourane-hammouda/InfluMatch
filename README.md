@@ -1,8 +1,52 @@
 # InfluMatch
 
-Platforme de mise en relation entre influenceurs et entreprises.
+> Plateforme de mise en relation entre influenceurs et entreprises
 
-## 📁 Arborescence Complète du Projet
+InfluMatch est une application web moderne permettant aux entreprises de publier des offres de collaboration et aux influenceurs de découvrir et postuler à ces opportunités. La plateforme facilite la mise en relation entre les deux parties grâce à un système de marketplace intuitif.
+
+## 🚀 Fonctionnalités
+
+### Pour les Influenceurs
+- **Inscription et authentification** sécurisée avec JWT
+- **Profil personnalisable** avec informations détaillées
+- **Marketplace** pour découvrir les offres de collaboration
+- **Système de candidature** pour postuler aux offres
+- **Tableau de bord** pour suivre les candidatures
+- **Notifications** pour rester informé
+
+### Pour les Entreprises
+- **Gestion de profil** entreprise
+- **Publication d'offres** de collaboration
+- **Consultation des candidatures** reçues
+- **Gestion des collaborations** avec les influenceurs
+
+## 🛠️ Technologies
+
+### Backend
+- **Django 5.2.7** - Framework web Python
+- **Django REST Framework 3.14.0** - API REST
+- **Django REST Framework Simple JWT 5.3.1** - Authentification JWT
+- **Django CORS Headers 4.3.1** - Gestion CORS
+- **Django Filter 23.5** - Filtrage avancé
+- **MySQL Connector Python 9.5.0** - Connecteur MySQL
+- **Python-dotenv 1.0.0** - Gestion des variables d'environnement
+
+### Frontend
+- **React 18.3.1** - Bibliothèque UI
+- **TypeScript** - Typage statique
+- **Vite 6.3.5** - Build tool moderne
+- **React Router DOM 7.9.6** - Routing
+- **Bootstrap 5.3.3** - Framework CSS
+- **React Bootstrap 2.10.2** - Composants React Bootstrap
+- **React Hook Form 7.55.0** - Gestion des formulaires
+- **Lucide React 0.487.0** - Icônes
+- **Recharts 2.15.2** - Graphiques et visualisations
+
+### Base de données
+- **MySQL 8.0+** (par défaut)
+- **SQLite** (optionnel pour le développement)
+
+## 📁 Structure du Projet
 
 ```
 influmatch/
@@ -26,14 +70,14 @@ influmatch/
 │   ├── signals.py                  # Signaux Django
 │   ├── tests.py                    # Tests unitaires
 │   │
-│   ├── 📁 models/                  # Modèles de données (MVC: Model)
+│   ├── 📁 models/                  # Modèles de données
 │   │   ├── __init__.py
 │   │   ├── user.py                 # Modèle User
 │   │   ├── influencer.py           # Modèle Influenceur
 │   │   ├── company.py              # Modèle Company
 │   │   └── application.py          # Modèle Application
 │   │
-│   ├── 📁 views/                   # Vues API (MVC: Controller)
+│   ├── 📁 views/                   # Vues API
 │   │   ├── __init__.py
 │   │   ├── auth_views.py           # Authentification (login, signup)
 │   │   ├── user_views.py           # Vues utilisateur
@@ -71,15 +115,15 @@ influmatch/
 │       ├── 📄 index.css            # Styles globaux
 │       ├── 📄 vite-env.d.ts        # Types TypeScript pour Vite
 │       │
-│       ├── 📁 pages/               # Pages/Vues (MVC: View)
+│       ├── 📁 pages/               # Pages de l'application
 │       │   ├── LandingPage.tsx     # Page d'accueil
 │       │   ├── LoginPage.tsx       # Page de connexion
 │       │   ├── SignupPage.tsx      # Page d'inscription
 │       │   ├── DashboardPage.tsx   # Tableau de bord
 │       │   ├── ProfilePage.tsx     # Page de profil
 │       │   ├── ProfileCompletionPage.tsx  # Complétion de profil
-│       │   ├── MarketplacePage.tsx # Marketplace (offres fictives)
-│       │   ├── OfferDetailPage.tsx  # Détails d'une offre
+│       │   ├── MarketplacePage.tsx # Marketplace
+│       │   ├── OfferDetailPage.tsx # Détails d'une offre
 │       │   ├── ApplicationsPage.tsx # Page des candidatures
 │       │   └── NotificationsPage.tsx # Page des notifications
 │       │
@@ -89,9 +133,9 @@ influmatch/
 │       │   │   └── TopBar.tsx      # Barre supérieure
 │       │   └── OfferCard.tsx       # Carte d'offre
 │       │
-│       ├── 📁 services/            # Services API (MVC: Controller)
+│       ├── 📁 services/            # Services API
 │       │   ├── api.ts              # Service API principal
-│       │   └── mockData.ts         # Données fictives (offres, etc.)
+│       │   └── mockData.ts         # Données fictives
 │       │
 │       ├── 📁 contexts/            # Contextes React
 │       │   └── AuthContext.tsx     # Contexte d'authentification
@@ -117,75 +161,33 @@ influmatch/
 └── 📁 venv/                        # Environnement virtuel Python (ignoré par Git)
 ```
 
-## Structure du Projet
+## 🏗️ Architecture
 
-### Backend (Django REST Framework)
-
-```
-backend/              # Configuration Django
-api/                  # Application principale
-  ├── models/         # Modèles de données (MVC: Model)
-  │   ├── user.py
-  │   ├── influencer.py
-  │   ├── company.py
-  │   └── application.py
-  ├── views/          # Vues API (MVC: Controller)
-  │   ├── auth_views.py
-  │   ├── user_views.py
-  │   └── profile_views.py
-  ├── serializers/    # Sérialiseurs DRF
-  ├── urls.py         # Routes API
-  └── signals.py      # Signaux Django
-```
-
-### Frontend (React + TypeScript + Vite + Bootstrap)
-
-```
-frontend/
-  ├── src/
-  │   ├── pages/              # Pages/Vues (MVC: View)
-  │   │   ├── LandingPage.tsx
-  │   │   ├── LoginPage.tsx
-  │   │   ├── SignupPage.tsx
-  │   │   ├── DashboardPage.tsx
-  │   │   └── ...
-  │   ├── components/         # Composants réutilisables
-  │   │   ├── layout/         # Composants de layout
-  │   │   │   ├── Sidebar.tsx
-  │   │   │   └── TopBar.tsx
-  │   │   └── OfferCard.tsx
-  │   ├── services/           # Services API (MVC: Controller)
-  │   │   ├── api.ts
-  │   │   └── mockData.ts
-  │   ├── contexts/           # Contextes React
-  │   │   └── AuthContext.tsx
-  │   └── index.css           # Styles globaux (Bootstrap + custom)
-```
-
-## Architecture MVC
+Le projet suit une architecture **MVC (Model-View-Controller)** :
 
 ### Model (Backend)
-- **Django Models** (`api/models/`): Définition des entités de données
-- **Database**: MySQL 8.0+ (SQLite optionnel via variable d'environnement)
+- **Django Models** (`api/models/`) : Définition des entités de données
+  - `User` : Utilisateurs de la plateforme
+  - `Influencer` : Profils d'influenceurs
+  - `Company` : Profils d'entreprises
+  - `Application` : Candidatures aux offres
 
 ### View (Frontend)
-- **React Pages** (`frontend/src/pages/`): Pages principales de l'application
-- **React Components** (`frontend/src/components/`): Composants réutilisables
-- **Bootstrap 5**: Framework CSS utilisé exclusivement pour le styling
-- **React Bootstrap**: Composants React basés sur Bootstrap
+- **React Pages** (`frontend/src/pages/`) : Pages principales de l'application
+- **React Components** (`frontend/src/components/`) : Composants réutilisables
+- **Bootstrap 5** : Framework CSS pour le styling
 
 ### Controller
-- **Backend**: Django Views (`api/views/`) - Gestion des requêtes API
-- **Frontend**: Services (`frontend/src/services/`) - Communication avec l'API
+- **Backend** : Django Views (`api/views/`) - Gestion des requêtes API
+- **Frontend** : Services (`frontend/src/services/`) - Communication avec l'API
 
-
-### Installation Rapide (Résumé)
+## 📦 Installation
 
 ### Prérequis
 
 - **Python** 3.8+ (recommandé: Python 3.11+)
 - **Node.js** 18+ et npm
-- **MySQL** 8.0+ (requis par défaut)
+- **MySQL** 8.0+ (requis par défaut) ou SQLite (optionnel)
 - **Git**
 
 ### Étape 1 : Cloner le projet
@@ -195,7 +197,9 @@ git clone https://github.com/nourane-hammouda/InfluMatch.git
 cd InfluMatch
 ```
 
-### Étape 2 : Configuration de la Base de Données MySQL
+### Étape 2 : Configuration de la Base de Données
+
+#### Option A : MySQL (recommandé)
 
 1. Créer une base de données MySQL :
 ```sql
@@ -207,16 +211,18 @@ CREATE DATABASE InfluMatch CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 mysql -u root -p InfluMatch < InfluMatch.sql
 ```
 
-**Note :** Le projet utilise MySQL par défaut. Pour utiliser SQLite à la place, ajouter `USE_SQLITE=true` dans le fichier `.env`.
+#### Option B : SQLite (pour le développement)
+
+Aucune configuration nécessaire. SQLite sera utilisé automatiquement si `USE_SQLITE=true` est défini dans le fichier `.env`.
 
 ### Étape 3 : Configuration du Backend (Django)
 
-1. Créer un environnement virtuel Python :
+1. **Créer un environnement virtuel Python** :
 ```bash
 python3 -m venv venv
 ```
 
-2. Activer l'environnement virtuel :
+2. **Activer l'environnement virtuel** :
    - **Sur macOS/Linux** :
    ```bash
    source venv/bin/activate
@@ -226,17 +232,19 @@ python3 -m venv venv
    venv\Scripts\activate
    ```
 
-3. Installer les dépendances Python :
+3. **Installer les dépendances Python** :
 ```bash
 pip install -r requirements.txt
 ```
 
-4. Créer le fichier `.env` à la racine du projet :
+4. **Créer le fichier `.env`** à la racine du projet :
 ```bash
 touch .env
 ```
 
-5. Configurer le fichier `.env` avec vos paramètres :
+5. **Configurer le fichier `.env`** avec vos paramètres :
+
+**Pour MySQL** :
 ```env
 SECRET_KEY=votre_secret_key_django_très_long_et_aléatoire
 DEBUG=True
@@ -247,52 +255,54 @@ DB_HOST=localhost
 DB_PORT=3306
 ```
 
-**Si vous préférez utiliser SQLite** (optionnel), ajouter :
+**Pour SQLite** :
 ```env
+SECRET_KEY=votre_secret_key_django_très_long_et_aléatoire
+DEBUG=True
 USE_SQLITE=true
 ```
 
-   **Générer une SECRET_KEY** :
-   ```python
-   python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
-   ```
+**Générer une SECRET_KEY** :
+```python
+python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+```
 
-6. Appliquer les migrations :
+6. **Appliquer les migrations** :
 ```bash
 python manage.py migrate
 ```
 
-7. (Optionnel) Créer un superutilisateur pour l'admin Django :
+7. **(Optionnel) Créer un superutilisateur** pour l'admin Django :
 ```bash
 python manage.py createsuperuser
 ```
 
-8. Lancer le serveur Django :
+8. **Lancer le serveur Django** :
 ```bash
 python manage.py runserver
 ```
 
-Le backend sera accessible sur : **http://127.0.0.1:8000**
+Le backend sera accessible sur : **http://127.0.0.1:8000**  
 L'admin Django sera accessible sur : **http://127.0.0.1:8000/admin/**
 
 ### Étape 4 : Configuration du Frontend (React)
 
-1. Aller dans le dossier frontend :
+1. **Aller dans le dossier frontend** :
 ```bash
 cd frontend
 ```
 
-2. Installer les dépendances Node.js :
+2. **Installer les dépendances Node.js** :
 ```bash
 npm install
 ```
 
-3. (Optionnel) Créer un fichier `.env` dans le dossier `frontend/` si vous voulez changer l'URL de l'API :
+3. **(Optionnel) Créer un fichier `.env`** dans le dossier `frontend/` pour configurer l'URL de l'API :
 ```env
 VITE_API_URL=http://127.0.0.1:8000/api
 ```
 
-4. Lancer le serveur de développement :
+4. **Lancer le serveur de développement** :
 ```bash
 npm run dev
 ```
@@ -301,21 +311,22 @@ Le frontend sera accessible sur : **http://localhost:5173** (ou le port indiqué
 
 ### Étape 5 : Vérification
 
-1. Vérifier que le backend fonctionne :
+1. **Vérifier que le backend fonctionne** :
    - Ouvrir : http://127.0.0.1:8000/api/
    - Vous devriez voir un message JSON
 
-2. Vérifier que le frontend fonctionne :
+2. **Vérifier que le frontend fonctionne** :
    - Ouvrir : http://localhost:5173
    - Vous devriez voir la page d'accueil InfluMatch
 
-3. Tester l'inscription et la connexion :
+3. **Tester l'inscription et la connexion** :
    - Créer un compte depuis la page d'inscription
    - Se connecter avec les identifiants créés
 
-## Commandes Utiles
+## 🔧 Commandes Utiles
 
 ### Backend
+
 ```bash
 # Créer les migrations après modification des models
 python manage.py makemigrations
@@ -326,11 +337,15 @@ python manage.py migrate
 # Créer un superutilisateur
 python manage.py createsuperuser
 
-# Charger des données initiales (si disponible)
+# Charger des données initiales
 python manage.py load_initial_data
+
+# Lancer le serveur de développement
+python manage.py runserver
 ```
 
 ### Frontend
+
 ```bash
 # Lancer le serveur de développement
 npm run dev
@@ -339,35 +354,67 @@ npm run dev
 npm run build
 ```
 
-## Endpoints API
+## 🔌 Endpoints API
 
-- `POST /api/auth/register/` - Inscription
-- `POST /api/auth/token/` - Connexion
-- `GET /api/auth/user/` - Informations utilisateur
-- `POST /api/auth/token/refresh/` - Rafraîchir le token
+### Authentification
+- `POST /api/auth/register/` - Inscription d'un nouvel utilisateur
+- `POST /api/auth/token/` - Connexion (obtention du token JWT)
+- `POST /api/auth/token/refresh/` - Rafraîchir le token JWT
+- `GET /api/auth/user/` - Informations de l'utilisateur connecté
 
-## Structure de la Base de Données
+### Utilisateurs
+- `GET /api/users/` - Liste des utilisateurs (authentifié)
+- `GET /api/users/{id}/` - Détails d'un utilisateur
 
-La base de données utilise MySQL 8.0+ par défaut. Les migrations Django définissent le schéma complet. Pour utiliser SQLite à la place, ajouter `USE_SQLITE=true` dans le fichier `.env`.
+### Profils
+- `GET /api/profile/` - Profil de l'utilisateur connecté
+- `PUT /api/profile/` - Mettre à jour le profil
+- `PATCH /api/profile/` - Mettre à jour partiellement le profil
 
-## Technologies
+## 🗄️ Structure de la Base de Données
 
-### Backend
-- **Framework**: Django 5.2
-- **API**: Django REST Framework
-- **Database**: MySQL 8.0+ (par défaut) ou SQLite (optionnel)
-- **Authentication**: JWT (Simple JWT)
+La base de données utilise **MySQL 8.0+** par défaut. Les migrations Django définissent le schéma complet. Pour utiliser **SQLite** à la place, ajouter `USE_SQLITE=true` dans le fichier `.env`.
 
-### Frontend
-- **Framework**: React 18.3.1 avec TypeScript
-- **Build Tool**: Vite 6.3.5
-- **TypeScript**: Configuration complète avec types Vite
-- **UI Framework**: Bootstrap 5.3.3 (exclusivement)
-- **React Components**: React Bootstrap 2.10.2
-- **Routing**: React Router DOM 7.9.6
-- **Icons**: Lucide React
-- **Charts**: Recharts
-- **Forms**: React Hook Form
+### Modèles principaux
 
+- **User** : Utilisateurs de la plateforme (influenceurs et entreprises)
+- **Influencer** : Profils détaillés des influenceurs
+- **Company** : Profils détaillés des entreprises
+- **Application** : Candidatures des influenceurs aux offres
 
+## 🧪 Tests
 
+```bash
+# Lancer les tests du backend
+python manage.py test
+```
+
+## 📝 Contribution
+
+Les contributions sont les bienvenues ! Pour contribuer :
+
+1. Fork le projet
+2. Créer une branche pour votre fonctionnalité (`git checkout -b feature/AmazingFeature`)
+3. Commit vos changements (`git commit -m 'Add some AmazingFeature'`)
+4. Push vers la branche (`git push origin feature/AmazingFeature`)
+5. Ouvrir une Pull Request
+
+## 📄 Licence
+
+Ce projet est un projet académique réalisé dans le cadre d'un cours à l'Université Paris Nanterre.
+
+## 👥 Auteur
+
+**Nourane Hammouda**
+
+- GitHub: [@nourane-hammouda](https://github.com/nourane-hammouda)
+
+## 🙏 Remerciements
+
+- Université Paris Nanterre
+- Django REST Framework
+- React Community
+
+---
+
+⭐ Si ce projet vous a aidé, n'hésitez pas à lui donner une étoile !
