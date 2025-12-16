@@ -8,9 +8,8 @@ Platforme de mise en relation entre influenceurs et entreprises.
 influmatch/
 ├── 📄 manage.py                    # Script de gestion Django
 ├── 📄 requirements.txt             # Dépendances Python
-├── 📄 .env.example                 # Exemple de variables d'environnement
-├── 📄 .env                         # Variables d'environnement (à créer)
-├── 📄 .gitignore                   # Fichiers ignorés par Git
+├── 📄 db.sqlite3                   # Base de données SQLite (si utilisée)
+├── 📄 README.md                    # Documentation principale
 │
 ├── 📁 backend/                      # Configuration Django
 │   ├── __init__.py
@@ -41,7 +40,7 @@ influmatch/
 │   │   └── profile_views.py        # Vues profil
 │   │
 │   ├── 📁 serializers/             # Sérialiseurs DRF
-│   │   └── __init__.py             # CustomTokenObtainPairSerializer
+│   │   └── __init__.py
 │   │
 │   ├── 📁 migrations/              # Migrations Django
 │   │   ├── __init__.py
@@ -62,6 +61,10 @@ influmatch/
 │   ├── 📄 tsconfig.node.json       # Configuration TypeScript pour Node
 │   ├── 📄 index.html               # Point d'entrée HTML
 │   │
+│   ├── 📁 build/                   # Build de production (généré)
+│   │   ├── index.html
+│   │   └── assets/                 # Assets compilés
+│   │
 │   └── 📁 src/                     # Code source React
 │       ├── 📄 main.tsx             # Point d'entrée React
 │       ├── 📄 App.tsx              # Composant principal + Routing
@@ -81,7 +84,7 @@ influmatch/
 │       │   └── NotificationsPage.tsx # Page des notifications
 │       │
 │       ├── 📁 components/          # Composants réutilisables
-│       │   ├── 📁 layout/         # Composants de layout
+│       │   ├── 📁 layout/          # Composants de layout
 │       │   │   ├── Sidebar.tsx     # Barre latérale
 │       │   │   └── TopBar.tsx      # Barre supérieure
 │       │   └── OfferCard.tsx       # Carte d'offre
@@ -97,10 +100,21 @@ influmatch/
 │           ├── bootstrap-custom.css # Styles Bootstrap personnalisés
 │           └── globals.css         # Styles globaux personnalisés
 │
-├── 📁 venv/                        # Environnement virtuel Python (ignoré par Git)
-├── 📄 README.md                    # Documentation principale
-├── 📄 rapport.tex                  # Rapport LaTeX du projet
-└── 📄 Logo_Université_Paris-Nanterre.svg  # Logo de l'université
+├── 📁 rapport/                     # Dossier du rapport LaTeX
+│   ├── rapport.tex                 # Fichier principal du rapport
+│   ├── pagedegarde.tex            # Page de garde
+│   ├── sample.bib                 # Bibliographie
+│   ├── logo_Paris_Nanterre_couleur_RVB.png  # Logo université
+│   ├── PageAccueil.png            # Capture d'écran
+│   ├── PageConnexion.png          # Capture d'écran
+│   ├── PageInscription.png        # Capture d'écran
+│   ├── Dashboard.png              # Capture d'écran
+│   ├── Marketplace.png            # Capture d'écran
+│   ├── Profil.png                 # Capture d'écran
+│   ├── Candidature.png            # Capture d'écran
+│   └── Bordure.png                # Image de bordure
+│
+└── 📁 venv/                        # Environnement virtuel Python (ignoré par Git)
 ```
 
 ## Structure du Projet
