@@ -403,18 +403,6 @@ Les contributions sont les bienvenues ! Pour contribuer :
 
 Ce projet est un projet académique réalisé dans le cadre d'un cours à l'Université Paris Nanterre.
 
-## 👥 Auteur
 
-**Nourane Hammouda**
 
-- GitHub: [@nourane-hammouda](https://github.com/nourane-hammouda)
 
-## 🙏 Remerciements
-
-- Université Paris Nanterre
-- Django REST Framework
-- React Community
-
----
-
-⭐ Si ce projet vous a aidé, n'hésitez pas à lui donner une étoile !
