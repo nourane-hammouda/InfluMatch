@@ -403,6 +403,8 @@ Les contributions sont les bienvenues ! Pour contribuer :
 
 Ce projet est un projet académique réalisé dans le cadre d'un cours à l'Université Paris Nanterre.
 
+## 🙏 Remerciements
 
-
-
+- Université Paris Nanterre
+- Django REST Framework
+- React Community
